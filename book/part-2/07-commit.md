@@ -18,6 +18,23 @@ git commit -m "docs: add project introduction"
 
 `git commit` 根据暂存区创建提交。`-m` 后面的文本是提交说明，`m` 来自 message。引号让整句话作为一个参数传入。
 
+## 从对象模型看 `commit`
+
+上一章的 `git add` 已经准备了文件内容及其 blob。执行 `git commit` 时，Git 根据暂存区记录的路径、文件属性和 blob 生成 tree 对象，再生成一个指向根 tree 的 commit 对象。commit 对象还会记录父提交、作者、提交者和提交说明。
+
+可以把这次操作概括为：
+
+```text
+git add
+  -> 准备 blob，并更新暂存区
+
+git commit
+  -> 根据暂存区生成 tree
+  -> 生成指向 tree 和父提交的 commit
+```
+
+所以 `git commit` 不是重新扫描工作区，把当前目录直接打成压缩包。它采用的是已经放入暂存区的结果。这也解释了为什么同一个文件可以同时存在“已暂存版本”和“暂存后又修改的版本”：本次提交只会采用前者。
+
 输出类似：
 
 ```text
