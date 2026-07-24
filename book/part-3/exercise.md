@@ -68,7 +68,7 @@ git log --oneline --graph --decorate --all
 git show v0.1.1 --no-patch
 ```
 
-## 验收判断
+## 结果判断
 
 你应能从提交图证明：
 

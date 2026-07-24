@@ -71,7 +71,7 @@ git push --force-with-lease=refs/heads/feature/search:<改写前远程提交ID> 
 
 若租约拒绝，说明远程状态与预期不同，应重新获取和协调，不应升级为无条件强推。
 
-## 本篇验收
+## 回看本篇
 
 你应能在不看命令表的情况下回答：
 

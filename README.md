@@ -1,17 +1,25 @@
 # Git 技术蓝皮书
 
-一本从零开始、面向真实工作场景的 Git 中文开源读物。
+一本从零开始、面向真实工作场景的 Git 中文公开读物。
 
 这本书不追求罗列全部 Git 命令，而是先解释 Git 为什么出现、它如何看待文件与历史，再逐步进入提交、分支、远程协作、回滚、历史修改和故障恢复。目标是让读者能够判断当前处境，选择合适的命令，并知道误操作后如何恢复。
 
 ## 当前状态
 
-仓库正在进行全书规划，正文尚未开始批量撰写。
+首版正文已完成，包含 6 篇连续教程、各篇综合场景、常用命令与事故索引，以及 8 套隔离 Git 实验。仓库会继续进行事实核对和读者反馈修订。
 
 - GitBook 阅读内容位于 [`book/`](book/)
 - 全书规划位于 [`docs/BOOK-PLAN.md`](docs/BOOK-PLAN.md)
 - 写作规范位于 [`docs/WRITING-GUIDE.md`](docs/WRITING-GUIDE.md)
 - 知识依赖位于 [`docs/CONCEPT-MAP.md`](docs/CONCEPT-MAP.md)
+- 完成标准位于 [`docs/ACCEPTANCE.md`](docs/ACCEPTANCE.md)
+- 可重复实验位于 [`scripts/`](scripts/)
+
+运行全部本地验证：
+
+```bash
+./scripts/verify-all.sh
+```
 
 ## GitBook 同步
 

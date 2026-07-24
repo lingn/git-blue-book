@@ -80,7 +80,7 @@ git diff --staged
 git commit -m "chore: ignore personal notes"
 ```
 
-## 第四步：验收结果
+## 第四步：检查结果
 
 ```bash
 git status
