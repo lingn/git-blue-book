@@ -43,6 +43,8 @@
 | 丢弃未暂存修改 | `git restore <路径>` | [恢复工作区](../part-5/02-restore-worktree.md) |
 | 取消暂存 | `git restore --staged` | [取消暂存](../part-5/03-unstage.md) |
 | 替换最近本地提交 | `git commit --amend` | [补充提交](../part-5/04-amend-content.md) |
+| 重置最近提交署名 | `git commit --amend --reset-author` | [重置署名](../part-5/05-amend-message.md) |
+| 变基时逐条执行命令 | `git rebase --exec` | [逐条执行](../part-5/06-interactive-rebase.md) |
 | 撤销已公开提交 | `git revert` | [公开回滚](../part-5/07-revert.md) |
 | 有条件更新个人远程分支 | `git push --force-with-lease` | [租约保护](../part-5/09-force-with-lease.md) |
 | 移动分支并选择区域更新范围 | `git reset` | [reset 三模式](../part-5/10-reset.md) |
