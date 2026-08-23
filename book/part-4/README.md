@@ -16,6 +16,8 @@
 10. [变基的本质：重新生成提交](10-rebase-model.md)
 11. [安全使用 git rebase](11-rebase-workflow.md)
 12. [只迁移需要的提交：git cherry-pick](12-cherry-pick.md)
-13. [综合场景：同步主线并准备代码评审](exercise.md)
+13. [远程 URL、传输协议与认证边界](13-transport-auth.md)
+14. [Refspec、传输协商与受限克隆](14-refspec-partial-clone.md)
+15. [综合场景：同步主线并准备代码评审](exercise.md)
 
-本篇完成后，你应能指出每条同步命令改变了哪一层，并能在推送被拒绝时先获取和检查他人历史，而不是覆盖远程分支。
+本篇完成后，你应能指出每条同步命令改变了哪一层，区分 Git 协议、SSH/HTTPS 保护、客户端认证和仓库授权，并判断一个受限克隆缺的是引用、祖先、对象还是工作区路径。

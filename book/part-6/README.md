@@ -9,11 +9,13 @@
 3. [定位引入问题的提交：git bisect](03-bisect.md)
 4. [查找一行代码和一段逻辑的演变](04-history-search.md)
 5. [热修复如何在多个分支之间迁移](05-hotfix.md)
-6. [发布分支、标签与回滚策略](06-release.md)
+6. [发布不是一个标签：源码、制品与运行状态](06-release.md)
 7. [冲突解决后如何准确说明](07-conflict-report.md)
 8. [提交信息、粒度与可审查历史](08-commit-quality.md)
 9. [受保护分支和团队协作约定](09-protected-branches.md)
 10. [一套可恢复的 Git 排障流程](10-troubleshooting.md)
-11. [综合场景：从线上缺陷到发布复盘](exercise.md)
+11. [从候选提交到运行版本：CI/CD 证据链](11-ci-evidence-chain.md)
+12. [CI 为什么会跑、跑哪一个：触发器、路径过滤与合并队列](12-ci-triggers-merge-queue.md)
+13. [综合场景：从线上缺陷到发布复盘](exercise.md)
 
 完成本篇后，你应能把 Git 证据、代码验证和部署决策连接起来，同时明确哪些结论不能只靠提交历史得到。

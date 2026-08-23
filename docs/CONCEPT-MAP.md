@@ -6,28 +6,333 @@
 版本问题
   -> 版本控制
   -> 分布式版本控制
-  -> 仓库 / 快照 / 历史 / 提交
+  -> 仓库 / 快照
+      -> 对象数据库
+          -> blob
+          -> tree
+          -> commit
+          -> tag 对象
+      -> 引用
+          -> 分支
+          -> HEAD
+          -> 标签引用
+      -> 暂存区 / index
       -> 工作区
-      -> 暂存区
+      -> 历史 / 提交
       -> 状态与差异
       -> 提交之间的父子关系
           -> 提交图
-          -> 引用
-              -> 分支
-              -> HEAD
-              -> 标签
-                  -> 合并
-                  -> 三方合并
-                  -> 冲突
+              -> 合并
+              -> 三方合并
+              -> 冲突
+                  -> index stage 1 / 2 / 3
+                  -> ort / AUTO_MERGE
+                  -> rename 与目录重命名推断
+                  -> abort / quit
+                  -> rerere
       -> 本地仓库与远程仓库
+          -> remote / URL
+              -> 本地文件、SSH、HTTPS 传输
+                  -> 服务器身份
+                  -> 客户端认证
+                  -> 仓库授权
+              -> Git wire protocol
+          -> refspec
+              -> 引用选择与映射
           -> 远程引用
           -> 远程跟踪分支
           -> fetch
+              -> FETCH_HEAD
+              -> 浅克隆 / shallow boundary
+              -> 部分克隆 / promisor remote
+                  -> 稀疏检出 / 工作区路径
               -> pull
           -> push / upstream
               -> 已公开历史
                   -> revert
                   -> force-with-lease
+              -> 评审 / CI 候选提交
+                  -> 触发事件 / old-new 对象
+                  -> 路径过滤 / 依赖闭包
+                  -> 合并队列 / 条件引用更新
+                  -> 实际 checkout / 分离 HEAD
+                  -> 流水线与依赖输入
+                      -> dependency selector / resolver
+                      -> resolved commit / content digest
+                      -> transitive/runtime dependencies
+                      -> runner image / cache / artifact
+                      -> provenance / builder / subject
+                  -> 构建制品 / 内容摘要
+                  -> 部署记录
+                  -> 运行实例版本
+      -> 对象签名与信任策略
+          -> commit / annotated tag payload
+          -> 签名格式与外部签名程序
+          -> key fingerprint / principal 映射
+          -> allowed signers / 证书链 / 信任根
+          -> 密钥轮换、撤销与历史验证
+          -> 组织授权 / 评审 / 发布证据
+      -> 凭据泄漏处置
+          -> 签发器中的撤销 / 轮换 / 使用审计
+          -> Git 可达历史
+              -> branches / tags / notes / 平台评审 refs
+              -> 全 ref rewrite / old-new map / first-changed commits
+          -> 对象物理保留
+              -> refs/original / reflog / pack / GC
+              -> LFS payload / 平台 cache / 备份
+          -> 外部副本
+              -> clone / fork / mirror / CI log 与 artifact
+              -> fresh clone / 防止旧 ancestry 重新污染
+      -> 机器身份与最小权限
+          -> principal / workload context / credential / authorization / session / audit
+          -> 资源 × 动作 × 上下文 × 时间
+          -> 个人令牌 / deploy key / bot / app installation
+          -> workload identity / subject token / token exchange
+              -> issuer / audience / subject / expiry
+              -> trust policy / resource role / 派生凭据
+          -> 根凭据 / 轮换 / 撤销 / break-glass
+          -> credential context / URL 与 local config 持久化
+      -> 不受信任仓库
+          -> 文件 owner / safe.directory
+          -> protected config / safe.bareRepository
+          -> tracked selectors
+              -> .gitattributes -> local filter/diff/merge driver
+              -> tracked hook -> hook 安装或 core.hooksPath
+              -> .gitmodules -> recursive transport / gitlink
+          -> clone / checkout / build / CI 执行边界
+      -> 秘密扫描与归档导出
+          -> 工作区 / index / 增量 diff / 可达 refs
+          -> reflog / 不可达对象 / notes / tag message
+          -> LFS payload / CI log / artifact / cache / bundle / mirror
+          -> provider pattern / generic rule / 熵与人工复核
+          -> 凭据有效性 / 撤销 / 结果访问控制
+          -> git fsck 完整性边界
+          -> tree mode / symlink / 大 blob / 路径与压缩内容安全
+          -> export-ignore / worktree attributes / archive 清单与摘要
+          -> 历史、旧 clone 与下游副本净化
+      -> 仓库规模与性能
+          -> 历史图 / 对象库 / refs / index / 工作区 / 网络
+          -> 可复现 workload / 冷热缓存 / 时延分布
+          -> Trace2 region 证据
+          -> commit-graph / changed-path Bloom filters
+          -> pack index / MIDX / bitmap
+          -> foreground maintenance / background scheduler
+      -> 二进制生命周期
+          -> Git blob / Git LFS / 制品库 / 对象存储决策
+          -> Git LFS
+              -> .gitattributes 路径选择 / 本机 filter 控制面
+              -> pointer blob / payload SHA-256 与 size
+              -> 本地 LFS cache / 远端 LFS 服务 / 工作区水合
+              -> Git fetch / LFS fetch / checkout 状态分离
+              -> 文件锁 / 服务端验证 / 权限与回收
+              -> 历史迁移 / 新旧 OID 映射
+              -> payload、锁与服务元数据的灾难恢复
+      -> 仓库组合拓扑
+          -> 变更原子性 / 历史所有权 / 权限 / 构建依赖
+          -> monorepo / 多仓库包与制品
+          -> submodule
+              -> gitlink mode 160000 / 外部 commit OID
+              -> .gitmodules 建议 / 本地 config / URL 与凭据
+              -> init / recursive checkout / detached HEAD
+              -> 依赖 commit 先发布 / 超级项目后发布
+              -> 递归备份与缺失 commit 恢复
+          -> subtree
+              -> 普通 tree/blob / 可选上游历史
+              -> add / pull / merge 冲突
+              -> split 合成历史 / rejoin / 非原子 push
+      -> 事故现场保护与证据采集
+          -> 恢复目标 / 恢复时间点 / 允许损失 / 决策权限
+          -> 文件系统原始现场 / Git 逻辑快照 / 平台控制面 / 运行环境
+          -> worktree Git directory / common directory / submodule
+          -> alternates / partial clone / LFS 外部对象
+          -> 工作区 / index / refs / reflog / operation state
+          -> 对象统计 / connectivity / pack 与辅助文件
+          -> 摘要 / 保管链 / 原件与脱敏派生物
+          -> clone / mirror / bundle 的遗漏边界
+          -> 可销毁恢复工作副本
+      -> 对象取证与恢复
+          -> reachable / unreachable / dangling / missing / corrupt
+          -> fsck roots / --no-reflogs / connectivity-only / full / strict
+          -> replace refs 与 GIT_NO_REPLACE_OBJECTS
+          -> lost-found 写入边界
+          -> loose object / pack / idx / delta / MIDX
+          -> alternates / promisor / shallow boundary 的缺失契约
+          -> donor 字节 / OID 重算 / hash-object 写入
+          -> recovery ref / tree / signature / external dependency 验收
+      -> 历史归因与证据边界
+          -> 调查问题 / candidate commit / refs / pathspec / 时间范围
+          -> blame line porcelain / 最后写入提交
+              -> -M / -C / ignore-rev / whitespace 策略
+          -> pickaxe -S / -G / commit message --grep
+          -> rename/copy detection / --follow / 相似度阈值
+          -> first-parent / full-history / ancestry-path / merge 各 parent diff
+          -> author / committer / server / CI / artifact / deployment 时间线
+          -> Git 机械证据 / 评审决定 / 运行影响 / 未知项
+      -> bundle / mirror / 备份与恢复演练
+          -> 恢复范围 / RPO / RTO / 决策权限
+          -> refs manifest / symbolic HEAD / object format / 摘要
+          -> full bundle / incremental prerequisite / retention chain
+          -> mirror refspec / force update / prune 删除传播
+          -> 文件系统一致性快照 / common dir / alternates / 对象池
+          -> LFS payload / submodule 仓库 / 平台控制面 / 制品与密钥
+          -> 空环境恢复 / fsck / refs、tree、tag、notes 验收
+          -> 写入围栏 / 旧站隔离 / 客户端重新同步
+      -> 仓库与托管平台迁移
+          -> 迁移范围 / 单一写入权威 / cutover / rollback
+          -> Git 到 Git OID 保持 / 对象格式 / 全 refs manifest
+          -> SVN revision/path/copy history -> Git commit/ref DAG
+          -> author / committer / mailmap / 平台 principal / 评审身份
+          -> old-new OID map / tag / signature / external links
+          -> LFS payload / submodule dependency order / 制品摘要
+          -> issue / merge request / comment / attachment / ID map
+          -> 默认分支 / 权限 / 保护规则 / CI / webhook / secret 轮换
+          -> 源端冻结 / 最终同步 / acceptance clone / 旧入口拒写
+      -> 灾难故障转移与安全回切
+          -> 不可用 / 损坏 / 安全事故 / 控制面丢失分类
+          -> Git refs、对象、LFS、平台事件的分层 RPO/RTO
+          -> 热备 / 不可变备份 / donor 候选与可信度
+          -> standby 复制滞后 / refs manifest / checkpoint
+          -> WRITES_FENCED / RECOVERY_POINT_SELECTED / CANDIDATE_VALIDATED
+          -> recovery namespace / prerequisite / 条件 update-ref 提升
+          -> 只读验收 / 普通 clone / CI 制品 / 外部对象
+          -> 单一写入权威 / 旧主 quarantine / 新副本重播种
+          -> failback 作为新的迁移和故障转移审批
+      -> 仓库生命周期与资产治理
+          -> 稳定 repository_id / 可变 locator / 历史别名
+          -> 业务 owner / 技术 owner / 备用联系人 / 身份目录
+          -> 数据分类 / 依赖消费者 / 恢复契约 / 保留契约
+          -> PROPOSED / PROVISIONING / ACTIVE / READ_ONLY_HOLD
+          -> TRANSFERRING / ARCHIVED / PENDING_DELETE / DELETED_TOMBSTONE
+          -> 声明状态 / Git、平台、身份与备份观测事实
+          -> 默认分支 symbolic HEAD / refs / 对象完整性对账
+          -> 归档恢复点 / 摘要 / 写入围栏 / 空环境恢复
+          -> 删除观察窗口 / 法律保留 / 双人审批 / 名称复用风险
+          -> pass / fail / inconclusive 治理结论
+      -> 权限生命周期与有效授权
+          -> 身份目录 principal / 雇佣或合同状态 / 稳定 ID
+          -> 组织继承 / 群组 / 仓库直授 / 应用 / key / 临时例外并集
+          -> 主体 × 资源 × 动作 × 上下文 × 时间门禁
+          -> 权威能力声明 / 平台观测快照 / 授权来源路径
+          -> 入职职责模板 / 正向与反向权限验证
+          -> 转岗交接窗口 / 新职责建立 / 旧能力撤销
+          -> 离职身份、授权、凭据、会话与共享 secret 回收
+          -> 外部 sponsor / 数据范围 / 硬到期 / 副本处置
+          -> 机器 owner / 工作负载退出 / 根凭据轮换
+          -> break-glass 申请 / 双人批准 / 硬到期 / 撤销与复盘
+          -> pass / fail / inconclusive 对账与失败关闭
+      -> 组织规则与例外治理
+          -> rule_id / policy version / digest / owner
+          -> repository snapshot / principal / action / old-new OID / evidence
+          -> 组织基线 / 数据分类 / 仓库 / ref / 主体与 cohort scope
+          -> 累积要求 / deny-dominant / max 最少审批 / allow 交集
+          -> 空匹配 / 过宽匹配 / 规则冲突 / inconclusive
+          -> DRAFT / VALIDATED / AUDIT / WARN / ENFORCE_CANARY / ENFORCE_BROAD
+          -> would-deny / canary 指标 / 停止条件 / 上一已知好版本
+          -> rule-scoped exception / 硬到期 / 补偿控制 / 使用审计
+          -> 策略仓库信任边界 / 执行器版本 / 回放测试
+          -> 声明策略 / 平台观测 / 行为探针三角对账
+          -> drift 保全 / 条件回退 / 降级窗口审查
+      -> 审计事件与证据留存
+          -> git log / reflog / 平台审计来源边界
+          -> repository_id / actor / delegation / request / old-new OID / rule-exception
+          -> object author-committer time / provider event time / collector time / export time
+          -> 身份 / 授权 / Git / 评审 / CI / 规则 / 制品 / 生命周期覆盖矩阵
+          -> provider cursor / pagination / retry / dedup / sequence gap
+          -> raw partition / normalized index / redacted derivative / schema registry
+          -> complete / partial / inconclusive / failed 查询状态
+          -> digest / manifest chain / signature / WORM 的证明边界
+          -> 最小访问 / 高敏 reveal / 导出审批 / 审计系统自审计
+          -> 分类留存 / legal hold / 销毁证据 / key-parser 同期保留
+          -> investigation package / gaps-and-unknowns / chain of custody
+          -> collector SLO / raw RPO / 索引重建 / 独立身份与故障域
+      -> 仓库健康、容量与维护窗口
+          -> 完整性 / 可用性 / 时延 / 新鲜度 / 容量 / 可治理性 / 可恢复性
+          -> repository_id / authority-replica / metric source-unit-window-status
+          -> Git objects / refs / worktree-index / LFS / artifact / backup / audit / network
+          -> current / hard-soft limit / safety margin / growth / lead time / owner
+          -> headroom days / 口径断点 / 季节性 / pass-warn-fail-inconclusive
+          -> SLI-SLO / 结果分类 / 分层分位数 / 错误预算边界
+          -> owner-domain-platform-region-lifecycle 汇总 / 热点 / 共同故障域
+          -> maintenance state machine / scratch 放大 / backup / incident freeze
+          -> object-pool-volume 互斥 / lock owner-lease / 停止条件
+          -> refs / reachable objects / HEAD tree / LFS-artifact / service 验收
+          -> 辅助索引回退 / 物理恢复 / 逻辑迁移 / 不可逆删除边界
+      -> 组织级故障手册与恢复演练
+          -> availability / integrity / confidentiality / control-plane / capacity / supply-chain 分类
+          -> IC / recovery / operator / platform / security / evidence / communications / business owner
+          -> playbook / runbook / checklist / communication template
+          -> DETECTED / DECLARED / WRITES_FENCED / EVIDENCE_PRESERVED
+          -> RECOVERY_OBJECTIVE_APPROVED / CANDIDATE_VALIDATED / PROMOTED_READ_ONLY
+          -> WRITES_OPEN / STABILIZED / REVIEWED
+          -> Git / LFS / review / identity / CI / artifact / audit / backup / capacity 分层验收
+          -> pass / fail / inconclusive / not_applicable 与 stop condition
+          -> desktop / component / integration / controlled failover / chaos 层级
+          -> inject / controller / termination phrase / observer evidence
+          -> conditional generation / single authority / canary / old-primary fence
+          -> action owner / due / acceptance evidence / residual risk / replay
+      -> 故障排查协议与最小证据集
+          -> goal / location / sharing boundary / original symptom / last-known-good / subsequent actions
+          -> observation / hypothesis / mutation 分离
+          -> trusted troubleshooting / security response / forensic preservation / organizational incident 分流
+          -> environment-discovery / operation / worktree-index / refs-graph
+          -> object-source / transport-auth / platform-control / external-data 八层
+          -> GIT_OPTIONAL_LOCKS / external diff / textconv / helper 执行边界
+          -> status porcelain v2 / symbolic HEAD / index stages / operation markers
+          -> local refs / limited graph / worktree-staged binary patch
+          -> fetch 前后 tracking refs / FETCH_HEAD / credential-network 副作用
+          -> manifest / exit status / digest / sensitivity / gaps-redactions
+          -> pass / fail / inconclusive
+          -> hypothesis / expected mutation / must-not-change / stop / verify / recovery 动作卡
+      -> 文件与提交消失诊断
+          -> worktree path / index entry-stage / commit tree / blob-gitlink / external payload
+          -> unstaged deletion / staged deletion / untracked-ignore / sparse skip-worktree
+          -> symlink mode / submodule gitlink / LFS pointer 与 payload
+          -> restore source(index-explicit tree) / target(worktree-staged)
+          -> exact path bytes / case-fold / Unicode / NUL 采集
+          -> log start / refs --all / reflog roots / path history simplification
+          -> commit object / parents / tree / refs --contains / full OID
+          -> recovery ref first / merge-cherry-pick-conditional update later
+          -> shallow boundary / deepen-unshallow / fetch mutation
+          -> partial clone / promisor / alternate / missing-corrupt 升级
+          -> local-untracked / reflog expiry / GC / remote visibility 恢复边界
+      -> Push、认证与权限失败诊断
+          -> endpoint / URL / DNS / proxy / SSH host key / TLS
+          -> client credential / principal / delegation / SSO / token scope
+          -> repository authorization / action / ref namespace / time context
+          -> old OID / new OID / fast-forward / non-fast-forward
+          -> fetch side effect / tracking ref / FETCH_HEAD / local HEAD unchanged
+          -> protected ref / receive hook / required check / approval / policy version
+          -> ls-remote visibility / hidden existence / read-vs-write distinction
+          -> force-with-lease concurrency condition / no privilege escalation
+          -> push accepted / source OID / CI checkout / artifact digest / deployment runtime
+          -> endpoint failure / auth failure / authorization failure / ref-rule failure 分流
+      -> 性能与容量故障诊断
+          -> status / log / switch-checkout / clone-fetch 症状分流
+          -> workload / input scale / cold-hot cache / samples / p50-p95 / error rate
+          -> worktree-index-stat / history-path-filter / object-pack / transport-service
+          -> count-objects / rev-list / for-each-ref / tracked paths / index bytes / Trace2
+          -> Git objects / refs-reflog / worktree-index / LFS / artifact / backup / scratch / inode
+          -> performance risk / capacity risk / integrity risk / inconclusive evidence
+          -> commit-graph / changed-path Bloom filters / MIDX / bitmap / maintenance
+          -> refs / HEAD / tree / reachable objects / worktree invariants before-after
+          -> no prune-now / no manual pack deletion / external data-plane verification boundary
+      -> LFS、子模块与 CI clone 故障诊断
+          -> Git blob / LFS pointer / payload / cache / service / worktree hydration
+          -> pointer Git OID / payload SHA-256 OID / size 两个命名空间
+          -> gitlink mode 160000 / .gitmodules URL / nested repository / detached HEAD
+          -> dependency commit publication order / recurse-submodules check / URL protocol trust
+          -> CI candidate OID / detached checkout / shallow-partial filter / promisor
+          -> LFS hydration / submodule recursion / cache provenance / build input manifest
+          -> main Git fsck complete 不等于 external payload/dependency/platform complete
+          -> preserve OID / trusted donor / hash-size verification / empty checkout replay
+      -> 签名验证与密钥状态故障诊断
+          -> signature exists / cryptographic match / key-principal mapping / organization authorization
+          -> commit gpgsig / annotated tag payload / tag target OID / remote tag ref
+          -> unknown / unauthorized / expired / revoked key and policy-time semantics
+          -> rewrite-generated OID / old signature not transferred / range-diff comparison
+          -> candidate checkout / external trust root / strategy digest / CI and release gate
+          -> verify-commit / verify-tag exit status / raw object and stderr evidence
+          -> no candidate self-authorization / no tag movement / no object mutation during diagnosis
       -> 重新生成提交
           -> amend
           -> rebase
@@ -43,7 +348,45 @@
 - 解释 `git diff --staged` 之前，必须已经解释工作区和暂存区。
 - 解释分支之前，必须已经解释提交图和引用。
 - 解释合并冲突之前，必须已经解释共同祖先和三方合并。
+- 解释 `AUTO_MERGE` 或 rerere 之前，必须先解释 index stage 和冲突状态；复用解决结果仍需重新验证业务语义。
 - 解释 `git pull` 之前，必须分别解释 `fetch` 与本地整合。
+- 解释 SSH key 或 HTTPS 令牌之前，必须区分服务器身份、客户端认证、仓库授权和提交身份。
+- 解释浅克隆、部分克隆和稀疏检出之前，必须分别解释引用、祖先可达性、对象库和工作区。
+- 解释 CI 绿色状态之前，必须明确候选提交、目标基线和 runner 实际 checkout；解释部署前必须引入制品摘要。
+- 解释“签名可信”之前，必须先区分签名存在、密码学有效、key 到 principal 的映射和组织授权；验证策略不能由待验证候选自行控制。
+- 解释“不受信任仓库会执行代码”之前，必须区分对象到达、tracked 文件选择本地控制面和程序实际启动；`safe.directory` 只承担 owner 门禁。
+- 解释敏感历史清理前，必须先区分签发器中的凭据撤销、Git ref 可达性、对象物理保留和外部副本；force push 不承担失效或全局删除。
+- 推荐大仓库优化前，必须先把慢命令映射到历史、对象、refs、index、工作区或网络层，并定义可复现 workload；辅助索引存在不等于收益成立。
+- 解释性能或容量故障前，必须固定命令、输入规模、版本、缓存、并发和样本口径；性能、容量、完整性和证据缺口不能合成一个分数，维护前后必须核对 refs、HEAD、tree、可达对象和工作区不变量。
+- 解释 LFS、submodule 或 CI clone 故障前，必须分别核对 pointer/payload、gitlink/嵌套仓库和 candidate/实际 HEAD/构建输入；主仓库 `fsck` 通过不能证明外部对象、依赖 commit、缓存或平台服务完整，恢复必须保留原始 OID。
+- 解释签名故障前，必须把签名存在、密码学有效、key 到 principal 映射、有效期/撤销和组织授权分开；信任根必须来自候选之外，tag 还要独立核对 target OID、制品和部署，历史改写后的新对象必须重新签名。
+- 解释 Git LFS 前，必须先区分 Git pointer blob、LFS payload 和工作区字节；Git `fsck` 通过不能证明 LFS 服务或备份完整。
+- 解释 submodule 前，必须先理解 gitlink 记录的是外部 commit OID 而不是嵌套 tree；解释递归 checkout 前，必须审查 `.gitmodules` URL、协议和凭据边界。
+- 解释短期机器凭据前，必须先区分稳定 principal、工作负载上下文、认证凭据、服务端授权和审计事件；短 TTL 不能替代资源与动作最小化。
+- 解释第三方 CI 依赖固定前，必须区分 selector、解析后身份、实际字节和传递依赖；顶层 commit OID 不覆盖运行时下载、runner 与 cache。
+- 解释秘密扫描前，必须先定义输入范围、检测器、发现结果和处置状态；当前 diff、可达 refs、reflog、LFS payload、CI artifact 与旧 clone 不能互相替代。
+- 解释 `git fsck` 通过前，必须区分对象格式/连通性完整性与秘密、脚本、symlink、压缩内容和资源耗尽风险；解释 `git archive` 前，必须区分固定 tree 导出、`export-ignore` 和历史/下游副本净化。
+- 解释灾难恢复命令前，必须先定义恢复目标、冻结写入并区分文件系统原始现场、Git 逻辑快照、平台控制面和运行环境；普通 clone、mirror 或 bundle 不能替代完整现场。
+- 解释对象库取证前，必须定位 Git/common directory、linked worktrees、submodules、alternates、partial clone 和 LFS 外部依赖；`--no-optional-locks` 不能把写命令变成只读。
+- 解释 `fsck` 输出前，必须定义本次根集合并区分 reachable、unreachable、dangling、missing 和 corrupt；`--lost-found`、`update-ref`、repack、prune 与 gc 的写入边界必须在恢复副本说明。
+- 解释 pack 恢复前，必须区分逻辑 OID 与 pack/idx/delta 物理布局；alternate 或 promisor 能让当前解析成功，却不能证明对象库自包含。
+- 解释 blame 结果前，必须固定候选 commit、路径和 refs 范围，并把“当前行最后写入”与“逻辑首次引入、评审决定、运行影响”分开；作者/提交者字段不是责任证明。
+- 使用 `-S`、`-G`、`--follow` 或 rename/copy detection 下结论前，必须记录 pathspec、历史简化、相似度和可见 refs；first-parent 主线不能替代完整图或 merge 逐父 diff。
+- 把 mirror 或 bundle 称为备份前，必须先定义恢复范围、RPO/RTO、保留和故障域；Git refs/objects 不能替代 LFS、submodule、平台控制面、制品和密钥恢复。
+- 解释增量 bundle 前，必须说明 prerequisite chain；解释 mirror 更新前，必须说明强制移动和 prune 删除传播。恢复验证必须从空隔离环境开始，不能只运行 `bundle verify`。
+- 解释仓库迁移前，必须先判断是否要求 OID 保持；mailmap 展示、平台账号映射与改写 commit identity 是三种不同动作。SVN branch/tag 目录和 property 不能机械等同于 Git refs、submodule 或 attributes。
+- 解释迁移切换前，必须定义唯一写入权威、源端围栏、最终同步点和目标开放门槛；目标产生独有事件后，回退不能只改 URL 或 DNS。
+- 解释故障转移前，必须区分可用性、完整性、安全和控制面故障；副本 `fsck` 通过不能证明最新，donor 必须先进入 recovery namespace，旧主恢复后必须按新副本重播种而不能自动回切。
+- 解释仓库删除前，必须先建立稳定资产 ID、双重所有权、依赖与保留契约，并经过只读归档、可验证恢复点和 `pending_delete` 观察窗口；平台页面不存在不能证明外部副本、LFS、制品或审计数据已处置。
+- 解释权限回收前，必须枚举组织继承、群组、直授、应用、key、凭据和活跃会话形成的全部授权路径；删除一个成员或 token 不能证明有效访问已经消失，采集不可见必须标记 inconclusive。
+- 解释组织规则优先级前，必须定义各类效果的组合代数；仓库级“更具体”不能静默取消组织基线，audit 的 would-deny 不是 pass，例外只能豁免指定 rule ID 并硬到期。
+- 解释审计时间线前，必须区分 commit 对象时间、provider event time、collector time 和调查导出时间；摘要/WORM 只能保护已经采集的字节，不能证明来源没有漏事件，查询不可见必须登记为 partial/inconclusive。
+- 解释组织容量健康前，必须固定资产、权威端、数据面、单位、时间窗和采集状态；Git、LFS、制品、备份和临时空间不能互相抵消，来源不可用不能写成零，维护任务必须先通过事故、备份、scratch 与共享资源互斥门禁。
+- 解释组织级恢复演练前，必须先建立写入围栏、证据保全、恢复点、权限、规则、审计和容量模型；`fsck` 或一次快速切换不能替代跨数据面验收，inconclusive 不能为了 RTO 改成 pass，旧权威必须持续围栏。
+- 给出排障修复命令前，必须先固定目标、执行位置、共享边界、原始错误、最近好状态和症状后的动作；`fetch` 是会改变对象、远程跟踪 refs 与 `FETCH_HEAD` 的受控诊断动作，摘要通过不能证明采集范围完整。
+- 解释文件或提交“不见了”前，必须分别检查工作区、index、tree/blob/外部 payload 与 commit/ref/reflog/对象来源；路径恢复要写明 source 和 worktree/index 目标，候选提交先建立 recovery ref，不用全树 reset 替代单路径判断。
+- 解释 push 失败前，必须区分 endpoint、服务器身份、客户端认证、仓库授权、Git ref 规则和平台控制面；non-fast-forward 不能用换凭据解决，fetch/remote set-url/force-with-lease 都要记录副作用和并发边界。
+- 解释路径过滤之前，必须区分功能变化集合与候选完整输入；解释合并队列之前，必须理解条件引用更新。
 - 解释 `rebase` 之前，必须说明提交不可变，以及“修改提交”实际会生成新提交。
 - 解释 `--force-with-lease` 之前，必须解释远程跟踪分支和覆盖已公开历史的风险。
 - 解释 `reflog` 之前，必须解释引用会移动，并区分对象仍存在与名字已经丢失。

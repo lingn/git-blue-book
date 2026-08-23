@@ -7,20 +7,141 @@
 - [Git Reference Manual](https://git-scm.com/docs)
 - [Git User Manual](https://git-scm.com/docs/user-manual)
 - [Git Glossary](https://git-scm.com/docs/gitglossary)
+- [gitformat-pack](https://git-scm.com/docs/gitformat-pack)
+- [Git Hash Function Transition](https://git-scm.com/docs/hash-function-transition)
+- [git-cat-file](https://git-scm.com/docs/git-cat-file)
+- [git-ls-tree](https://git-scm.com/docs/git-ls-tree)
 - [Pro Git: A Short History of Git](https://git-scm.com/book/en/v2/Getting-Started-A-Short-History-of-Git)
 - [Pro Git: Git Branching](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
 - [Pro Git: Reset Demystified](https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified)
 - [git-restore](https://git-scm.com/docs/git-restore)
 - [git-rebase](https://git-scm.com/docs/git-rebase)
+- [git-range-diff](https://git-scm.com/docs/git-range-diff)
 - [git-revert](https://git-scm.com/docs/git-revert)
+- [Revert a faulty merge](https://github.com/git/git/blob/master/Documentation/howto/revert-a-faulty-merge.adoc)
+- [git-reset](https://git-scm.com/docs/git-reset)
+- [gitrevisions](https://git-scm.com/docs/gitrevisions)
 - [git-push](https://git-scm.com/docs/git-push)
+- [git-receive-pack](https://git-scm.com/docs/git-receive-pack)
+- [git-clone](https://git-scm.com/docs/git-clone)
+- [git-fetch](https://git-scm.com/docs/git-fetch)
+- [git-daemon](https://git-scm.com/docs/git-daemon)
+- [git-ls-remote](https://git-scm.com/docs/git-ls-remote)
+- [git-remote](https://git-scm.com/docs/git-remote)
+- [git-config](https://git-scm.com/docs/git-config)
+- [gitcredentials](https://git-scm.com/docs/gitcredentials)
+- [git-credential](https://git-scm.com/docs/git-credential)
+- [git-credential-store](https://git-scm.com/docs/git-credential-store)
+- [gitprotocol-v2](https://git-scm.com/docs/gitprotocol-v2)
+- [gitprotocol-http](https://git-scm.com/docs/gitprotocol-http)
+- [gitprotocol-pack](https://git-scm.com/docs/gitprotocol-pack)
+- [Partial Clone Design Notes](https://git-scm.com/docs/partial-clone)
+- [git-replace](https://git-scm.com/docs/git-replace)
+- [git-hash-object](https://git-scm.com/docs/git-hash-object)
+- [git-verify-pack](https://git-scm.com/docs/git-verify-pack)
+- [git-index-pack](https://git-scm.com/docs/git-index-pack)
+- [gitformat-pack](https://git-scm.com/docs/gitformat-pack)
+- [git-sparse-checkout](https://git-scm.com/docs/git-sparse-checkout)
+- [git-rev-list](https://git-scm.com/docs/git-rev-list)
+- [git-log](https://git-scm.com/docs/git-log)
+- [git-blame](https://git-scm.com/docs/git-blame)
+- [git-diff](https://git-scm.com/docs/git-diff)
+- [git-diff-tree](https://git-scm.com/docs/git-diff-tree)
+- [gitdiffcore](https://git-scm.com/docs/gitdiffcore)
+- [git-merge](https://git-scm.com/docs/git-merge)
+- [git-merge-base](https://git-scm.com/docs/git-merge-base)
+- [git-ls-files](https://git-scm.com/docs/git-ls-files)
+- [git-rerere](https://git-scm.com/docs/git-rerere)
+- [git-update-ref](https://git-scm.com/docs/git-update-ref)
+- [git-rev-parse](https://git-scm.com/docs/git-rev-parse)
+- [git-status](https://git-scm.com/docs/git-status)
+- [git-for-each-ref](https://git-scm.com/docs/git-for-each-ref)
+- [git-symbolic-ref](https://git-scm.com/docs/git-symbolic-ref)
+- [gitrepository-layout](https://git-scm.com/docs/gitrepository-layout)
+- [gitmailmap](https://git-scm.com/docs/gitmailmap)
+- [git-svn](https://git-scm.com/docs/git-svn)
+- [git-fast-export](https://git-scm.com/docs/git-fast-export)
+- [git-fast-import](https://git-scm.com/docs/git-fast-import)
+- [git-show](https://git-scm.com/docs/git-show)
+- [git-show-ref](https://git-scm.com/docs/git-show-ref)
+- [git-archive](https://git-scm.com/docs/git-archive)
+- [git-fsck](https://git-scm.com/docs/git-fsck)
+- [git-check-attr](https://git-scm.com/docs/git-check-attr)
+- [git-prune](https://git-scm.com/docs/git-prune)
+- [git-tag](https://git-scm.com/docs/git-tag)
 - [git-reflog](https://git-scm.com/docs/git-reflog)
+- [git-gc](https://git-scm.com/docs/git-gc)
+- [gitformat-signature](https://git-scm.com/docs/gitformat-signature)
+- [git-verify-commit](https://git-scm.com/docs/git-verify-commit)
+- [git-verify-tag](https://git-scm.com/docs/git-verify-tag)
+- [OpenSSH ssh-keygen: ALLOWED SIGNERS 与签名验证](https://man.openbsd.org/ssh-keygen)
+- [gitattributes](https://git-scm.com/docs/gitattributes)
+- [githooks](https://git-scm.com/docs/githooks)
+- [gitmodules](https://git-scm.com/docs/gitmodules)
+- [git-submodule](https://git-scm.com/docs/git-submodule)
+- [gitsubmodules](https://git-scm.com/docs/gitsubmodules)
+- [Git 2.49.0 git-submodule manual source](https://github.com/git/git/blob/v2.49.0/Documentation/git-submodule.adoc)
+- [Git 2.49.0 git-subtree manual source](https://github.com/git/git/blob/v2.49.0/contrib/subtree/git-subtree.adoc)
+- [git-init](https://git-scm.com/docs/git-init)
+- [git-count-objects](https://git-scm.com/docs/git-count-objects)
+- [git-worktree](https://git-scm.com/docs/git-worktree)
+- [git-bundle](https://git-scm.com/docs/git-bundle)
+- [git-commit-graph](https://git-scm.com/docs/git-commit-graph)
+- [git-multi-pack-index](https://git-scm.com/docs/git-multi-pack-index)
+- [git-maintenance](https://git-scm.com/docs/git-maintenance)
+- [Trace2 API](https://git-scm.com/docs/api-trace2)
+- [gitformat-commit-graph](https://git-scm.com/docs/gitformat-commit-graph)
+- [Git LFS 3.7.1 release](https://github.com/git-lfs/git-lfs/releases/tag/v3.7.1)
+- [Git LFS v3.7.1 pointer specification](https://github.com/git-lfs/git-lfs/blob/v3.7.1/docs/spec.md)
+- [Git LFS v3.7.1 fetch manual](https://github.com/git-lfs/git-lfs/blob/v3.7.1/docs/man/git-lfs-fetch.adoc)
+- [Git LFS v3.7.1 checkout manual](https://github.com/git-lfs/git-lfs/blob/v3.7.1/docs/man/git-lfs-checkout.adoc)
+- [Git LFS v3.7.1 fsck manual](https://github.com/git-lfs/git-lfs/blob/v3.7.1/docs/man/git-lfs-fsck.adoc)
+- [Git LFS v3.7.1 migrate manual](https://github.com/git-lfs/git-lfs/blob/v3.7.1/docs/man/git-lfs-migrate.adoc)
+- [Git LFS v3.7.1 prune manual](https://github.com/git-lfs/git-lfs/blob/v3.7.1/docs/man/git-lfs-prune.adoc)
+- [Git LFS File Locking API](https://github.com/git-lfs/git-lfs/blob/v3.7.1/docs/api/locking.md)
+- [Git 2.49.0 git-filter-branch warning and manual](https://github.com/git/git/blob/v2.49.0/Documentation/git-filter-branch.adoc)
+- [git-filter-repo 2.47.0 release](https://github.com/newren/git-filter-repo/releases/tag/v2.47.0)
+- [git-filter-repo 2.47.0 manual](https://github.com/newren/git-filter-repo/blob/v2.47.0/Documentation/git-filter-repo.txt)
+- [RFC 8693: OAuth 2.0 Token Exchange](https://www.rfc-editor.org/rfc/rfc8693)
+- [GitHub Docs: Managing deploy keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys)
+- [GitHub Docs: Generating an installation access token for a GitHub App](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app)
+- [GitHub Actions: OpenID Connect concepts](https://docs.github.com/en/actions/concepts/security/openid-connect)
+- [GitHub Actions: OpenID Connect reference](https://docs.github.com/en/actions/reference/security/oidc)
+- [GitLab CI/CD: OpenID Connect authentication using ID tokens](https://docs.gitlab.com/ci/secrets/id_token_authentication/)
+- [GitHub Actions: Secure use reference](https://docs.github.com/en/actions/reference/security/secure-use)
+- [GitHub Secret scanning: Push protection](https://docs.github.com/en/code-security/concepts/secret-security/push-protection)
+- [GitHub Secret scanning: Supported patterns](https://docs.github.com/en/code-security/reference/secret-security/supported-secret-scanning-patterns)
+- [GitHub Actions: Reuse workflows](https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows)
+- [GitLab CI/CD: Pipeline security](https://docs.gitlab.com/ci/pipeline_security/)
+- [GitLab CI/CD YAML: include 与 integrity](https://docs.gitlab.com/ci/yaml/)
+- [GitLab Pipeline secret detection](https://docs.gitlab.com/user/application_security/secret_detection/pipeline/)
+- [GitLab Secret push protection](https://docs.gitlab.com/user/application_security/secret_detection/secret_push_protection/)
+- [GitLab Secret detection overview](https://docs.gitlab.com/user/application_security/secret_detection/)
+- [SLSA 1.2: Provenance](https://slsa.dev/spec/v1.2/provenance)
+- [SLSA 1.2: Build provenance](https://slsa.dev/spec/v1.2/build-provenance)
+- [OCI Image Spec 1.1.1: Content descriptors](https://github.com/opencontainers/image-spec/blob/v1.1.1/descriptor.md)
 
 ## 本书验证基线
 
 - 最低命令主线：Git 2.28；
-- 首版实验验证环境：Git 2.49.0；
+- 当前本地实验验证环境：Git 2.49.0；
+- Git LFS 正文参考版本：3.7.1，2026-08-20 核对为官方最新 release；本地未安装 `git-lfs`，只验证 pointer/外部对象模型；
+- 敏感历史清理参考工具：`git-filter-repo` 2.47.0，2026-08-20 核对为官方最新 release；本地未安装，实验只验证 Git refs/objects/clone 边界；
+- 机器身份平台实例：GitHub.com deploy key、GitHub App installation token、Actions OIDC 与 GitLab CI/CD ID token 官方文档，核对日期为 2026-08-20；本地实验不验证这些平台能力；
+- CI 依赖平台实例：GitHub.com Actions 完整 commit pin/reusable workflow 与 GitLab CI/CD remote include integrity/pipeline security，核对日期为 2026-08-20；来源证明参考 SLSA 1.2，容器内容身份参考 OCI Image Spec 1.1.1；
+- 仓库生命周期章节只以 Git 2.49.0 官方手册验证 refs、symbolic HEAD、对象完整性、bundle 和 hook 行为；归档、删除、审计留存、权限与套餐不引用未登记的平台固定结论，核对日期为 2026-08-21；
+- 权限生命周期章节只以 Git 2.49.0 官方手册验证 receive hook 与 ref 更新的本地数据面；身份目录、平台角色、会话撤销和审计能力保持厂商无关抽象，尚未写入未核对的平台固定值，核对日期为 2026-08-21；
+- 规则与例外章节只以 Git 2.49.0 官方手册验证 receive-pack、hook、祖先关系与 ref 更新；规则继承、评估模式、绕过、审计字段和套餐保持厂商无关抽象，核对日期为 2026-08-21；
+- 审计证据章节只以 Git 2.49.0 官方手册验证 commit/reflog 与 receive hook 的本地边界；平台事件字段、分页、审计保留、导出、legal hold、许可和计费保持厂商无关抽象，核对日期为 2026-08-21；
+- 健康与容量章节只以 Git 2.49.0 官方手册验证对象/refs/commit 指标、fsck 和 commit-graph 维护；LFS/制品/平台容量、SLI、配额、限流、后台维护和计费保持厂商无关抽象，核对日期为 2026-08-21；
+- 性能与容量故障章节只以 Git 2.49.0 官方手册和隔离实验验证 `status`/`rev-list`/`count-objects`/`for-each-ref`/Trace2、commit-graph、MIDX、bitmap、maintenance 与逻辑不变量；冷/热缓存、真实 p95、文件系统、网络/服务端、LFS/制品/备份、inode、磁盘故障、后台调度、平台配额和计费保持外部验证边界，核对日期为 2026-08-22；
+- LFS/子模块/CI clone 故障章节以 Git 2.49.0、Git LFS 3.7.1 官方 pointer/fetch/checkout/fsck 文档和本地隔离实验验证 pointer/payload、gitlink、依赖发布顺序与 candidate checkout 边界；真实 LFS 服务、锁/配额、SSH/TLS、平台权限、CI runner、缓存、制品和审计保持外部验证边界，核对日期为 2026-08-22；
+- 签名故障章节以 Git 2.49.0 官方 verify-commit/verify-tag/show/revisions 文档和 SSH 对象签名隔离实验验证签名存在性、密码学结果、外部信任策略、tag 目标和历史改写边界；OpenPGP/X.509、硬件密钥、撤销/时间戳服务、平台徽章、组织授权和发布门禁保持外部验证边界，核对日期为 2026-08-22；
+- 组织级故障手册章节只以 Git 2.49.0 官方手册验证 refs、bundle、fsck、receive hook 和本地 push 围栏；角色、审批、审计、通信、身份、外部数据面和 control-plane generation 均明确为 fixture，不写入未经目标环境核对的平台固定能力，核对日期为 2026-08-21；
+- 最小排障证据章节以 Git 2.49.0 官方手册与隔离实验验证 rev-parse、porcelain v2、index stages、操作状态、diff helper 边界、ls-remote 和 fetch 写入；不把本地采集器描述为恶意仓库沙盒或平台/磁盘取证工具，核对日期为 2026-08-21；
+- 文件/提交消失章节以 Git 2.49.0 官方手册与隔离实验验证 worktree-index-tree 路径存在性、restore 来源、ignore/sparse、reflog/recovery ref、shallow/unshallow 边界；磁盘恢复、平台保留、LFS/submodule 和对象 GC 保持为未由本地实验证明的外部边界，核对日期为 2026-08-21；
+- Push/认证/权限排障章节以 Git 2.49.0 官方手册与本地 bare 实验验证 ls-remote、非快进接收、fetch 副作用、receive hook 和 remote URL 回滚；SSH/TLS/令牌/SSO/平台授权、保护规则、评审、CI、配额与审计保持厂商无关抽象，核对日期为 2026-08-22；
 - 示例 Shell：Bash；
 - 远程实验：本地 bare 仓库，不需要网络和平台账号。
 
-本书不把 GitHub、GitLab 等平台界面当作 Git 本身。受保护分支、评审和持续集成属于平台与团队流程，具体配置应参考所用平台当前官方文档。
+本书不把 GitHub、GitLab 等平台界面当作 Git 本身。受保护分支、评审、持续集成、LFS 配额与计费属于平台与团队流程，具体配置应参考所用平台当前官方文档并登记核对日期。

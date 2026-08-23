@@ -43,12 +43,15 @@ git diff origin/main...HEAD
 ```bash
 git status
 git diff
+git rebase --show-current-patch
 ```
 
-理解当前正在重放哪条提交，以及主线和该提交分别想实现什么。编辑最终文件后：
+第三条命令显示当前正在重放的原提交补丁。使用默认 merge 后端时，冲突中的 ours 指已经重建的历史及新基线，theirs 指正在重放的原提交变化，与普通合并时的直觉可能相反。根据两边意图编辑最终文件，不要只按 ours/theirs 名称选择整边。
+
+编辑最终文件后：
 
 ```bash
-git add <已解决文件>
+git add -- path/to/resolved-file
 git rebase --continue
 ```
 
@@ -63,6 +66,8 @@ git rebase --abort
 它把分支和工作区恢复到本次变基开始前。中止后重新检查提交图。
 
 `git rebase --skip` 会跳过当前正在重放的整个提交，可能丢掉其独有变化。只有确认该变化已经包含在新基线或确实不需要时才使用，不能把它当作跳过冲突。
+
+需要修改剩余重放计划时使用 `git rebase --edit-todo`。`git rebase --quit` 会移除 rebase 状态但保留当前 `HEAD`、index 和工作区，不会像 `--abort` 一样恢复操作前位置。
 
 ## 变基后的推送
 

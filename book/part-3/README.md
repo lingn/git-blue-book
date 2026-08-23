@@ -13,6 +13,7 @@
 7. [冲突不是报错：理解三方合并](07-conflict-model.md)
 8. [完整处理一次冲突](08-resolve-conflict.md)
 9. [给重要提交命名：git tag](09-tags.md)
-10. [综合场景：功能开发中插入紧急修复](exercise.md)
+10. [复杂冲突不是“选一边”：ort、index 阶段与 rerere](10-complex-conflicts-rerere.md)
+11. [综合场景：功能开发中插入紧急修复](exercise.md)
 
 完成本篇后，你应当能先画出提交图，再决定切换、合并或解决冲突，而不是根据分支名猜测历史关系。
