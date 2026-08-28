@@ -22,6 +22,14 @@
 - [x] 重写第二篇历史阅读章节，补齐本地 refs 范围、`A..B`/`A...B`、父提交、路径追踪、浅克隆和远程平台证据边界。
 - [x] 重写第二篇综合练习，贯通混合改动拆分、忽略规则、误暂存恢复、`MM` 状态、历史验收和失败分流。
 - [x] 扩展 `verify-part-2.sh`，新增初始化前后发现、初始分支、子目录 `add .` 路径范围、历史范围、路径历史和差异检查断言。
+- [x] 重写第三篇提交图、分支、`HEAD`、切换、第一次合并和合并形状章节，补齐父提交、可达性、`merge-base`、分离 `HEAD`、工作区保护、快进/非快进策略和合并父顺序。
+- [x] 重写第三篇冲突模型与完整解决流程，补齐三方输入、ours/theirs 视角、`MERGE_HEAD`、index 未合并状态、abort/continue、业务验收和报告证据。
+- [x] 重写第三篇标签章节与综合练习，补齐轻量/附注/签名标签边界、target OID、标签竞态、紧急修复插入功能开发和本地/远程发布分层。
+- [x] 扩展第三篇分支、合并和冲突实验，新增根提交、祖先关系、分离 `HEAD`、ff-only 拒绝、合并父顺序和轻量标签断言。
+- [x] 重写第四篇远程模型、clone、remote、fetch、远程跟踪、pull 和 push 章节，分开服务器 refs、本地远程跟踪缓存、本地工作分支、对象传输、认证、授权和平台控制面。
+- [x] 扩展远程基础实验，验证 clone 初始 OID、remote URL、fetch 不移动本地分支、`FETCH_HEAD`、upstream 配置和附注标签 target。
+- [x] 重写第四篇 push 拒绝、评审准备、cherry-pick 和综合练习，补齐非快进因果链、候选/base OID、共享历史边界、来源/目标提交和评审证据。
+- [x] 重写第四篇 rebase 模型与安全工作流，补齐恢复引用、range-diff、`--onto`、冲突状态、continue/skip/abort/quit、自动暂存、签名与评审绑定及显式租约边界。
 - [x] 扩写第二篇忽略与属性章节，补齐 `.gitignore` 规则优先级、已跟踪文件、`.gitattributes`、换行规范化和 filter 选择器边界。
 - [x] 重写第二篇身份与提交章节，补齐配置来源、条件 include、author/committer 与认证边界、local hook 拒绝、空提交和 `--no-verify` 风险。
 - [x] 重构对象模型章节，补齐 tag 对象、引用、index、可达性、对象格式和物理存储边界。
@@ -214,6 +222,16 @@
 | 2026-08-23 | Write 中文标点门禁 | 通过 | 第二篇十个章节和综合练习通过中文标点检查，代码块与 Git 输出未被改写 |
 | 2026-08-23 | `./scripts/verify-part-2.sh` | 通过 | 仓库发现、初始化不变量、子目录 `add .` 范围、三层差异、历史范围和混合提交恢复断言正常 |
 | 2026-08-23 | `./scripts/verify-all.sh` | 通过 | 第二篇六章正文重构和实验扩展接入整库回归，129 个公开页面与 52 组隔离实验正常 |
+| 2026-08-27 | Write 中文标点门禁 | 通过 | 第三篇十个正文页面和综合练习通过中文标点检查，冲突示例使用可渲染转义，不触发差异门禁 |
+| 2026-08-27 | `./scripts/verify-part-3-basics.sh`、`verify-part-3-conflicts.sh`、`verify-complex-conflicts-rerere.sh` | 通过 | 提交图、分支引用、分离 `HEAD`、快进/分叉、冲突 abort/resolve、标签对象和复杂冲突实验正常 |
+| 2026-08-27 | `ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第三篇导航同步、129 个公开页面链接覆盖和新增正文差异检查正常 |
+| 2026-08-27 | Write 中文标点门禁 | 通过 | 第四篇远程基础七章通过中文标点检查，命令代码块保持原样 |
+| 2026-08-27 | `./scripts/verify-part-4-remotes.sh` | 通过 | clone、remote URL、fetch/远程跟踪、pull、upstream、push 和 tag target 断言正常 |
+| 2026-08-27 | Write 中文标点门禁 | 通过 | 第四篇 push 拒绝、评审准备、cherry-pick 和综合练习通过中文标点检查 |
+| 2026-08-27 | `./scripts/verify-part-4-history.sh`、`verify-part-4-remotes.sh`、`verify-remote-transport-auth.sh`、`verify-refspec-partial-clone.sh` | 通过 | 非快进、rebase/cherry-pick、远程传输认证和受限克隆实验继续通过 |
+| 2026-08-28 | Write 中文标点门禁 | 通过 | 第四篇 rebase 模型、工作流和前置协作章节通过中文标点检查 |
+| 2026-08-28 | `./scripts/verify-part-4-history.sh`、`verify-interactive-rebase.sh`、`verify-force-with-lease.sh` | 通过 | 普通 rebase 的旧/新 OID、最终 tree、主线祖先关系、range-diff、交互式重建和租约恢复断言正常 |
+| 2026-08-28 | `./scripts/verify-all.sh` | 通过 | 第三篇和第四篇阶段性正文重构接入整库回归，129 个公开页面与 52 组隔离实验正常 |
 
 ## 已知风险
 

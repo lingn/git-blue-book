@@ -22,8 +22,18 @@ git -C "$lab_dir" switch --quiet main
 printf '\nVersion notes live here.\n' >> "$lab_dir/README.md"
 git -C "$lab_dir" add README.md
 git -C "$lab_dir" commit --quiet -m "docs: add version note"
+main_before_merge="$(git -C "$lab_dir" rev-parse main)"
+feature_before_merge="$(git -C "$lab_dir" rev-parse feature/navigation)"
+if git -C "$lab_dir" merge --ff-only feature/navigation >/dev/null 2>&1; then
+  printf 'Expected ff-only to reject divergent histories.\n' >&2
+  exit 1
+fi
+test "$(git -C "$lab_dir" rev-parse main)" = "$main_before_merge"
+test "$(git -C "$lab_dir" rev-parse feature/navigation)" = "$feature_before_merge"
 git -C "$lab_dir" merge --quiet --no-edit feature/navigation
 test "$(git -C "$lab_dir" show -s --format=%P HEAD | wc -w | tr -d ' ')" = "2"
+test "$(git -C "$lab_dir" show -s --format=%P HEAD | awk '{print $1}')" = "$main_before_merge"
+test "$(git -C "$lab_dir" show -s --format=%P HEAD | awk '{print $2}')" = "$feature_before_merge"
 git -C "$lab_dir" branch -d feature/navigation >/dev/null
 
 git -C "$lab_dir" switch --quiet -c feature/title
@@ -65,5 +75,8 @@ fi
 git -C "$lab_dir" tag -a v0.1.0 -m "First Git workflow lab release"
 test "$(git -C "$lab_dir" cat-file -t v0.1.0)" = "tag"
 test "$(git -C "$lab_dir" rev-list -n 1 v0.1.0)" = "$(git -C "$lab_dir" rev-parse HEAD)"
+git -C "$lab_dir" tag v0.1.0-lightweight HEAD~1
+test "$(git -C "$lab_dir" cat-file -t v0.1.0-lightweight)" = "commit"
+git -C "$lab_dir" tag -d v0.1.0-lightweight >/dev/null
 
 printf 'Part 3 divergence, conflict, abort, resolution, and tag experiments passed.\n'

@@ -38,9 +38,14 @@ fi
 git -C "$lab_dir/bob" fetch --quiet origin
 test "$(git -C "$lab_dir/bob" rev-list --count main..origin/main)" = "1"
 test "$(git -C "$lab_dir/bob" rev-list --count origin/main..main)" = "1"
+rebase_base="$(git -C "$lab_dir/bob" merge-base main origin/main)"
+bob_old_tree="$(git -C "$lab_dir/bob" rev-parse 'HEAD^{tree}')"
 git -C "$lab_dir/bob" rebase --quiet origin/main
 bob_new="$(git -C "$lab_dir/bob" rev-parse HEAD)"
 test "$bob_new" != "$bob_old"
+test "$(git -C "$lab_dir/bob" rev-parse 'HEAD^{tree}')" != "$bob_old_tree"
+git -C "$lab_dir/bob" merge-base --is-ancestor origin/main HEAD
+git -C "$lab_dir/bob" range-diff "$rebase_base..$bob_old" "origin/main..$bob_new" >/dev/null
 git -C "$lab_dir/bob" push --quiet origin main
 
 git -C "$lab_dir/alice" pull --quiet --ff-only
