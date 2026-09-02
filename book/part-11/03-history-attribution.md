@@ -172,6 +172,26 @@ done
 
 循环只适用于没有特殊空白的变量 OID；OID 来自 Git 自身而不是用户文本。每个父得到的是“相对该父的变化”，不能把第一个父的 diff 当整个合并理由。最终业务结论还需审查冲突解决、评审和测试。
 
+## bisect 只缩小候选，不直接证明根因
+
+当已有一个可重复的判定脚本，并且能确认某个提交为 good、另一个提交为 bad 时，`git bisect` 可以把提交图中的候选范围逐步缩小。它改变当前 `HEAD` 和工作区，脚本还可能执行构建、网络请求或数据操作，所以只能在可销毁的诊断副本中运行。
+
+~~~bash
+git status --short --branch
+git bisect start
+git bisect bad <KNOWN_BAD_COMMIT>
+git bisect good <KNOWN_GOOD_COMMIT>
+git bisect run ./scripts/reproduce-incident.sh
+git bisect log > /restricted/evidence/bisect.log
+git bisect reset
+~~~
+
+`<KNOWN_BAD_COMMIT>` 和 `<KNOWN_GOOD_COMMIT>` 必须来自已经核对的运行版本或受控复现，不能只凭提交时间猜测。判定脚本应把可复现的失败返回为 bad，把通过返回为 good，把无法构建、依赖缺失或环境不可用返回为 125，避免把环境故障误算成代码缺陷。每一步保存实际检出的 OID、退出码、stderr、脚本版本和输入摘要。
+
+成功找到的“首个坏提交”只是在给定范围、路径、依赖和判定契约下的边界。它可能只是把错误带入运行环境的第一个提交，根因还可能位于配置、数据、并发、外部服务或多个提交的组合。merge、revert、cherry-pick、生成文件和浅克隆都会改变候选解释；无法稳定复现时，应回到时间线、部署证据和受控回放，不要为了让 bisect 继续而复制生产数据或秘密。
+
+完成后确认 `git bisect reset` 已把工作区和引用恢复到预期。若 reset 前发生了额外修改，先保留现场和 bisect 日志，再从干净副本继续调查。详细的事故发布顺序见[从事故到发布](../part-08/08-incident-to-release.md)。
+
 ## 把 Git 输出串成可复核证据链
 
 一个合格的归因记录至少包含：

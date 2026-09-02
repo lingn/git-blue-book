@@ -143,9 +143,9 @@ book/part-13/  故障排查手册
 | `book/part-6/README.md` | 多篇 README | 拆分；不保留“真实工程杂项篇”作为 v2 结构 |
 | `book/part-6/01-stash.md` | `book/part-02/11-stash.md` | 保留重写 |
 | `book/part-6/02-worktree.md` | `book/part-02/12-multiple-worktrees.md` | 保留重写 |
-| `book/part-6/03-bisect.md` | `book/part-11/03-history-attribution.md` | 保留基础实验，后续把 bisect 候选缩小与调查证据合并到权威归因章 |
-| `book/part-6/04-history-search.md` | `book/part-11/03-history-attribution.md` | 迁入权威章，保留基础入口；补 rename、pathspec、逐父 diff 与证据边界 |
-| `book/part-6/05-hotfix.md` | `book/part-08/08-incident-to-release.md` | 合并到事故发布链 |
+| `book/part-6/03-bisect.md` | `book/part-11/03-history-attribution.md`、`book/part-08/08-incident-to-release.md` | 已于 2026-09-02 收束迁移；旧页保留 `legacy-redirect` 兼容入口，权威章补齐 bisect 候选边界 |
+| `book/part-6/04-history-search.md` | `book/part-11/03-history-attribution.md` | 已于 2026-09-02 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-6/05-hotfix.md` | `book/part-08/08-incident-to-release.md` | 已于 2026-09-02 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/06-release.md` | `book/part-08/03-source-artifact-deployment-evidence.md` 至 `book/part-08/08-incident-to-release.md` | 已于 2026-08-30 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/07-conflict-report.md` | `book/part-04/10-conflict-report.md`、`book/part-06/04-reviewable-changes.md` | 拆分 |
 | `book/part-6/08-commit-quality.md` | `book/part-02/07-atomic-commit-and-hooks.md`、`book/part-06/04-reviewable-changes.md` | 拆分 |

@@ -16,10 +16,10 @@
 | pull 后发生冲突 | [冲突模型](../part-3/07-conflict-model.md) |
 | 冲突已经解决，需向同事说明 | [冲突说明](../part-6/07-conflict-report.md) |
 | 开发中途需要处理紧急任务 | [stash](../part-6/01-stash.md) 或 [worktree](../part-6/02-worktree.md) |
-| 需要把一个修复迁到发布分支 | [热修复迁移](../part-6/05-hotfix.md) |
-| 不知道哪条提交引入缺陷 | [bisect](../part-6/03-bisect.md) |
+| 需要把一个修复迁到发布分支 | [事故到发布中的热修复](../part-08/08-incident-to-release.md) |
+| 不知道哪条提交引入缺陷 | [历史归因与 bisect](../part-11/03-history-attribution.md) |
 | 想知道当前一行最后由哪个提交写入，以及逻辑何时首次出现 | [历史归因](../part-11/03-history-attribution.md) |
-| 判断 manager、worker 是否都要部署 | [热修复与部署范围](../part-6/05-hotfix.md) |
+| 判断 manager、worker 是否都要部署 | [事故到发布与部署范围](../part-08/08-incident-to-release.md) |
 | 判断是否需要优雅停机 | [部署与回退](../part-08/06-deploy-and-rollback.md) |
 | 仓库变慢但不知道瓶颈在哪一层 | [性能与维护基线](../part-09/01-measure-before-optimizing.md) |
 | LFS 路径只检出 pointer 或 payload 缺失 | [二进制与 Git LFS](../part-09/02-binary-and-lfs.md) |
