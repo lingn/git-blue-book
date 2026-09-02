@@ -166,7 +166,7 @@ git status --porcelain=v1 --ignore-submodules=none
 
 浅克隆、部分克隆和并发 `--jobs` 可以减少特定负载，却会扩大兼容矩阵。若固定 gitlink OID 不在 shallow 边界、服务端不允许按 OID 获取、嵌套仓库不支持 filter，初始化可能失败。先在完整 clone 建正确性基线，再逐层引入限制，并为每个依赖记录回退到完整 fetch 的路径。
 
-超级项目的普通 `git archive` 也不会替你把外部 submodule tree 递归封装成完整源码包。发布归档应显式组装每个固定 checkout，记录清单和摘要，再按[CI/CD 证据链](../part-6/11-ci-evidence-chain.md)验证制品。
+超级项目的普通 `git archive` 也不会替你把外部 submodule tree 递归封装成完整源码包。发布归档应显式组装每个固定 checkout，记录清单和摘要，再按[源码、制品与部署证据链](../part-08/03-source-artifact-deployment-evidence.md)验证制品。
 
 ## Submodule 失败时先判断是哪一个仓库
 
@@ -174,11 +174,11 @@ git status --porcelain=v1 --ignore-submodules=none
 | --- | --- | --- |
 | 路径为空、status 为 `-` | `.gitmodules`、gitlink、active/config 状态 | 审查 URL 后 `update --init`，不要创建同名普通文件 |
 | `not our ref`/无法取得固定 OID | gitlink OID、实际 URL、远端 refs、对象保留、权限 | 从批准镜像或其他 clone 恢复同一 commit，再重试；或经评审更新 gitlink |
-| status 为 `+` | recorded OID、submodule `HEAD`、本地分支与修改 | 先在 submodule 保存工作，决定升级 gitlink还是恢复固定 OID |
+| status 为 `+` | recorded OID、submodule `HEAD`、本地分支与修改 | 先在 submodule 保存工作，决定升级 gitlink 还是恢复固定 OID |
 | Submodule 工作区脏 | 子仓库 `status/diff`，超级项目 ignore 配置 | 在子仓库提交、stash 或恢复；不要只设置 `ignore=all` 隐藏 |
 | Gitlink merge 冲突为 `U` | 双方 OID、依赖提交图、兼容测试 | 在依赖仓库产生/选择包含所需变化的 commit，取得后 `git add <path>` |
 | URL 仍指向旧服务 | `.gitmodules` 与 `.git/config` 来源 | 审批新地址后 `submodule sync`；验证仓库身份再 update |
-| Reset/switch 后子模块仍旧 | 超级项目 gitlink与子模块实际 HEAD | 保存子仓库工作后显式递归 update；谨慎使用 `--force` |
+| Reset/switch 后子模块仍旧 | 超级项目 gitlink 与子模块实际 HEAD | 保存子仓库工作后显式递归 update；谨慎使用 `--force` |
 
 `git submodule deinit <path>` 只注销本地配置并移除该 submodule 工作区，gitlink 与 `.gitmodules` 仍在超级项目历史中，`update --init` 可以恢复。`deinit --force` 会丢弃 submodule 工作区修改，只应在已验证的可销毁 checkout 使用。
 

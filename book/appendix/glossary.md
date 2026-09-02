@@ -74,10 +74,10 @@
 | 引用日志 | 本地记录引用近期移动情况的日志，也叫 reflog | [reflog](../part-5/11-reflog.md) |
 | 工作树 | 与仓库关联的一套工作区、暂存状态和当前 HEAD | [worktree](../part-6/02-worktree.md) |
 | 候选提交（兼容入口） | 旧 CI/CD 章节对 candidate commit 的称呼，权威定义已迁移到第八篇候选提交章 | [候选提交](../part-08/02-candidate-commits.md) |
-| 路径过滤 | 根据 changed paths 与依赖策略选择要运行的检查，不代表候选的完整输入 | [CI 触发与合并队列](../part-6/12-ci-triggers-merge-queue.md) |
-| 合并队列 | 按目标分支当前状态和队列顺序重建候选、检查后条件更新主线的协调机制 | [CI 触发与合并队列](../part-6/12-ci-triggers-merge-queue.md) |
-| 制品 | 由构建过程生成、可被存储和部署的软件输出，不等同于源码提交 | [CI/CD 证据链](../part-6/11-ci-evidence-chain.md) |
-| 制品摘要 | 对制品字节计算的内容摘要，用于跨构建、存储和部署阶段核对同一输出 | [CI/CD 证据链](../part-6/11-ci-evidence-chain.md) |
+| 路径过滤 | 根据 changed paths 与依赖策略选择要运行的检查，不代表候选的完整输入 | [触发与 checkout](../part-08/01-triggers-and-checkout.md) |
+| 合并队列 | 按目标分支当前状态和队列顺序重建候选、检查后条件更新主线的协调机制 | [候选提交](../part-08/02-candidate-commits.md) |
+| 制品 | 由构建过程生成、可被存储和部署的软件输出，不等同于源码提交 | [源码、制品与部署证据链](../part-08/03-source-artifact-deployment-evidence.md) |
+| 制品摘要 | 对制品字节计算的内容摘要，用于跨构建、存储和部署阶段核对同一输出 | [源码、制品与部署证据链](../part-08/03-source-artifact-deployment-evidence.md) |
 | 对象签名 | 私钥控制者对 commit 或附注 tag 的精确 payload 生成的密码学签名 | [签名与信任策略](../part-10/04-signatures.md) |
 | key fingerprint | 从公钥计算、用于稳定标识签名 key 的指纹；不同于可由策略赋予的姓名或 principal | [签名与信任策略](../part-10/04-signatures.md) |
 | principal | 验证策略中映射到签名 key 的主体标识；SSH 签名本身不把该名称证明为组织身份 | [签名与信任策略](../part-10/04-signatures.md) |

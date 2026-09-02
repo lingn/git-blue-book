@@ -22,7 +22,7 @@
 
 | 事实 ID | 主题 | 厂商与产品 | 事实陈述 | 版本或套餐 | 权限 | 计费影响 | 核对日期 | 官方来源 | 正文位置 | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| PF-GENERIC-001 | 分支保护 | 厂商无关抽象 | 分支保护由托管平台或服务端控制面实施，不属于本地 Git 客户端语义 | 不适用 | 平台配置者 | 不适用 | 2026-08-20 | 待各厂商实例补充 | `book/part-6/09-protected-branches.md`、`book/part-12/03-policy-rules-and-exceptions.md` | 有效 |
+| PF-GENERIC-001 | 分支保护 | 厂商无关抽象 | 分支保护由托管平台或服务端控制面实施，不属于本地 Git 客户端语义 | 不适用 | 平台配置者 | 不适用 | 2026-08-20 | 待各厂商实例补充 | `book/part-06/08-protected-refs-and-exceptions.md`、`book/part-12/03-policy-rules-and-exceptions.md` | 有效 |
 | LFS-UPSTREAM-001 | LFS 客户端 | Git LFS 官方项目 | 核对时官方 latest release 为 Git LFS 3.7.1，发布于 2025-10-17 | 3.7.1 | 不适用 | 无 | 2026-08-20 | [官方 release](https://github.com/git-lfs/git-lfs/releases/tag/v3.7.1) | `book/part-09/02-binary-and-lfs.md` | 有效 |
 | LFS-LOCK-001 | LFS 锁 | Git LFS File Locking API | 官方 API 定义创建、列出、验证和删除路径锁；实际可用性与强制入口仍取决于服务端和客户端配置 | API v2.0 起；本章按 3.7.1 文档 | 创建/验证通常需要 push 权限，列出至少需要 pull 权限 | 服务端成本另行核对 | 2026-08-20 | [官方锁 API](https://github.com/git-lfs/git-lfs/blob/v3.7.1/docs/api/locking.md) | `book/part-09/02-binary-and-lfs.md` | 有效 |
 | FILTER-REPO-UPSTREAM-001 | 历史清理工具 | git-filter-repo 官方项目 | 核对时官方 latest release 为 2.47.0，发布于 2024-12-04 | 2.47.0 | 本机执行者需有 cleanup clone 权限；远端更新权限另行核对 | 工具免费；平台清理成本另行核对 | 2026-08-20 | [官方 release](https://github.com/newren/git-filter-repo/releases/tag/v2.47.0) | `book/part-10/01-credential-leak-history-cleanup.md` | 有效 |

@@ -1,10 +1,10 @@
 # v2 重构进度
 
-> 最近更新：2026-08-23。状态只描述已经落盘并验证的工作。
+> 最近更新：2026-08-31。状态只描述已经落盘并验证的工作。
 
 ## 当前里程碑
 
-阶段 0 已完成。现有基础教程和实验保持可用，六篇到十三篇的逐章迁移映射已经建立；阶段 1 至 4 正按知识依赖推进。正文尚未达到出版标准。
+阶段 0 已完成。现有基础教程和实验保持可用，v2 第六篇与第八至十三篇已经落入权威路径，其余旧目录按逐章迁移表继续收束。当前共有 139 个公开页面、4 个兼容迁移页和 53 组隔离实验；正文尚未达到出版标准。
 
 ## 已完成
 
@@ -30,6 +30,16 @@
 - [x] 扩展远程基础实验，验证 clone 初始 OID、remote URL、fetch 不移动本地分支、`FETCH_HEAD`、upstream 配置和附注标签 target。
 - [x] 重写第四篇 push 拒绝、评审准备、cherry-pick 和综合练习，补齐非快进因果链、候选/base OID、共享历史边界、来源/目标提交和评审证据。
 - [x] 重写第四篇 rebase 模型与安全工作流，补齐恢复引用、range-diff、`--onto`、冲突状态、continue/skip/abort/quit、自动暂存、签名与评审绑定及显式租约边界。
+- [x] 重写第六篇 stash、worktree 和 bisect 章节，补齐临时对象与 `refs/stash`、linked worktree 共享/隔离、good/bad/skip 判定契约、恢复边界和外部依赖限制。
+- [x] 扩展第六篇工程实验，新增 stash 对象类型、worktree common directory、工作树清单和 bisect 判定轨迹断言。
+- [x] 重写第六篇历史检索和热修复章节，补齐 blame/pickaxe/rename/copy/merge 父视角的证据边界、source/target/picked OID、依赖闭包、部署范围和共享发布回退。
+- [x] 重写第六篇冲突报告、提交质量和统一排障章节，补齐 merge/rebase/squash/cherry-pick 报告差异、提交原子性、身份与 hook 边界、命令副作用、证据包和故障分流。
+- [x] 重写第五篇撤销入口决策矩阵、restore、unstage、amend 内容、amend 说明和公开历史章节，补齐 source/target、index/工作区保护、OID 重建、恢复引用、共享边界和 revert/租约分流。
+- [x] 重写第五篇综合恢复练习，贯通工作区丢弃、取消暂存、私有 amend、共享 revert、分支恢复、远程租约操作卡和进行中状态机，并修正连续执行前置条件。
+- [x] 重写第一篇五个基础页面，补齐版本控制与备份边界、方案比较维度、Git 设计约束、快照/差异/物理存储分层和可执行决策练习。
+- [x] 同步根 README、全书阅读路线和受保护分支职责链接，修正 129 个公开页面与 52 组实验的当前统计，并增加基础、发布、规模、安全、取证、治理和排障角色路径。
+- [x] 修正阅读路线中现行第五/六篇兼容入口与第七篇 v2 目标篇的迁移标识，避免撤销与恢复主题出现无说明的重复入口。
+- [x] 完成第一批旧正文迁移：第六篇发布、CI 证据链、CI 触发与队列三页改为 `legacy-redirect` 兼容入口，权威内容收束到第八篇并更新 glossary、场景索引、治理章和子模块章入站链接。
 - [x] 扩写第二篇忽略与属性章节，补齐 `.gitignore` 规则优先级、已跟踪文件、`.gitattributes`、换行规范化和 filter 选择器边界。
 - [x] 重写第二篇身份与提交章节，补齐配置来源、条件 include、author/committer 与认证边界、local hook 拒绝、空提交和 `--no-verify` 风险。
 - [x] 重构对象模型章节，补齐 tag 对象、引用、index、可达性、对象格式和物理存储边界。
@@ -105,6 +115,9 @@
 - [x] 新增第八篇“从事故到发布：把缓解、修复和复盘串成一条证据链”权威章节，收束证据冻结、缓解与修复状态机、bisect、hotfix/cherry-pick 来源与目标提交、共享依赖部署范围和关闭条件；新增事故到发布隔离实验，回归后总计 127 个公开页面与 51 组隔离实验。
 - [x] 新增第九篇“稀疏与部分工作流：减少本地负担，不削弱候选证据”权威章节，收束 refspec、shallow、partial clone、sparse-checkout、sparse-index 的组合边界、受限输入契约和恢复顺序；复用受限克隆隔离实验，回归后总计 128 个公开页面与 51 组隔离实验。
 - [x] 新增第九篇“Monorepo 拓扑治理：用构建图和所有权决定边界”权威章节，收束构建图、变更闭包、所有权/运行责任、路径过滤、原子变更、拆分/合并和恢复责任；新增 monorepo 拓扑隔离实验，回归后总计 129 个公开页面与 52 组隔离实验。
+- [x] 建立 v2 第六篇权威目录并新增八章正文与综合场景，贯通分支状态、评审状态机、三种合并方式、可审查变更、所有权审批、必需检查、CI 身份、合并队列、受保护引用与窄例外。
+- [x] 新增第六篇协作隔离实验，验证 merge、squash、rebase merge 的父关系、祖先关系、tree/OID 差异和 expected-old 引用更新；实验总数增至 53 组。
+- [x] 将旧 `book/part-6/09-protected-branches.md` 拆分迁入 v2 第六篇和第十二篇，旧页改为 `legacy-redirect`，同步导航、迁移映射、事实登记和入站链接；回归后总计 139 个公开页面与 4 个兼容迁移页。
 
 - [x] 扩写受保护分支章节，建立平台控制面与 Git 引用更新的分层模型。
 - [x] 为平台事实建立版本与核对登记表。
@@ -154,6 +167,10 @@
 - [x] 新写第八篇“从源码到运行版本：制品与部署证据链”章节，覆盖构建输入、流水线和 runner 身份、制品 digest、发布 tag、部署实例、数据库兼容和回退决策。
 - [x] 新写第八篇“可重复构建”章节，覆盖输入闭包、非确定性、构建清单、摘要比较、缓存边界和构建一次提升同一制品。
 - [x] 新写第八篇“发布引用与制品提升”章节，覆盖附注 tag、远端核对、发布清单、审批、同名竞态和跨环境提升。
+- [ ] 审计旧第六篇的 bisect 与历史检索页，把尚未迁入的基础推演收束到第十一篇历史归因权威章，并为旧 URL 留兼容入口。
+- [ ] 审计旧第六篇的热修复、冲突报告、提交质量、排障与综合场景，分别迁入第二、四、六、八、十一和十三篇，避免工程杂项目录继续承担多篇职责。
+- [ ] 建立 v2 第七篇目标路径，把第五篇现行恢复正文按迁移表合并、拆分并留下旧链接兼容页，完成第六至八篇的连续导航。
+- [ ] 在专用托管平台测试仓库验证第六篇的审批失效、代码所有者、同名检查报告者、合并队列、管理员/API 绕过和审计事件，并把产品、版本、权限、套餐和核对日期写入事实登记表。
 
 ## 回归状态
 
@@ -232,6 +249,19 @@
 | 2026-08-28 | Write 中文标点门禁 | 通过 | 第四篇 rebase 模型、工作流和前置协作章节通过中文标点检查 |
 | 2026-08-28 | `./scripts/verify-part-4-history.sh`、`verify-interactive-rebase.sh`、`verify-force-with-lease.sh` | 通过 | 普通 rebase 的旧/新 OID、最终 tree、主线祖先关系、range-diff、交互式重建和租约恢复断言正常 |
 | 2026-08-28 | `./scripts/verify-all.sh` | 通过 | 第三篇和第四篇阶段性正文重构接入整库回归，129 个公开页面与 52 组隔离实验正常 |
+| 2026-08-28 | Write 中文标点门禁 | 通过 | 第六篇 stash、worktree 和 bisect 正文通过中文标点检查 |
+| 2026-08-28 | `./scripts/verify-part-6-engineering.sh` | 通过 | stash 恢复、linked worktree 共同目录、bisect 自动判定和 cherry-pick 工程实验正常 |
+| 2026-08-29 | Write 中文标点门禁 | 通过 | 第六篇历史检索、热修复、冲突报告、提交质量和统一排障章节通过中文标点检查 |
+| 2026-08-29 | `./scripts/verify-part-6-engineering.sh`、`verify-history-attribution.sh`、`verify-troubleshooting-snapshot.sh` | 通过 | stash/worktree/bisect、历史归因、证据采集和 fetch 副作用实验正常 |
+| 2026-08-29 | Write 中文标点门禁 | 通过 | 第五篇撤销决策、restore、unstage、amend 和公开历史章节通过中文标点检查 |
+| 2026-08-29 | `./scripts/verify-part-5-local-history.sh`、`verify-reset-reflog.sh`、`verify-revert.sh`、`verify-interactive-rebase.sh`、`verify-force-with-lease.sh` | 通过 | 工作区/index 恢复、私有对象重建、共享历史回滚、交互式 rebase 和租约边界实验正常 |
+| 2026-08-29 | Write 中文标点门禁 | 通过 | 第一篇五个基础页面和综合练习通过中文标点检查 |
+| 2026-08-29 | `./scripts/verify-object-model.sh`、`./scripts/verify-all.sh` | 通过 | 第一篇、第五篇和第六篇正文重构接入整库回归，129 个公开页面与 52 组隔离实验正常 |
+| 2026-08-29 | `./scripts/verify-all.sh`、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 阅读路线、根 README 统计和受保护分支职责链接同步后整库回归仍正常 |
+| 2026-08-31 | `./scripts/verify-part-6-collaboration.sh` | 通过 | merge、squash、rebase merge 的父关系、祖先关系、最终 tree、OID 重建和 expected-old 并发更新断言正常 |
+| 2026-08-31 | `./scripts/verify-all.sh` | 通过 | v2 第六篇八章、综合场景和新实验接入整库回归，139 个公开页面与 53 组隔离实验正常 |
+| 2026-08-31 | Write 中文标点门禁 | 通过 | v2 第六篇、导航、实验索引、迁移映射和事实登记通过中文标点检查，代码块保持原样 |
+| 2026-08-31 | `ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 139 个公开页面、4 个兼容迁移页、SUMMARY 覆盖和差异空白检查正常 |
 
 ## 已知风险
 
@@ -260,5 +290,6 @@
 - 远程引用漂移实验只验证本地 seed/bare/client 的 refs、symbolic HEAD、tag ref、fetch/prune 和查询时序；平台隐藏 refs、默认分支控制面、分支保护、评审/队列、SSO、审计事件和真实网络竞态仍需目标环境核对。
 - 仓库损坏/锁并发实验只验证本地 files ref backend、index/ref lock、expected-old、pack/idx 和 fsck 边界；reftable、网络文件系统租约、真实崩溃、磁盘坏道、服务端对象池、维护调度和跨节点并发仍需专用环境演练。
 - 第八篇已落盘八章；第九篇已落盘五章，覆盖性能、LFS、submodule/subtree、受限工作流和 monorepo 拓扑治理。真实运行平台核验、跨篇旧页面迁移和出版级综合审校仍需按总纲继续推进。
-- 第八篇新章与 `part-6` 兼容章节暂时并列，尚未完成旧页面迁移说明和主导航切换；跨章重复定义仍需在阶段 7 统一审校。
+- 第六篇的发布、CI 证据链、CI 触发与队列、受保护分支旧页已改为兼容迁移页；stash、worktree、bisect、热修复、冲突报告、提交质量、排障与综合案例仍等待按迁移表收束，旧目录暂时不能移出导航。
+- v2 第六篇的本地实验只证明 Git 合并形状和 expected-old 引用更新，不证明真实平台的评审、所有者、检查报告者、合并队列、绕过、权限或审计行为；这些易变事实仍需在专用平台环境按版本、权限、套餐和核对日期验收。
 - Push/认证/权限边界实验只验证本地 `file://`、bare receive、非快进、hook 和 URL 配置边界；真实 SSH/TLS/凭据/SSO/平台授权、规则、评审、CI、配额和审计仍需目标环境专项验收。

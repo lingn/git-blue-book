@@ -20,7 +20,7 @@
 | 不知道哪条提交引入缺陷 | [bisect](../part-6/03-bisect.md) |
 | 想知道当前一行最后由哪个提交写入，以及逻辑何时首次出现 | [历史归因](../part-11/03-history-attribution.md) |
 | 判断 manager、worker 是否都要部署 | [热修复与部署范围](../part-6/05-hotfix.md) |
-| 判断是否需要优雅停机 | [发布策略](../part-6/06-release.md) |
+| 判断是否需要优雅停机 | [部署与回退](../part-08/06-deploy-and-rollback.md) |
 | 仓库变慢但不知道瓶颈在哪一层 | [性能与维护基线](../part-09/01-measure-before-optimizing.md) |
 | LFS 路径只检出 pointer 或 payload 缺失 | [二进制与 Git LFS](../part-09/02-binary-and-lfs.md) |
 | Submodule 目录为空、OID 不匹配或固定提交取不到 | [Submodule 与 subtree](../part-09/03-submodule-and-subtree.md) |

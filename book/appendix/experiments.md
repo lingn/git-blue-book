@@ -25,6 +25,7 @@
 - 显式租约拒绝、协调后的条件更新和远程引用恢复；
 - reset 三模式、路径 reset、未跟踪路径边界和 reflog 恢复；
 - stash、worktree、bisect 和热修复迁移。
+- merge、squash 与 rebase merge 的父关系、祖先关系、最终 tree 和 OID 差异，以及带 expected-old 的引用并发更新。
 - 分离 HEAD 的 CI 候选、合并提交父节点、可重复源码归档、证据清单和部署副本摘要恢复。
 - CI 的 NUL 路径清单、路径选择、过期候选、队列顺序和带期望旧值的条件引用更新。
 - 候选 commit/tree 的构造上下文、目标与功能差异、候选过期和合并队列的 expected-old 条件更新（复用上述两组 CI 实验）。
@@ -128,5 +129,7 @@ LFS/子模块/CI 外部依赖实验只在临时仓库验证自建 filter 的 poi
 远程引用漂移实验只在临时 seed、bare 远端和客户端 clone 中验证 Git refs、symbolic HEAD、tag ref、fetch/prune 和查询时序；它不模拟平台隐藏 refs、默认分支控制面、分支保护、评审/合并队列、SSO、审计事件或真实网络竞态。
 
 仓库损坏/锁并发实验只在临时本地仓库和可销毁副本中验证 Git lockfile、expected-old ref、pack/idx 和 fsck 边界；它不模拟网络文件系统租约、reftable、真实进程崩溃、磁盘坏道、服务端对象池或组织调度器。
+
+第六篇协作实验只在临时仓库验证 merge、squash、rebase 和 `update-ref` 的 Git 数据面。它不连接评审平台，也不验证审批、代码所有者、检查报告者、合并队列、服务端身份、保护规则、套餐或审计事件；这些控制面行为必须在目标平台的专用测试仓库中按版本、权限和核对日期验收。
 
 验证脚本是正文事实的回归测试，不是让读者在真实项目照抄的发布脚本。高风险操作只应在脚本生成的临时仓库中观察。

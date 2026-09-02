@@ -5,9 +5,9 @@
 ## 本篇内容
 
 1. [没有版本控制时，我们到底在怕什么](01-why-version-control.md)
-2. [从本地版本、集中式到分布式](02-three-generations.md)
-3. [Git 的诞生：为大规模协作重新设计](03-birth-of-git.md)
-4. [Git 保存的是快照](04-snapshots.md)
+2. [从本地版本、集中式到分布式：仓库权威在哪里](02-three-generations.md)
+3. [Git 的诞生：在大规模协作中同时追求速度和可验证性](03-birth-of-git.md)
+4. [Git 保存的是快照：完整视图和差异显示是两件事](04-snapshots.md)
 5. [一次提交在仓库里怎样组成](05-first-model.md)
 6. [综合场景：三种版本管理方案怎么选](exercise.md)
 
