@@ -63,6 +63,8 @@
   * [reset 会移动引用，并按模式重置另外两个区域](part-5/10-reset.md)
   * [reflog 保存引用移动的本地证据](part-5/11-reflog.md)
   * [从误删分支、错误 reset 和失败 rebase 中恢复](part-5/12-recovery-cases.md)
+  * [提交之后又想改：先判断有没有共享，再决定改写还是追加](part-5/13-rewrite-commit-playbook.md)
+  * [远端历史被重写后为什么同时 ahead 和 behind](part-5/14-remote-history-rewrite.md)
   * [综合场景：四类事故的恢复决策](part-5/exercise.md)
 * [兼容目录：旧第六篇工程场景](part-6/README.md)
   * [工作做到一半需要切任务：stash 的临时状态与恢复边界](part-6/01-stash.md)

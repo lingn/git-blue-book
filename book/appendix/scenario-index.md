@@ -9,6 +9,10 @@
 | 最近本地提交漏文件 | [补充最近提交](../part-5/04-amend-content.md) |
 | 最近本地提交说明写错 | [修改提交说明](../part-5/05-amend-message.md) |
 | 多条未推送提交需要改说明或合并 | [交互式变基](../part-5/06-interactive-rebase.md) |
+| 提交后继续改代码，想保留一条提交 | [提交后又想改](../part-5/13-rewrite-commit-playbook.md) |
+| 想删除远端提交、拆分混合提交或修订已推送提交 | [提交后又想改](../part-5/13-rewrite-commit-playbook.md) |
+| fetch 后突然显示 `ahead N, behind M`，怀疑远端历史被改写 | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
+| rebase abort 后又回到旧分支状态 | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
 | 已推送错误需要回滚 | [git revert](../part-5/07-revert.md) |
 | 个人评审分支变基后要更新远程 | [force-with-lease](../part-5/09-force-with-lease.md) |
 | 错误 reset 或误删分支 | [恢复案例](../part-5/12-recovery-cases.md) |

@@ -16,6 +16,8 @@
 10. [reset 会移动引用，并按模式重置另外两个区域](10-reset.md)
 11. [reflog 保存引用移动的本地证据](11-reflog.md)
 12. [从误删分支、错误 reset 和失败 rebase 中恢复](12-recovery-cases.md)
-13. [综合场景：四类事故的恢复决策](exercise.md)
+13. [提交之后又想改：先判断有没有共享，再决定改写还是追加](13-rewrite-commit-playbook.md)
+14. [远端历史被重写后为什么同时 ahead 和 behind](14-remote-history-rewrite.md)
+15. [综合场景：四类事故的恢复决策](exercise.md)
 
 高风险实验全部在验证脚本创建的临时仓库中运行。真实项目发生事故时，先保护现场和记录提交 ID，不要边搜索边试命令。
