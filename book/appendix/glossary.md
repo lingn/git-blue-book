@@ -68,7 +68,7 @@
 | 浅克隆 | 以 shallow boundary 截断部分祖先历史的仓库 | [Refspec 与受限克隆](../part-4/14-refspec-partial-clone.md) |
 | 部分克隆 | 由 promisor 远端承诺按需提供被过滤对象的克隆 | [Refspec 与受限克隆](../part-4/14-refspec-partial-clone.md) |
 | 变基 | 以新起点重新应用一段变化并生成新提交 | [变基模型](../part-4/10-rebase-model.md) |
-| 挑选提交 | 在当前分支重放指定提交变化并创建新提交 | [cherry-pick](../part-4/12-cherry-pick.md) |
+| 挑选提交 | 在当前分支重放指定提交变化并创建新提交 | [cherry-pick](../part-07/07-cherry-pick.md) |
 | 改写历史 | 生成新提交替换原关系，使旧 ID 离开当前分支 | [第七篇状态矩阵](../part-07/01-state-and-sharing-matrix.md) |
 | 回滚变化 | 创建新提交抵消旧提交效果，保留旧历史 | [revert](../part-5/07-revert.md) |
 | 引用日志 | 本地记录引用近期移动情况的日志，也叫 reflog | [reflog](../part-5/11-reflog.md) |

@@ -14,7 +14,9 @@
 2. [丢弃工作区修改：restore 的来源与覆盖边界](02-restore-worktree.md)
 3. [取消暂存，但保留文件修改：把选择退回工作区](03-unstage.md)
 4. [amend 一条提交：先判断有没有共享，再决定改写还是追加](04-amend-one-commit.md)
+5. [交互式 rebase：重建一段尚未共享的历史](05-interactive-rebase.md)
+6. [cherry-pick：把一个变化迁移到另一条历史](07-cherry-pick.md)
 
-后续目标章节包括交互式 rebase、cherry-pick、共享历史 revert、显式租约、reset、reflog 与本地/远程恢复。迁移关系记录在 `docs/CHAPTER-MIGRATION-MAP.md`，旧路径在目标章节落地前继续保留。
+后续目标章节包括 rebase 模型与工作流、共享历史 revert、显式租约、reset、reflog 与本地/远程恢复。迁移关系记录在 `docs/CHAPTER-MIGRATION-MAP.md`，旧路径在目标章节落地前继续保留。
 
 本篇高风险实验全部在验证脚本创建的临时仓库中执行。实验能证明 Git 数据面行为，不能证明平台审批、远程保留、制品、数据库或生产恢复能力。

@@ -26,7 +26,7 @@
 | 合并历史 | `git merge` | [合并](../part-3/05-first-merge.md) |
 | 标记版本 | `git tag` | [标签](../part-3/09-tags.md) |
 | 重建功能提交 | `git rebase` | [安全变基](../part-4/11-rebase-workflow.md) |
-| 迁移独立提交 | `git cherry-pick` | [挑选提交](../part-4/12-cherry-pick.md) |
+| 迁移独立提交 | `git cherry-pick` | [挑选提交](../part-07/07-cherry-pick.md) |
 
 ## 远程协作
 
@@ -48,7 +48,7 @@
 | 取消暂存 | `git restore --staged` | [取消暂存](../part-07/03-unstage.md) |
 | 替换最近本地提交 | `git commit --amend` | [amend 一条提交](../part-07/04-amend-one-commit.md) |
 | 重置最近提交署名 | `git commit --amend --reset-author` | [amend 一条提交](../part-07/04-amend-one-commit.md) |
-| 变基时逐条执行命令 | `git rebase --exec` | [逐条执行](../part-5/06-interactive-rebase.md) |
+| 变基时逐条执行命令 | `git rebase --exec` | [逐条执行](../part-07/05-interactive-rebase.md) |
 | 对提交改名、合并、拆分或删除 | `git rebase -i` 的 `reword`、`fixup`、`squash`、`edit`、`drop` | [amend 一条提交](../part-07/04-amend-one-commit.md) |
 | 撤销已公开提交 | `git revert` | [公开回滚](../part-5/07-revert.md) |
 | 有条件更新个人远程分支 | `git push --force-with-lease` | [租约保护](../part-5/09-force-with-lease.md) |

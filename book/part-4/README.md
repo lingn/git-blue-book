@@ -15,7 +15,7 @@
 9. [代码评审前整理什么：把候选、范围和验证绑定起来](09-review-ready.md)
 10. [变基的本质：用新父提交重建一段历史](10-rebase-model.md)
 11. [安全执行 rebase：把历史重建变成可回退流程](11-rebase-workflow.md)
-12. [只迁移需要的提交：cherry-pick 的来源、目标和新 OID](12-cherry-pick.md)
+12. [兼容入口：cherry-pick 正文已迁入第七篇](12-cherry-pick.md)
 13. [远程 URL、传输协议与认证边界](13-transport-auth.md)
 14. [Refspec、传输协商与受限克隆](14-refspec-partial-clone.md)
 15. [综合场景：同步主线，再准备一次可追溯评审](exercise.md)

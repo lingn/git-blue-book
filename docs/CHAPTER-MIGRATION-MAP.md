@@ -112,7 +112,7 @@ book/part-13/  故障排查手册
 | `book/part-4/09-review-ready.md` | `book/part-06/02-review-request-model.md`、`book/part-06/04-reviewable-changes.md` | 拆分 |
 | `book/part-4/10-rebase-model.md` | `book/part-07/06-rebase-model-and-workflow.md` | 合并 |
 | `book/part-4/11-rebase-workflow.md` | `book/part-07/06-rebase-model-and-workflow.md` | 合并；保留当前冲突语义补强 |
-| `book/part-4/12-cherry-pick.md` | `book/part-07/07-cherry-pick.md` | 保留重写 |
+| `book/part-4/12-cherry-pick.md` | `book/part-07/07-cherry-pick.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/13-transport-auth.md` | `book/part-05/08-transport-and-authentication.md`、`book/part-10/01-credentials.md` | 过渡新增后拆分；传输章权威解释身份分层 |
 | `book/part-4/14-refspec-partial-clone.md` | `book/part-05/03-remotes-and-refspecs.md`、`book/part-05/09-negotiation-and-limited-clones.md`、`book/part-09/04-sparse-partial-workflows.md` | 过渡新增后拆分；性能决策只在第九篇扩展 |
 | `book/part-4/exercise.md` | `book/part-05/exercise.md`、`book/part-06/exercise.md` | 拆分远程同步与评审准备 |
@@ -127,7 +127,7 @@ book/part-13/  故障排查手册
 | `book/part-5/03-unstage.md` | `book/part-07/03-unstage.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/04-amend-content.md` | `book/part-07/04-amend-one-commit.md` | 已于 2026-09-05 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/05-amend-message.md` | `book/part-07/04-amend-one-commit.md` | 已于 2026-09-05 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-5/06-interactive-rebase.md` | `book/part-07/05-interactive-rebase.md` | 保留当前重构稿 |
+| `book/part-5/06-interactive-rebase.md` | `book/part-07/05-interactive-rebase.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/07-revert.md` | `book/part-07/08-revert-shared-history.md` | 保留当前重构稿 |
 | `book/part-5/08-public-history.md` | `book/part-07/09-public-history-policy.md` | 保留重写，并链接第六篇团队规则 |
 | `book/part-5/09-force-with-lease.md` | `book/part-07/10-explicit-force-lease.md` | 保留当前重构稿 |
@@ -158,6 +158,8 @@ book/part-13/  故障排查手册
 | `book/part-07/02-restore-worktree.md` | `book/part-5/02-restore-worktree.md` | 已于 2026-09-05 迁入；首批 v2 权威章，旧页已改为 `legacy-redirect` |
 | `book/part-07/03-unstage.md` | `book/part-5/03-unstage.md` | 已于 2026-09-05 迁入；首批 v2 权威章，旧页已改为 `legacy-redirect` |
 | `book/part-07/04-amend-one-commit.md` | `book/part-5/04-amend-content.md`、`book/part-5/05-amend-message.md`、`book/part-5/13-rewrite-commit-playbook.md` | 已于 2026-09-05 合并迁入；承担 amend 内容/说明、未共享重建、显式租约、hook、签名与空提交边界 |
+| `book/part-07/05-interactive-rebase.md` | `book/part-5/06-interactive-rebase.md`、`book/part-4/10-rebase-model.md`、`book/part-4/11-rebase-workflow.md` | 已于 2026-09-05 迁入；承担交互式 todo、重排/拆分、冲突、中止和重建后验证，通用 rebase 模型与工作流仍待单独合并 |
+| `book/part-07/07-cherry-pick.md` | `book/part-4/12-cherry-pick.md` | 已于 2026-09-05 迁入；承担来源/目标 OID、顺序、冲突、空提交和共享边界 |
 | `book/part-6/exercise.md` | `book/part-08/08-incident-to-release.md` | 已于 2026-09-05 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
 后续在六篇兼容目录中新增的 CI/CD 章节，统一登记到第八篇目标，不把兼容位置视为最终归属。

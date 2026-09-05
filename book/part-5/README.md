@@ -9,7 +9,7 @@
 3. [兼容入口：取消暂存正文已迁入第七篇](03-unstage.md)
 4. [兼容入口：amend 内容正文已迁入第七篇](04-amend-content.md)
 5. [兼容入口：amend 说明正文已迁入第七篇](05-amend-message.md)
-6. [交互式 rebase 重建一段私有历史](06-interactive-rebase.md)
+6. [兼容入口：交互式 rebase 正文已迁入第七篇](06-interactive-rebase.md)
 7. [revert 用新提交撤销共享历史中的变化](07-revert.md)
 8. [为什么已公开历史不应随意改写：共享坐标比图形整洁更重要](08-public-history.md)
 9. [用显式租约更新允许改写的远程分支](09-force-with-lease.md)
