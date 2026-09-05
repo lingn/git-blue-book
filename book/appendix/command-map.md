@@ -60,8 +60,8 @@
 
 | 目标 | 命令 | 详解 |
 | --- | --- | --- |
-| 临时收纳修改 | `git stash` | [stash](../part-6/01-stash.md) |
-| 多个工作目录 | `git worktree` | [worktree](../part-6/02-worktree.md) |
+| 临时收纳修改 | `git stash` | [stash](../part-02/11-stash.md) |
+| 多个工作目录 | `git worktree` | [worktree](../part-02/12-multiple-worktrees.md) |
 | 二分定位缺陷 | `git bisect` | [历史归因中的 bisect](../part-11/03-history-attribution.md) |
 | 查询当前行的最后写入提交 | `git blame --line-porcelain` | [历史归因](../part-11/03-history-attribution.md) |
 | 搜索字符串数量或差异行演变 | `git log -S`、`git log -G` | [历史归因](../part-11/03-history-attribution.md) |

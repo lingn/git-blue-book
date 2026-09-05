@@ -6,8 +6,8 @@
 
 ## 本篇内容
 
-1. [工作做到一半需要切任务：stash 的临时状态与恢复边界](01-stash.md)
-2. [同时维护多个工作目录：worktree 的共享与隔离](02-worktree.md)
+1. [兼容入口：stash 正文已迁入 v2 第二篇补充](01-stash.md)
+2. [兼容入口：worktree 正文已迁入 v2 第二篇补充](02-worktree.md)
 3. [兼容入口：bisect 归因正文已迁入权威章节](03-bisect.md)
 4. [兼容入口：历史检索正文已迁入第十一篇](04-history-search.md)
 5. [兼容入口：热修复正文已迁入第八篇](05-hotfix.md)
