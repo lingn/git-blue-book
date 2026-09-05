@@ -150,10 +150,10 @@ book/part-13/  故障排查手册
 | `book/part-6/07-conflict-report.md` | `book/part-3/10-complex-conflicts-rerere.md`、`book/part-06/04-reviewable-changes-and-stacks.md` | 已于 2026-09-02 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/08-commit-quality.md` | `book/part-2/07-commit.md`、`book/part-06/04-reviewable-changes-and-stacks.md` | 已于 2026-09-02 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/09-protected-branches.md` | `book/part-06/02-review-state-machine.md`、`book/part-06/05-ownership-approvals-and-stale-decisions.md`、`book/part-06/06-required-checks-and-merge-queues.md`、`book/part-06/08-protected-refs-and-exceptions.md`、`book/part-12/03-policy-rules-and-exceptions.md` | 已于 2026-08-31 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-6/10-troubleshooting.md` | `book/part-13/README.md`、`book/part-13/01-evidence-first.md` | 拆分后全面扩写 |
+| `book/part-6/10-troubleshooting.md` | `book/part-13/README.md`、`book/part-13/01-evidence-first.md` | 已于 2026-09-05 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/11-ci-evidence-chain.md` | `book/part-08/01-triggers-and-checkout.md` 至 `book/part-08/05-release-refs-and-artifact-promotion.md` | 已于 2026-08-30 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/12-ci-triggers-merge-queue.md` | `book/part-08/01-triggers-and-checkout.md`、`book/part-08/02-candidate-commits.md`、`book/part-06/06-required-checks-and-merge-queues.md`、`book/part-06/08-protected-refs-and-exceptions.md` | 已于 2026-08-30 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-6/exercise.md` | `book/part-08/exercise.md` | 保留案例因果链，重写制品与运行证据 |
+| `book/part-6/exercise.md` | `book/part-08/08-incident-to-release.md` | 已于 2026-09-05 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
 后续在六篇兼容目录中新增的 CI/CD 章节，统一登记到第八篇目标，不把兼容位置视为最终归属。
 

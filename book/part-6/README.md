@@ -15,9 +15,9 @@
 7. [兼容入口：冲突解决报告正文已迁入 v2 第六篇](07-conflict-report.md)
 8. [兼容入口：提交质量正文已迁入第二篇和 v2 第六篇](08-commit-quality.md)
 9. [兼容入口：受保护分支与评审正文已迁入 v2 第六篇](09-protected-branches.md)
-10. [一套可恢复的 Git 排障流程：先固定证据，再改变状态](10-troubleshooting.md)
+10. [兼容入口：Git 排障正文已迁入第十三篇](10-troubleshooting.md)
 11. [兼容入口：CI/CD 证据链已迁入第八篇](11-ci-evidence-chain.md)
 12. [兼容入口：CI 触发、候选与合并队列已迁移](12-ci-triggers-merge-queue.md)
-13. [综合场景：从线上缺陷到发布复盘](exercise.md)
+13. [兼容入口：工程综合场景已迁入第八篇](exercise.md)
 
 需要系统学习团队协作时，从新的[第六篇权威稿](../part-06/README.md)开始；需要按旧链接查找 stash、worktree、bisect、热修复或排障内容时，继续使用本目录。
