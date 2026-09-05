@@ -147,8 +147,8 @@ book/part-13/  故障排查手册
 | `book/part-6/04-history-search.md` | `book/part-11/03-history-attribution.md` | 已于 2026-09-02 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/05-hotfix.md` | `book/part-08/08-incident-to-release.md` | 已于 2026-09-02 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/06-release.md` | `book/part-08/03-source-artifact-deployment-evidence.md` 至 `book/part-08/08-incident-to-release.md` | 已于 2026-08-30 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-6/07-conflict-report.md` | `book/part-04/10-conflict-report.md`、`book/part-06/04-reviewable-changes.md` | 拆分 |
-| `book/part-6/08-commit-quality.md` | `book/part-02/07-atomic-commit-and-hooks.md`、`book/part-06/04-reviewable-changes.md` | 拆分 |
+| `book/part-6/07-conflict-report.md` | `book/part-3/10-complex-conflicts-rerere.md`、`book/part-06/04-reviewable-changes-and-stacks.md` | 已于 2026-09-02 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-6/08-commit-quality.md` | `book/part-2/07-commit.md`、`book/part-06/04-reviewable-changes-and-stacks.md` | 已于 2026-09-02 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/09-protected-branches.md` | `book/part-06/02-review-state-machine.md`、`book/part-06/05-ownership-approvals-and-stale-decisions.md`、`book/part-06/06-required-checks-and-merge-queues.md`、`book/part-06/08-protected-refs-and-exceptions.md`、`book/part-12/03-policy-rules-and-exceptions.md` | 已于 2026-08-31 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/10-troubleshooting.md` | `book/part-13/README.md`、`book/part-13/01-evidence-first.md` | 拆分后全面扩写 |
 | `book/part-6/11-ci-evidence-chain.md` | `book/part-08/01-triggers-and-checkout.md` 至 `book/part-08/05-release-refs-and-artifact-promotion.md` | 已于 2026-08-30 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
@@ -193,7 +193,7 @@ book/part-13/  故障排查手册
 | `book/part-06/01-branch-models-and-integration.md` | `book/part-4/09-review-ready.md`、`book/part-6/05-hotfix.md` | 新写并建立分支状态与整合拓扑的权威来源；承担主干、功能、发布、维护和堆叠分支的状态、责任与恢复契约 |
 | `book/part-06/02-review-state-machine.md` | `book/part-4/09-review-ready.md`、`book/part-6/09-protected-branches.md` | 新写并建立厂商无关评审请求状态机；承担功能头、目标基线、候选、审批、检查、策略版本和条件引用更新的失效与重算 |
 | `book/part-06/03-merge-strategies-and-history.md` | `book/part-3/06-merge-shapes.md`、`book/part-4/10-rebase-model.md`、`book/part-6/09-protected-branches.md` | 新写；承担 merge、squash、rebase merge 对 OID、父关系、签名、回滚、归因和评审映射的协作后果，基础命令仍由第三、四篇负责 |
-| `book/part-06/04-reviewable-changes-and-stacks.md` | `book/part-4/09-review-ready.md`、`book/part-6/08-commit-quality.md` | 新写；承担评审范围、风险密度、提交序列、堆叠依赖、反馈吸收和候选重绑定，提交对象质量仍由旧页迁入第二篇目标章 |
+| `book/part-06/04-reviewable-changes-and-stacks.md` | `book/part-4/09-review-ready.md`、`book/part-6/07-conflict-report.md`、`book/part-6/08-commit-quality.md` | 新写；承担评审范围、冲突结果报告、风险密度、提交序列、堆叠依赖、反馈吸收和候选重绑定，提交对象质量仍由第二篇提交章负责 |
 | `book/part-06/05-ownership-approvals-and-stale-decisions.md` | `book/part-6/09-protected-branches.md`、`book/part-09/05-monorepo-topology-and-ownership.md` | 新写；承担路径/构建图/运行责任映射、审批角色、独立性、候选绑定、失效与替补机制 |
 | `book/part-06/06-required-checks-and-merge-queues.md` | `book/part-6/09-protected-branches.md`、`book/part-6/12-ci-triggers-merge-queue.md`、`book/part-08/02-candidate-commits.md` | 新写；承担必需检查身份、结果状态、候选过期、队列 generation 与 expected-old 主线更新，第八篇继续承担 CI 候选生成细节 |
 | `book/part-06/07-ci-identities-and-status-reports.md` | `book/part-10/02-machine-identities.md`、`book/part-08/01-triggers-and-checkout.md` | 新写；承担 runner、状态报告、合并与发布主体的权限分层、候选外信任根和结果撤销，凭据与执行细节仍引用第八、十篇 |

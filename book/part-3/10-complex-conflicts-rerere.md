@@ -254,7 +254,7 @@ git diff "$merge_commit^1" "$merge_commit"
 git diff "$merge_commit^2" "$merge_commit"
 ```
 
-前提是 HEAD 确为预期合并提交；先确认 `%P` 至少有两个父对象。组合 diff 突出相对父提交的结果，但不能完整证明哪些路径当时触发冲突、谁做了决定或运行了哪些测试。因此在解决现场保留结构化说明，格式可参考本篇的[冲突解决报告](../part-6/07-conflict-report.md)。
+前提是 HEAD 确为预期合并提交；先确认 `%P` 至少有两个父对象。组合 diff 突出相对父提交的结果，但不能完整证明哪些路径当时触发冲突、谁做了决定或运行了哪些测试。因此在解决现场保留结构化说明，格式可参考第六篇的[冲突解决报告](../part-06/04-reviewable-changes-and-stacks.md)。
 
 ## 常见失败怎样恢复
 

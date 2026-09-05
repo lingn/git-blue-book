@@ -14,7 +14,7 @@
 | 错误 reset 或误删分支 | [恢复案例](../part-5/12-recovery-cases.md) |
 | push 被拒绝 | [推送拒绝](../part-4/08-push-rejection.md) |
 | pull 后发生冲突 | [冲突模型](../part-3/07-conflict-model.md) |
-| 冲突已经解决，需向同事说明 | [冲突说明](../part-6/07-conflict-report.md) |
+| 冲突已经解决，需向同事说明 | [可审查变更中的冲突报告](../part-06/04-reviewable-changes-and-stacks.md) |
 | 开发中途需要处理紧急任务 | [stash](../part-6/01-stash.md) 或 [worktree](../part-6/02-worktree.md) |
 | 需要把一个修复迁到发布分支 | [事故到发布中的热修复](../part-08/08-incident-to-release.md) |
 | 不知道哪条提交引入缺陷 | [历史归因与 bisect](../part-11/03-history-attribution.md) |

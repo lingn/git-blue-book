@@ -51,7 +51,7 @@ git ls-files --others --exclude-standard
 
 常见的合理顺序是先加入兼容接口或 schema，再切换调用方，最后删除旧路径。纯格式化、大规模重命名和生成物刷新容易淹没行为变化，通常应单独提交，并固定工具版本和输入。
 
-提交原子性、说明、trailers、hook 与签名由[提交质量章节](../part-6/08-commit-quality.md)承担。本章只增加共享评审边界：一旦评审、CI 或子分支绑定某个提交序列，reword、squash、fixup 和 reorder 都会生成新 OID，需要使旧证据过期。
+提交原子性、说明、trailers、hook 与签名由[第二篇的提交章节](../part-2/07-commit.md)承担。本章只增加共享评审边界：一旦评审、CI 或子分支绑定某个提交序列，reword、squash、fixup 和 reorder 都会生成新 OID，需要使旧证据过期。
 
 ## 什么时候应拆分评审
 
@@ -105,6 +105,40 @@ git diff --stat "$parent"..."$child"
 
 不要把“所有反馈都 squash 掉”当成评审完成条件。需要保留的设计决定、失败实验和风险接受应进入评审记录、提交说明或决策文档，不能只存在于随后被删除的临时提交里。
 
+## 冲突解决结果也属于评审输入
+
+冲突标记被删除、测试变绿，只能说明当前工作区可以继续。评审还需要知道：冲突发生在哪个共同祖先、哪些路径有多个候选版本、最终选择怎样满足接口或数据约束，以及解决后的候选是否在干净环境重新验证。
+
+在完成 merge、rebase 或 cherry-pick 后，先在最终候选所在的临时分支固定对象。具体的 index stage、AUTO_MERGE 和 rerere 机制见[第三篇复杂冲突](../part-3/10-complex-conflicts-rerere.md)。
+
+~~~bash
+git status --short --branch
+candidate="$(git rev-parse --verify HEAD^{commit})"
+git show --no-patch --format='%H%n%P%n%T%n%s' "$candidate"
+git diff-tree --no-commit-id --name-status -r -M -C "$candidate^" "$candidate"
+git diff --check "$candidate^" "$candidate"
+~~~
+
+合并提交有多个父，`$candidate^` 只表示第一父；报告需要另外列出完整 parent 列表，并按每个父比较最终 tree。rebase 或 cherry-pick 的候选通常只有一个父，但来源提交、目标提交和冲突解决仍要分别记录。命令失败时先保存 `MERGE_HEAD`、`REBASE_HEAD` 或 `CHERRY_PICK_HEAD`、index stages 和原始 stderr，不要用 `reset --hard` 清掉现场。
+
+一份最小冲突报告可以写成：
+
+~~~text
+operation: merge | rebase | cherry-pick
+base_or_source: <完整 OID>
+target_before: <完整 OID>
+candidate_after: <完整 OID>
+parents: <按顺序列出>
+conflicted_paths: <NUL 安全的路径清单>
+decisions: <按路径写最终语义，不只写 ours/theirs>
+validation: <命令、环境、结果和未覆盖范围>
+review_impact: <哪些评论/审批因候选变化而失效>
+rollback_or_forward_fix: <共享边界下的动作>
+limitations: <无法从 Git 恢复的事实>
+~~~
+
+“选 ours”只描述了一个实现细节，不能说明最终行为；“冲突已解决”也不能替代测试、构建、数据库和部署证据。报告中的路径来自 Git 输出，跨进程传递时使用 NUL 分隔或结构化文件，避免换行路径被截断。
+
 ## 失败方式和恢复
 
 | 现象 | 先固定 | 安全动作 |
@@ -119,4 +153,3 @@ git diff --stat "$parent"..."$child"
 ## 小结
 
 可审查变更由明确意图、闭合依赖、固定候选和真实验证组成。提交序列帮助理解与恢复，堆叠评审帮助拆分大型变化，两者都会引入 OID 和证据重绑定成本。评审大小要按风险密度判断，不能用行数或提交数量替代工程边界。
-
