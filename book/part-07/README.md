@@ -13,7 +13,8 @@
 1. [先别急着撤销：用状态矩阵判断位置](01-state-and-sharing-matrix.md)
 2. [丢弃工作区修改：restore 的来源与覆盖边界](02-restore-worktree.md)
 3. [取消暂存，但保留文件修改：把选择退回工作区](03-unstage.md)
+4. [amend 一条提交：先判断有没有共享，再决定改写还是追加](04-amend-one-commit.md)
 
-后续目标章节包括最近一次提交的 amend、交互式 rebase、cherry-pick、共享历史 revert、显式租约、reset、reflog 与本地/远程恢复。迁移关系记录在 `docs/CHAPTER-MIGRATION-MAP.md`，旧路径在目标章节落地前继续保留。
+后续目标章节包括交互式 rebase、cherry-pick、共享历史 revert、显式租约、reset、reflog 与本地/远程恢复。迁移关系记录在 `docs/CHAPTER-MIGRATION-MAP.md`，旧路径在目标章节落地前继续保留。
 
 本篇高风险实验全部在验证脚本创建的临时仓库中执行。实验能证明 Git 数据面行为，不能证明平台审批、远程保留、制品、数据库或生产恢复能力。
