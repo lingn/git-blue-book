@@ -122,9 +122,9 @@ book/part-13/  故障排查手册
 | 当前文件 | v2 目标 | 动作 |
 | --- | --- | --- |
 | `book/part-5/README.md` | `book/part-07/README.md` | 保留重写 |
-| `book/part-5/01-decision-matrix.md` | `book/part-07/01-state-and-sharing-matrix.md` | 保留重写 |
-| `book/part-5/02-restore-worktree.md` | `book/part-07/02-restore-worktree.md` | 保留重写 |
-| `book/part-5/03-unstage.md` | `book/part-07/03-unstage.md` | 保留重写 |
+| `book/part-5/01-decision-matrix.md` | `book/part-07/01-state-and-sharing-matrix.md` | 已于 2026-09-05 迁移；旧页暂保原正文，待 v2 第七篇首批回归后改为 `legacy-redirect` |
+| `book/part-5/02-restore-worktree.md` | `book/part-07/02-restore-worktree.md` | 已于 2026-09-05 迁移；旧页暂保原正文，待 v2 第七篇首批回归后改为 `legacy-redirect` |
+| `book/part-5/03-unstage.md` | `book/part-07/03-unstage.md` | 已于 2026-09-05 迁移；旧页暂保原正文，待 v2 第七篇首批回归后改为 `legacy-redirect` |
 | `book/part-5/04-amend-content.md` | `book/part-07/04-amend-one-commit.md` | 合并 |
 | `book/part-5/05-amend-message.md` | `book/part-07/04-amend-one-commit.md` | 合并 |
 | `book/part-5/06-interactive-rebase.md` | `book/part-07/05-interactive-rebase.md` | 保留当前重构稿 |
@@ -153,6 +153,10 @@ book/part-13/  故障排查手册
 | `book/part-6/10-troubleshooting.md` | `book/part-13/README.md`、`book/part-13/01-evidence-first.md` | 已于 2026-09-05 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/11-ci-evidence-chain.md` | `book/part-08/01-triggers-and-checkout.md` 至 `book/part-08/05-release-refs-and-artifact-promotion.md` | 已于 2026-08-30 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/12-ci-triggers-merge-queue.md` | `book/part-08/01-triggers-and-checkout.md`、`book/part-08/02-candidate-commits.md`、`book/part-06/06-required-checks-and-merge-queues.md`、`book/part-06/08-protected-refs-and-exceptions.md` | 已于 2026-08-30 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-07/README.md` | 原路径 | 新写；建立第七篇改写、撤销与恢复的 v2 入口，后续章节按状态和共享边界逐步接入 |
+| `book/part-07/01-state-and-sharing-matrix.md` | `book/part-5/01-decision-matrix.md` | 已于 2026-09-05 迁入；首批 v2 权威章，旧页暂保原正文 |
+| `book/part-07/02-restore-worktree.md` | `book/part-5/02-restore-worktree.md` | 已于 2026-09-05 迁入；首批 v2 权威章，旧页暂保原正文 |
+| `book/part-07/03-unstage.md` | `book/part-5/03-unstage.md` | 已于 2026-09-05 迁入；首批 v2 权威章，旧页暂保原正文 |
 | `book/part-6/exercise.md` | `book/part-08/08-incident-to-release.md` | 已于 2026-09-05 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
 后续在六篇兼容目录中新增的 CI/CD 章节，统一登记到第八篇目标，不把兼容位置视为最终归属。
