@@ -37,6 +37,8 @@
 | 只获取远程历史 | `git fetch` | [获取](../part-4/04-fetch.md) |
 | 获取并整合 | `git pull` | [拉取](../part-4/06-pull.md) |
 | 发布提交或标签 | `git push` | [推送](../part-4/07-push.md) |
+| 计算本地与上游各自独有的提交数 | `git rev-list --left-right --count` | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
+| 判断本地提交是否有上游补丁等价项 | `git cherry -v`、`git range-diff` | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
 
 ## 撤销与恢复
 
@@ -47,10 +49,12 @@
 | 替换最近本地提交 | `git commit --amend` | [补充提交](../part-5/04-amend-content.md) |
 | 重置最近提交署名 | `git commit --amend --reset-author` | [重置署名](../part-5/05-amend-message.md) |
 | 变基时逐条执行命令 | `git rebase --exec` | [逐条执行](../part-5/06-interactive-rebase.md) |
+| 对提交改名、合并、拆分或删除 | `git rebase -i` 的 `reword`、`fixup`、`squash`、`edit`、`drop` | [提交后又想改](../part-5/13-rewrite-commit-playbook.md) |
 | 撤销已公开提交 | `git revert` | [公开回滚](../part-5/07-revert.md) |
 | 有条件更新个人远程分支 | `git push --force-with-lease` | [租约保护](../part-5/09-force-with-lease.md) |
 | 移动分支并选择区域更新范围 | `git reset` | [reset 三模式](../part-5/10-reset.md) |
 | 查找引用旧位置 | `git reflog` | [引用日志](../part-5/11-reflog.md) |
+| 证明 fetch 非快进更新及 rebase abort 返回位置 | `git reflog show origin/<branch>`、`git reflog show HEAD` | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
 
 ## 工程调查
 

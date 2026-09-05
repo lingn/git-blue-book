@@ -24,6 +24,7 @@
 - 普通提交 revert、冲突中止和 merge mainline revert；
 - 显式租约拒绝、协调后的条件更新和远程引用恢复；
 - reset 三模式、路径 reset、未跟踪路径边界和 reflog 恢复；
+- 远端在六条新基线后重建三条旧变化时精确出现 `ahead 3, behind 9`，以及 forced-update、补丁等价、rebase abort 和恢复分支同步；
 - stash、worktree、bisect 和热修复迁移。
 - merge、squash 与 rebase merge 的父关系、祖先关系、最终 tree 和 OID 差异，以及带 expected-old 的引用并发更新。
 - 分离 HEAD 的 CI 候选、合并提交父节点、可重复源码归档、证据清单和部署副本摘要恢复。
@@ -127,6 +128,8 @@ LFS/子模块/CI 外部依赖实验只在临时仓库验证自建 filter 的 poi
 签名排障实验只在临时仓库使用一次性 SSH key、外部 allowed signers 文件和合成 release 授权清单验证 Git 对象签名、信任策略切换、tag 目标、候选之外的授权匹配和历史改写边界；它不模拟 OpenPGP/X.509、硬件 key、撤销/时间戳服务、真实组织授权服务、托管平台徽章或真实发布门禁。
 
 远程引用漂移实验只在临时 seed、bare 远端和客户端 clone 中验证 Git refs、symbolic HEAD、tag ref、fetch/prune 和查询时序；它不模拟平台隐藏 refs、默认分支控制面、分支保护、评审/合并队列、SSO、审计事件或真实网络竞态。
+
+远端历史改写实验只在临时 seed、bare 远端和两个 clone 中验证提交图、patch equivalence、远程跟踪 reflog、rebase 状态与恢复引用。它不证明真实托管平台的操作者、强制更新入口、保护规则、审计事件、评审、CI 或业务语义。
 
 仓库损坏/锁并发实验只在临时本地仓库和可销毁副本中验证 Git lockfile、expected-old ref、pack/idx 和 fsck 边界；它不模拟网络文件系统租约、reftable、真实进程崩溃、磁盘坏道、服务端对象池或组织调度器。
 
