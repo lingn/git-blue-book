@@ -25,7 +25,7 @@
 | 切换分支 | `git switch` | [切换分支](../part-3/04-switch-branch.md) |
 | 合并历史 | `git merge` | [合并](../part-3/05-first-merge.md) |
 | 标记版本 | `git tag` | [标签](../part-3/09-tags.md) |
-| 重建功能提交 | `git rebase` | [安全变基](../part-4/11-rebase-workflow.md) |
+| 重建功能提交 | `git rebase` | [rebase 模型与安全工作流](../part-07/06-rebase-model-and-workflow.md) |
 | 迁移独立提交 | `git cherry-pick` | [挑选提交](../part-07/07-cherry-pick.md) |
 
 ## 远程协作

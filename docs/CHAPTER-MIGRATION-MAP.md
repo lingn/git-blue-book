@@ -110,8 +110,8 @@ book/part-13/  故障排查手册
 | `book/part-4/07-push.md` | `book/part-05/06-push-upstream-and-ref-updates.md` | 保留重写 |
 | `book/part-4/08-push-rejection.md` | `book/part-05/07-rejection-atomic-push-and-options.md` | 扩写原子推送与 push options |
 | `book/part-4/09-review-ready.md` | `book/part-06/02-review-request-model.md`、`book/part-06/04-reviewable-changes.md` | 拆分 |
-| `book/part-4/10-rebase-model.md` | `book/part-07/06-rebase-model-and-workflow.md` | 合并 |
-| `book/part-4/11-rebase-workflow.md` | `book/part-07/06-rebase-model-and-workflow.md` | 合并；保留当前冲突语义补强 |
+| `book/part-4/10-rebase-model.md` | `book/part-07/06-rebase-model-and-workflow.md` | 已于 2026-09-05 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-4/11-rebase-workflow.md` | `book/part-07/06-rebase-model-and-workflow.md` | 已于 2026-09-05 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/12-cherry-pick.md` | `book/part-07/07-cherry-pick.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/13-transport-auth.md` | `book/part-05/08-transport-and-authentication.md`、`book/part-10/01-credentials.md` | 过渡新增后拆分；传输章权威解释身份分层 |
 | `book/part-4/14-refspec-partial-clone.md` | `book/part-05/03-remotes-and-refspecs.md`、`book/part-05/09-negotiation-and-limited-clones.md`、`book/part-09/04-sparse-partial-workflows.md` | 过渡新增后拆分；性能决策只在第九篇扩展 |
@@ -158,7 +158,8 @@ book/part-13/  故障排查手册
 | `book/part-07/02-restore-worktree.md` | `book/part-5/02-restore-worktree.md` | 已于 2026-09-05 迁入；首批 v2 权威章，旧页已改为 `legacy-redirect` |
 | `book/part-07/03-unstage.md` | `book/part-5/03-unstage.md` | 已于 2026-09-05 迁入；首批 v2 权威章，旧页已改为 `legacy-redirect` |
 | `book/part-07/04-amend-one-commit.md` | `book/part-5/04-amend-content.md`、`book/part-5/05-amend-message.md`、`book/part-5/13-rewrite-commit-playbook.md` | 已于 2026-09-05 合并迁入；承担 amend 内容/说明、未共享重建、显式租约、hook、签名与空提交边界 |
-| `book/part-07/05-interactive-rebase.md` | `book/part-5/06-interactive-rebase.md`、`book/part-4/10-rebase-model.md`、`book/part-4/11-rebase-workflow.md` | 已于 2026-09-05 迁入；承担交互式 todo、重排/拆分、冲突、中止和重建后验证，通用 rebase 模型与工作流仍待单独合并 |
+| `book/part-07/05-interactive-rebase.md` | `book/part-5/06-interactive-rebase.md` | 已于 2026-09-05 迁入；承担交互式 todo、重排/拆分、冲突、中止和重建后验证 |
+| `book/part-07/06-rebase-model-and-workflow.md` | `book/part-4/10-rebase-model.md`、`book/part-4/11-rebase-workflow.md` | 已于 2026-09-05 合并迁入；承担普通 rebase 模型、范围、冲突、中止、range-diff、签名、评审和显式租约 |
 | `book/part-07/07-cherry-pick.md` | `book/part-4/12-cherry-pick.md` | 已于 2026-09-05 迁入；承担来源/目标 OID、顺序、冲突、空提交和共享边界 |
 | `book/part-6/exercise.md` | `book/part-08/08-incident-to-release.md` | 已于 2026-09-05 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
@@ -199,7 +200,7 @@ book/part-13/  故障排查手册
 | `book/part-06/README.md` | 原路径 | 新写；第六篇只导航已经落盘的共享历史、评审与受保护更新正文，不预列占位章 |
 | `book/part-06/01-branch-models-and-integration.md` | `book/part-4/09-review-ready.md`、`book/part-6/05-hotfix.md` | 新写并建立分支状态与整合拓扑的权威来源；承担主干、功能、发布、维护和堆叠分支的状态、责任与恢复契约 |
 | `book/part-06/02-review-state-machine.md` | `book/part-4/09-review-ready.md`、`book/part-6/09-protected-branches.md` | 新写并建立厂商无关评审请求状态机；承担功能头、目标基线、候选、审批、检查、策略版本和条件引用更新的失效与重算 |
-| `book/part-06/03-merge-strategies-and-history.md` | `book/part-3/06-merge-shapes.md`、`book/part-4/10-rebase-model.md`、`book/part-6/09-protected-branches.md` | 新写；承担 merge、squash、rebase merge 对 OID、父关系、签名、回滚、归因和评审映射的协作后果，基础命令仍由第三、四篇负责 |
+| `book/part-06/03-merge-strategies-and-history.md` | `book/part-3/06-merge-shapes.md`、`book/part-07/06-rebase-model-and-workflow.md`、`book/part-6/09-protected-branches.md` | 新写；承担 merge、squash、rebase merge 对 OID、父关系、签名、回滚、归因和评审映射的协作后果，基础命令仍由第三、七篇负责 |
 | `book/part-06/04-reviewable-changes-and-stacks.md` | `book/part-4/09-review-ready.md`、`book/part-6/07-conflict-report.md`、`book/part-6/08-commit-quality.md` | 新写；承担评审范围、冲突结果报告、风险密度、提交序列、堆叠依赖、反馈吸收和候选重绑定，提交对象质量仍由第二篇提交章负责 |
 | `book/part-06/05-ownership-approvals-and-stale-decisions.md` | `book/part-6/09-protected-branches.md`、`book/part-09/05-monorepo-topology-and-ownership.md` | 新写；承担路径/构建图/运行责任映射、审批角色、独立性、候选绑定、失效与替补机制 |
 | `book/part-06/06-required-checks-and-merge-queues.md` | `book/part-6/09-protected-branches.md`、`book/part-6/12-ci-triggers-merge-queue.md`、`book/part-08/02-candidate-commits.md` | 新写；承担必需检查身份、结果状态、候选过期、队列 generation 与 expected-old 主线更新，第八篇继续承担 CI 候选生成细节 |
