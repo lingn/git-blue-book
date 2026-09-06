@@ -284,7 +284,7 @@ git ls-remote --exit-code origin refs/heads/main
 
 需要取得对象时，把 fetch 写成单独动作，记录 refspec 和 fetch 前追踪 OID。不要先 `fetch --prune`：prune 可能删除本地映射引用，使最后一个易读名字消失；虽然对象可能仍受 reflog 保持，恢复难度已经增加。
 
-错误强推或远端删除涉及并发协作者、平台审计和服务端保留，进入[显式租约](../part-5/09-force-with-lease.md)与[综合恢复案例](../part-5/12-recovery-cases.md)，不由个人根据本地 reflog直接覆盖服务器。
+错误强推或远端删除涉及并发协作者、平台审计和服务端保留，进入[显式租约](../part-07/10-explicit-force-lease.md)与[综合恢复案例](../part-5/12-recovery-cases.md)，不由个人根据本地 reflog 直接覆盖服务器。
 
 ## 恢复验收按对象、路径、引用和外部状态分层
 
@@ -327,7 +327,7 @@ bash scripts/verify-missing-files-and-commits.sh
 2. 删除已暂存时 index 不再含路径，显式 `--source=<OID> --staged --worktree` 同时恢复 index 与工作区；
 3. 稀疏检出使 tree 中路径不在工作区，扩大 sparse 范围后重新展开而不产生删除提交；
 4. ignore 让未跟踪路径不进入默认 status，但文件字节仍在磁盘；
-5. 从未写入对象库的未跟踪内容删除后，按计算 OID读取失败，只能从实验外部副本恢复；
+5. 从未写入对象库的未跟踪内容删除后，按计算 OID 读取失败，只能从实验外部副本恢复；
 6. 分支经 hard reset 移走后，旧 commit 仍由 reflog 提供线索；创建 recovery ref 不改变当前 HEAD/index/worktree；
 7. depth=1 的浅克隆无法读取源端更早 commit，`fetch --unshallow` 后才取得对象且保留当前工作区版本；
 8. 所有恢复都核对目标 blob/tree/ref 与不得改变的旁路文件，不用一条成功输出冒充验收。

@@ -67,7 +67,7 @@ git diff "$merge_commit^2" "$merge_commit"
 
 命令在包含该对象的本地仓库中执行，只读。父不存在通常说明对象缺失、浅边界或输入并非 merge commit。不要把 `^1`、`^2` 的方向称为固定的 ours/theirs；冲突过程中的视角还取决于当时正在执行的操作。
 
-`git revert -m 1 "$merge_commit"` 会以第一父为主线计算反向变化。它不删除被合并对象，也不保证以后重新 merge 会恢复原变化。执行前必须在临时分支验证 mainline 选择、冲突和业务结果，详见[revert 共享历史](../part-5/07-revert.md)。
+`git revert -m 1 "$merge_commit"` 会以第一父为主线计算反向变化。它不删除被合并对象，也不保证以后重新 merge 会恢复原变化。执行前必须在临时分支验证 mainline 选择、冲突和业务结果，详见[revert 共享历史](../part-07/08-revert-shared-history.md)。
 
 ## Squash 只保存最终差异
 

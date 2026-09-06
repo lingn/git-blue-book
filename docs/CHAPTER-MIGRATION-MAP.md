@@ -128,10 +128,10 @@ book/part-13/  故障排查手册
 | `book/part-5/04-amend-content.md` | `book/part-07/04-amend-one-commit.md` | 已于 2026-09-05 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/05-amend-message.md` | `book/part-07/04-amend-one-commit.md` | 已于 2026-09-05 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/06-interactive-rebase.md` | `book/part-07/05-interactive-rebase.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-5/07-revert.md` | `book/part-07/08-revert-shared-history.md` | 保留当前重构稿 |
+| `book/part-5/07-revert.md` | `book/part-07/08-revert-shared-history.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/08-public-history.md` | `book/part-07/09-public-history-policy.md` | 保留重写，并链接第六篇团队规则 |
-| `book/part-5/09-force-with-lease.md` | `book/part-07/10-explicit-force-lease.md` | 保留当前重构稿 |
-| `book/part-5/10-reset.md` | `book/part-07/11-reset.md` | 保留当前重构稿 |
+| `book/part-5/09-force-with-lease.md` | `book/part-07/10-explicit-force-lease.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-5/10-reset.md` | `book/part-07/11-reset.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/11-reflog.md` | `book/part-07/12-reflog-and-recovery-refs.md`、`book/part-11/02-evidence-and-reflog.md` | 拆分日常恢复与取证证据 |
 | `book/part-5/12-recovery-cases.md` | `book/part-07/13-local-and-remote-recovery.md`、`book/part-13/02-missing-commits.md` | 拆分 |
 | `book/part-5/exercise.md` | `book/part-07/exercise.md` | 保留重写 |
@@ -161,6 +161,10 @@ book/part-13/  故障排查手册
 | `book/part-07/05-interactive-rebase.md` | `book/part-5/06-interactive-rebase.md` | 已于 2026-09-05 迁入；承担交互式 todo、重排/拆分、冲突、中止和重建后验证 |
 | `book/part-07/06-rebase-model-and-workflow.md` | `book/part-4/10-rebase-model.md`、`book/part-4/11-rebase-workflow.md` | 已于 2026-09-05 合并迁入；承担普通 rebase 模型、范围、冲突、中止、range-diff、签名、评审和显式租约 |
 | `book/part-07/07-cherry-pick.md` | `book/part-4/12-cherry-pick.md` | 已于 2026-09-05 迁入；承担来源/目标 OID、顺序、冲突、空提交和共享边界 |
+| `book/part-07/08-revert-shared-history.md` | `book/part-5/07-revert.md` | 已于 2026-09-05 迁入；承担共享历史反向提交、冲突、merge mainline、再次启用和运行状态边界 |
+| `book/part-07/09-public-history-policy.md` | `book/part-5/08-public-history.md` | 目标待落地；承担共享历史改写边界和团队恢复政策 |
+| `book/part-07/10-explicit-force-lease.md` | `book/part-5/09-force-with-lease.md` | 已于 2026-09-05 迁入；承担服务器基线、expected-old、竞态、拒绝、恢复和授权边界 |
+| `book/part-07/11-reset.md` | `book/part-5/10-reset.md` | 已于 2026-09-05 迁入；承担 soft/mixed/hard、路径形式、未跟踪边界、分离 HEAD 和本地恢复 |
 | `book/part-6/exercise.md` | `book/part-08/08-incident-to-release.md` | 已于 2026-09-05 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
 后续在六篇兼容目录中新增的 CI/CD 章节，统一登记到第八篇目标，不把兼容位置视为最终归属。

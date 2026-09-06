@@ -17,7 +17,10 @@
 5. [交互式 rebase：重建一段尚未共享的历史](05-interactive-rebase.md)
 6. [rebase 模型与安全工作流：把历史重建变成可回退流程](06-rebase-model-and-workflow.md)
 7. [cherry-pick：把一个变化迁移到另一条历史](07-cherry-pick.md)
+8. [revert 共享历史：用新提交撤销已经公开的变化](08-revert-shared-history.md)
+9. [显式租约：有条件地改写允许更新的远程分支](10-explicit-force-lease.md)
+10. [reset：移动引用，并按模式重置另外两个区域](11-reset.md)
 
-后续目标章节包括共享历史 revert、显式租约、reset、reflog 与本地/远程恢复。迁移关系记录在 `docs/CHAPTER-MIGRATION-MAP.md`，旧路径在目标章节落地前继续保留。
+后续目标章节包括 public history policy、reflog 与本地/远程恢复。迁移关系记录在 `docs/CHAPTER-MIGRATION-MAP.md`，旧路径在目标章节落地前继续保留。
 
 本篇高风险实验全部在验证脚本创建的临时仓库中执行。实验能证明 Git 数据面行为，不能证明平台审批、远程保留、制品、数据库或生产恢复能力。

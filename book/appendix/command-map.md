@@ -50,9 +50,9 @@
 | 重置最近提交署名 | `git commit --amend --reset-author` | [amend 一条提交](../part-07/04-amend-one-commit.md) |
 | 变基时逐条执行命令 | `git rebase --exec` | [逐条执行](../part-07/05-interactive-rebase.md) |
 | 对提交改名、合并、拆分或删除 | `git rebase -i` 的 `reword`、`fixup`、`squash`、`edit`、`drop` | [amend 一条提交](../part-07/04-amend-one-commit.md) |
-| 撤销已公开提交 | `git revert` | [公开回滚](../part-5/07-revert.md) |
-| 有条件更新个人远程分支 | `git push --force-with-lease` | [租约保护](../part-5/09-force-with-lease.md) |
-| 移动分支并选择区域更新范围 | `git reset` | [reset 三模式](../part-5/10-reset.md) |
+| 撤销已公开提交 | `git revert` | [公开回滚](../part-07/08-revert-shared-history.md) |
+| 有条件更新个人远程分支 | `git push --force-with-lease` | [租约保护](../part-07/10-explicit-force-lease.md) |
+| 移动分支并选择区域更新范围 | `git reset` | [reset 三模式](../part-07/11-reset.md) |
 | 查找引用旧位置 | `git reflog` | [引用日志](../part-5/11-reflog.md) |
 | 证明 fetch 非快进更新及 rebase abort 返回位置 | `git reflog show origin/<branch>`、`git reflog show HEAD` | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
 

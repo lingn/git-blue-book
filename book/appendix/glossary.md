@@ -70,7 +70,7 @@
 | 变基 | 以新起点重新应用一段变化并生成新提交 | [变基模型](../part-07/06-rebase-model-and-workflow.md) |
 | 挑选提交 | 在当前分支重放指定提交变化并创建新提交 | [cherry-pick](../part-07/07-cherry-pick.md) |
 | 改写历史 | 生成新提交替换原关系，使旧 ID 离开当前分支 | [第七篇状态矩阵](../part-07/01-state-and-sharing-matrix.md) |
-| 回滚变化 | 创建新提交抵消旧提交效果，保留旧历史 | [revert](../part-5/07-revert.md) |
+| 回滚变化 | 创建新提交抵消旧提交效果，保留旧历史 | [revert](../part-07/08-revert-shared-history.md) |
 | 引用日志 | 本地记录引用近期移动情况的日志，也叫 reflog | [reflog](../part-5/11-reflog.md) |
 | 工作树 | 与仓库关联的一套工作区、暂存状态和当前 HEAD | [worktree](../part-02/12-multiple-worktrees.md) |
 | 候选提交（兼容入口） | 旧 CI/CD 章节对 candidate commit 的称呼，权威定义已迁移到第八篇候选提交章 | [候选提交](../part-08/02-candidate-commits.md) |

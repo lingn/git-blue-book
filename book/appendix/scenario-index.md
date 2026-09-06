@@ -13,8 +13,8 @@
 | 想删除远端提交、拆分混合提交或修订已推送提交 | [amend 一条提交](../part-07/04-amend-one-commit.md) |
 | fetch 后突然显示 `ahead N, behind M`，怀疑远端历史被改写 | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
 | rebase abort 后又回到旧分支状态 | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
-| 已推送错误需要回滚 | [git revert](../part-5/07-revert.md) |
-| 个人评审分支变基后要更新远程 | [force-with-lease](../part-5/09-force-with-lease.md) |
+| 已推送错误需要回滚 | [git revert](../part-07/08-revert-shared-history.md) |
+| 个人评审分支变基后要更新远程 | [force-with-lease](../part-07/10-explicit-force-lease.md) |
 | 错误 reset 或误删分支 | [恢复案例](../part-5/12-recovery-cases.md) |
 | push 被拒绝 | [推送拒绝](../part-4/08-push-rejection.md) |
 | pull 后发生冲突 | [冲突模型](../part-3/07-conflict-model.md) |
