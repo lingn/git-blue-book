@@ -53,7 +53,7 @@
 | 撤销已公开提交 | `git revert` | [公开回滚](../part-07/08-revert-shared-history.md) |
 | 有条件更新个人远程分支 | `git push --force-with-lease` | [租约保护](../part-07/10-explicit-force-lease.md) |
 | 移动分支并选择区域更新范围 | `git reset` | [reset 三模式](../part-07/11-reset.md) |
-| 查找引用旧位置 | `git reflog` | [引用日志](../part-5/11-reflog.md) |
+| 查找引用旧位置 | `git reflog` | [引用日志](../part-07/12-reflog-and-recovery-refs.md) |
 | 证明 fetch 非快进更新及 rebase abort 返回位置 | `git reflog show origin/<branch>`、`git reflog show HEAD` | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
 
 ## 工程调查

@@ -109,7 +109,7 @@ printf 'candidate=%s\n' "$tip"
 
 前两条命令只列出本地哪些可见引用包含该 OID，第三条用 `=`、`<` 和 `>` 辅助识别补丁等价和两侧独有提交。它们都不是通用的“是否已合并”判定，输出还受 fetch 时点和可见 refs 影响。可靠做法是先保存完整 OID，再按团队采用的 merge、squash 或 rebase merge 方式验证最终结果。Merge 可以检查祖先关系；squash 和 rebase merge 还要结合评审记录、补丁映射和最终 tree。
 
-误删分支时不要立即运行清理。先用保存的 OID、reflog、评审平台和同事 clone 建立 `refs/recovery/*`，再恢复工作分支。恢复步骤见[reflog](../part-5/11-reflog.md)和[综合恢复案例](../part-5/12-recovery-cases.md)。
+误删分支时不要立即运行清理。先用保存的 OID、reflog、评审平台和同事 clone 建立 `refs/recovery/*`，再恢复工作分支。恢复步骤见[reflog](../part-07/12-reflog-and-recovery-refs.md)和[综合恢复案例](../part-07/13-local-and-remote-recovery.md)。
 
 ## 失败方式和恢复边界
 

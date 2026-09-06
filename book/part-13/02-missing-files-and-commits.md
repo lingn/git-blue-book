@@ -228,7 +228,7 @@ git reflog show --date=iso-strict HEAD
 git reflog show --date=iso-strict refs/heads/main
 ```
 
-Reflog 保存本仓库曾经的引用移动；分支删除时其分支日志可能一起删除，`HEAD` 日志可能仍有线索。日志有过期和清理窗口，不随 clone/fetch/push 传输。完整模型、默认过期边界和 `ORIG_HEAD` 见[reflog 章节](../part-5/11-reflog.md)。
+Reflog 保存本仓库曾经的引用移动；分支删除时其分支日志可能一起删除，`HEAD` 日志可能仍有线索。日志有过期和清理窗口，不随 clone/fetch/push 传输。完整模型、默认过期边界和 `ORIG_HEAD` 见[reflog 章节](../part-07/12-reflog-and-recovery-refs.md)。
 
 找到候选后，不把正式分支立即 reset 到它。先验证 commit、父、tree、差异、签名与业务内容，然后创建恢复引用：
 
@@ -239,7 +239,7 @@ git log --oneline --decorate --max-count=5 recovery/missing-work
 git diff --stat main...recovery/missing-work
 ```
 
-`git branch` 新增本地 `refs/heads/recovery/missing-work`，不切换 `HEAD`、index 或工作区；若名字已存在会失败而不覆盖。三点比较需要共同祖先，不存在时分别比较 tree。恢复引用创建后，再根据共享边界选择 merge、cherry-pick 或经协调的条件 ref 更新。详细案例见[误删分支与错误 reset 恢复](../part-5/12-recovery-cases.md)。
+`git branch` 新增本地 `refs/heads/recovery/missing-work`，不切换 `HEAD`、index 或工作区；若名字已存在会失败而不覆盖。三点比较需要共同祖先，不存在时分别比较 tree。恢复引用创建后，再根据共享边界选择 merge、cherry-pick 或经协调的条件 ref 更新。详细案例见[误删分支与错误 reset 恢复](../part-07/13-local-and-remote-recovery.md)。
 
 ### Shallow clone：更早提交可能从未到达本地
 
@@ -284,7 +284,7 @@ git ls-remote --exit-code origin refs/heads/main
 
 需要取得对象时，把 fetch 写成单独动作，记录 refspec 和 fetch 前追踪 OID。不要先 `fetch --prune`：prune 可能删除本地映射引用，使最后一个易读名字消失；虽然对象可能仍受 reflog 保持，恢复难度已经增加。
 
-错误强推或远端删除涉及并发协作者、平台审计和服务端保留，进入[显式租约](../part-07/10-explicit-force-lease.md)与[综合恢复案例](../part-5/12-recovery-cases.md)，不由个人根据本地 reflog 直接覆盖服务器。
+错误强推或远端删除涉及并发协作者、平台审计和服务端保留，进入[显式租约](../part-07/10-explicit-force-lease.md)与[综合恢复案例](../part-07/13-local-and-remote-recovery.md)，不由个人根据本地 reflog 直接覆盖服务器。
 
 ## 恢复验收按对象、路径、引用和外部状态分层
 

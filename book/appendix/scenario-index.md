@@ -15,7 +15,7 @@
 | rebase abort 后又回到旧分支状态 | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
 | 已推送错误需要回滚 | [git revert](../part-07/08-revert-shared-history.md) |
 | 个人评审分支变基后要更新远程 | [force-with-lease](../part-07/10-explicit-force-lease.md) |
-| 错误 reset 或误删分支 | [恢复案例](../part-5/12-recovery-cases.md) |
+| 错误 reset 或误删分支 | [恢复案例](../part-07/13-local-and-remote-recovery.md) |
 | push 被拒绝 | [推送拒绝](../part-4/08-push-rejection.md) |
 | pull 后发生冲突 | [冲突模型](../part-3/07-conflict-model.md) |
 | 冲突已经解决，需向同事说明 | [可审查变更中的冲突报告](../part-06/04-reviewable-changes-and-stacks.md) |

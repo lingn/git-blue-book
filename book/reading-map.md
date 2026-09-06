@@ -28,7 +28,7 @@
 
 ## 第七篇（v2 目标稿）：改写、撤销与恢复
 
-v2 第七篇已经落地状态矩阵、工作区 restore 和取消暂存三章。后续会把 amend、交互式 rebase、cherry-pick、共享历史 revert、显式租约、reset、reflog 和恢复案例分别迁入，旧第五篇在迁移完成前继续保留入口。
+v2 第七篇已经落地状态矩阵、工作区 restore、取消暂存、amend、交互式 rebase、rebase 工作流、cherry-pick、共享历史 revert、显式租约、reset、共享政策、reflog 和恢复案例。旧第五篇在最终审校前保留兼容入口。
 
 ## 第六篇（v2 权威稿）：共享历史的协作与评审
 
