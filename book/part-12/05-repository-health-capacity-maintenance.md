@@ -113,6 +113,25 @@ headroom_days = (hard_limit - current_usage - safety_margin) / daily_growth
 
 `warn` 不是失败的弱化名字，它应有 owner、截止和具体动作。连续数月 warn 且无人处置说明治理系统失效。
 
+### 健康快照和动作要分开状态化
+
+健康状态描述当前证据，维护状态描述是否允许改变数据。两者不能互相覆盖：
+
+```text
+snapshot: AVAILABLE -> PASS / WARN / FAIL / INCONCLUSIVE
+maintenance: REQUESTED -> GATED -> RUNNING -> VALIDATING -> COMPLETE
+                                      \-> BLOCKED / FAILED_CONTAINED
+```
+
+| 健康快照 | 可允许的动作 | 必须记录的附加信息 |
+| --- | --- | --- |
+| `PASS` | 按维护计划申请任务 | 快照时间、口径版本、owner 和下一次采集 |
+| `WARN` | 只允许有明确 owner、截止时间和扩大余量的受控维护 | 触发指标、headroom、行动工单和停止阈值 |
+| `FAIL` | 只允许恢复、围栏或修复必需动作 | 故障范围、写入策略、备份/恢复点和审批 |
+| `INCONCLUSIVE` | 不允许破坏性维护或清理；先补证据 | 缺失来源、权限、单位、分页、时钟和补采计划 |
+
+维护任务进入 `GATED` 前，必须把最新健康快照、备份验证、scratch 预算、活动锁和事故/法律保留状态绑定到同一个任务 ID。任务运行期间快照过期、容量跨越硬限制、出现对象完整性失败或恢复点失效时，自动停在 `BLOCKED`/`FAILED_CONTAINED`，不能继续沿用启动时的绿色状态。维护完成也要生成新的健康快照；旧快照只能解释任务前状态，不能证明任务后健康。
+
 ## SLI、SLO 与错误预算要按路径分开
 
 典型 SLI：
