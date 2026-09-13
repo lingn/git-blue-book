@@ -279,6 +279,7 @@
 - [x] 扩写第八篇数据库迁移章节，增加 `DESIGNED`、`EXPAND_APPLIED`、`BACKFILLING`、`BACKFILL_VERIFIED`、`READ_SWITCHED`、`CONTRACT_ELIGIBLE`、`CONTRACTED` 及暂停/向前修复状态，明确批次、schema、checkpoint、兼容矩阵和不可逆边界。
 - [x] 扩写第八篇事故到发布综合章节，增加各状态的进入证据、回退触发条件、attempt/blocked_reason 记录和不能提前宣称的结论，防止以局部指标关闭事故。
 - [x] 扩写第十三篇 push/认证/权限故障章，增加单次尝试的 before/after 证据记录，区分 `not-reached`、`denied`、`accepted`、`partial`、`unknown`，并将传输、原子更新、受保护引用和显式租约链接到 v2 权威章节。
+- [x] 扩写第十三篇远程引用漂移章，增加 endpoint/主体/查询模式/响应摘要与 fetch 前后本地引用的 observation 记录，区分 `visible`、`absent`、`inconclusive`，防止把空列表或 prune 结果误写成服务端删除事实。
 
 ## 回归状态
 
@@ -500,6 +501,8 @@
 | 2026-09-14 | 第七篇重复命令/术语扫描、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 普通 rebase 移除重复显式租约流程，租约章继续作为高风险命令权威来源，事故章只保留诊断与恢复，远程跟踪引用术语已统一 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-push-auth-permission-boundaries.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十三篇 push 尝试 before/after 记录、分层结果与 v2 权威链接扩写通过专项实验和文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十三篇 push 故障章扩写后的整库回归；首轮在可重复构建无输出断言处瞬时退出，专项复验通过后全量重跑通过，末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-remote-ref-drift-failures.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十三篇远程引用 observation、空响应证据状态和 fetch/prune 本地副作用边界扩写通过专项实验与文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十三篇远程引用漂移 observation 契约扩写后的整库回归，207 个公开页面、75 个兼容入口与 73 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 

@@ -48,6 +48,27 @@ git ls-remote "$remote_name" \
 
 如果同时需要比较多个引用，把它们放在同一个查询中，并记录查询时间、远端 URL 摘要和完整输出。不要把两次独立的 `ls-remote` 结果拼成一个不存在过的“快照”：两次查询之间远端可能已经发生了更新。
 
+### 把远端响应和本地缓存写进同一个观察记录
+
+一次引用排障至少保存下面的字段：
+
+```text
+observation_id / observed_at
+repository_id / remote_name / sanitized_endpoint
+principal_or_credential_context_id
+query_patterns / protocol_and_git_version
+remote_response_digest / remote_symref / visible_refs
+local_refs_before / fetch_refspec / prune_configuration
+fetch_attempt / fetch_exit_status / fetch_output_digest
+local_refs_after / upstream_configuration / origin_head
+platform_event_or_request_id
+evidence_state: visible | absent | inconclusive
+```
+
+`visible` 表示某个 ref 和 OID 出现在同一次受控响应中；`absent` 只有在查询范围、主体权限、隐藏规则和分页/协议边界都已确认时，才能表示目标 ref 在本次服务端视图中不存在；任何一项无法确认都应记为 `inconclusive`。即使是 `absent`，也不能单独证明引用何时删除、对象已清理或所有客户端缓存已经收敛。
+
+fetch 前后引用清单必须分别保存。若执行了 prune，本地旧远程跟踪引用消失是客户端状态变化，不应回写成服务端删除证据。远端响应、平台事件和本地缓存三者 OID 不一致时，保留原始记录并创建新的 observation，不要修改旧文件让它们看起来一致。
+
 ## 分支重命名：创建和删除是两个动作
 
 远端分支从 `legacy` 改名为 `archive/legacy`，在 Git 数据面通常表现为：新引用指向某个 OID，旧引用被删除。提交对象可能完全没有变化。
