@@ -214,6 +214,9 @@ book/part-13/  故障排查手册
 | `book/part-03/04-commit-graph-and-reachability.md` | `book/part-3/01-commit-graph.md`、`book/part-09/01-measure-before-optimizing.md` | 新写并建立 commit 父边、拓扑/时间、查询根、revision 集合、merge-base/fork-point、浅边界、replace refs、commit-graph 和 generation data 的模型层权威来源；第九篇继续承担性能测量，旧第三篇页面在第四篇 merge-base 操作章落地前保留正文 |
 | `book/part-03/05-index-internals.md` | `book/part-2/05-three-areas.md`、`book/part-3/07-conflict-model.md`、`book/part-3/10-complex-conflicts-rerere.md`、`book/part-09/04-sparse-partial-workflows.md` | 新写并建立 index entry/mode/OID/stage/stat、格式/扩展/锁、替代 index、冲突 stage 0/1/2/3、sparse-directory 和标志边界的模型层权威来源；第二篇保留日常操作，第四篇承担合并策略，第九篇承担受限工作流决策 |
 | `book/part-03/06-porcelain-and-plumbing.md` | `book/part-1/05-first-model.md`、各篇底层命令说明 | 新写并建立高层编排与底层原语的责任边界，覆盖对象构造、引用条件更新、index/工作区不同步、机器接口、batch 读取、hooks/签名和平台控制面缺口；不把 plumbing 分类当作风险等级 |
+| `book/part-04/README.md` | `book/part-3/README.md` | 新写；建立分支、合并、冲突与标签的 v2 操作层入口，只导航已落盘章节，旧第三篇在全部目标章迁移前继续承担兼容教学 |
+| `book/part-04/01-branches-and-detached-head.md` | `book/part-3/02-branch-as-reference.md`、`book/part-3/03-head.md` | 新写并承担分支工作线、附着/分离/unborn `HEAD`、可达关系、本地/远程跟踪/upstream、命名、worktree 占用和删除恢复；底层 ref/reflog 格式仍引用第三篇 |
+| `book/part-04/02-create-and-switch-branches.md` | `book/part-3/04-switch-branch.md` | 新写并承担 branch/switch、明确起点、tracked/staged/未跟踪覆盖保护、可携带修改、upstream、分离候选、worktree 和 checkout 迁移边界 |
 | `book/part-06/README.md` | 原路径 | 新写；第六篇只导航已经落盘的共享历史、评审与受保护更新正文，不预列占位章 |
 | `book/part-06/01-branch-models-and-integration.md` | `book/part-4/09-review-ready.md`、`book/part-6/05-hotfix.md` | 新写并建立分支状态与整合拓扑的权威来源；承担主干、功能、发布、维护和堆叠分支的状态、责任与恢复契约 |
 | `book/part-06/02-review-state-machine.md` | `book/part-4/09-review-ready.md`、`book/part-6/09-protected-branches.md` | 新写并建立厂商无关评审请求状态机；承担功能头、目标基线、候选、审批、检查、策略版本和条件引用更新的失效与重算 |

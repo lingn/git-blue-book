@@ -17,7 +17,8 @@
 | 未跟踪文件 | 工作区中存在但尚未纳入 Git 记录集合的文件 | [查看状态](../part-2/04-status.md) |
 | 提交图 | 以提交为节点、父提交关系为连线的有向图 | [提交图与可达性](../part-03/04-commit-graph-and-reachability.md) |
 | 引用 | 指向 Git 对象的名字 | [引用、HEAD 与 reflog](../part-03/03-refs-head-and-reflog.md) |
-| 分支 | 指向提交并随当前工作线新提交向前移动的引用 | [分支模型](../part-3/02-branch-as-reference.md) |
+| 分支 | 指向提交并随当前工作线新提交向前移动的引用 | [分支与分离 HEAD](../part-04/01-branches-and-detached-head.md) |
+| upstream | 本地分支关联的默认远端与合并引用配置，用于比较、pull/push 默认值等上下文 | [创建和切换分支](../part-04/02-create-and-switch-branches.md) |
 | `HEAD` | 表示当前工作位置的特殊引用，通常指向当前分支 | [引用、HEAD 与 reflog](../part-03/03-refs-head-and-reflog.md) |
 | 合并 | 把另一条历史中当前分支尚未包含的变化整合进来 | [第一次合并](../part-3/05-first-merge.md) |
 | 快进 | 当前提交是目标提交祖先，只需向前移动分支 | [第一次合并](../part-3/05-first-merge.md) |
