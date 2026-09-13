@@ -166,6 +166,49 @@ git status --porcelain=v1 --ignore-submodules=none
 
 浅克隆、部分克隆和并发 `--jobs` 可以减少特定负载，却会扩大兼容矩阵。若固定 gitlink OID 不在 shallow 边界、服务端不允许按 OID 获取、嵌套仓库不支持 filter，初始化可能失败。先在完整 clone 建正确性基线，再逐层引入限制，并为每个依赖记录回退到完整 fetch 的路径。
 
+## 把 gitlink 发布状态写成一组证据
+
+超级项目的 commit 已经固定 gitlink，并不等于依赖已经可以被所有消费者取得。一次可审查的依赖升级至少要关联以下字段：
+
+~~~text
+superproject_candidate: <超级项目 commit OID>
+submodule_path: <tree 中的路径>
+dependency_repository: <批准的仓库稳定 ID>
+gitlink_oid: <依赖 commit OID>
+published_refs: <依赖远端可见的 refs 和查询时间>
+authenticated_principal: <取得/发布主体>
+checkout_result: <记录 OID 与实际 HEAD>
+payloads: <LFS、嵌套 submodule 或生成输入>
+~~~
+
+这些字段分别回答“主项目记录了什么”“依赖仓库是谁”“commit 是否已经发布”“当前身份能否取得”和“CI 实际检出了什么”。`.gitmodules` URL、依赖分支名或超级项目页面上的绿色检查，都不能替代 `gitlink_oid` 与远端可见性证明。
+
+可以把依赖状态分成四类：
+
+| 状态 | Git 事实 | 是否允许构建 | 修复方向 |
+| --- | --- | --- | --- |
+| `unpublished` | gitlink OID 在发布者本地存在，批准远端查不到 | 否 | 先向依赖远端发布同一 OID，或重新选择已发布 commit |
+| `published-inaccessible` | 远端存在 OID，但 CI 身份无法读取 | 否 | 修复仓库授权、协议或凭据，不能改 gitlink 冒充修复 |
+| `fetched-unverified` | CI 已取得 OID，但来源、签名、许可证或外部 payload 未验证 | 否 | 补齐来源证明和依赖内部检查 |
+| `fixed-verified` | OID、来源、checkout、payload 和检查均匹配候选 | 可以 | 将清单写入构建 provenance，保留恢复来源 |
+
+`git push --recurse-submodules=check` 只能根据当前配置的 submodule 远端检查相关 commit 是否已发布；它不检查远端是否允许 CI 身份读取，也不验证签名、保护规则或 LFS payload。`on-demand` 可能先成功发布依赖、随后在超级项目 push 失败，或者多个依赖只发布一部分。任何非零结果都要逐仓库查询最终 refs，不能假定整批回滚。
+
+## 依赖恢复要从原 OID 开始
+
+当依赖远端不可用或 gitlink 指向已删除 commit 时，先冻结超级项目继续升级，保存超级项目 candidate、gitlink OID、`.gitmodules` 原文和失败响应。恢复顺序是：
+
+1. 在不受原工作区影响的副本中，用其他可信 clone、mirror 或 bundle 查找同一依赖 OID；
+2. 验证依赖 commit、tree、签名、许可证、LFS pointer 和嵌套 gitlink；
+3. 将同一 OID 发布到受控恢复仓库的专用 ref，记录发布主体和服务端 old/new OID；
+4. 在空 cache 的 CI 目录中按批准 URL 递归 checkout，核对每个 path/OID；
+5. 重新生成超级项目候选和构建 manifest，明确恢复仓库是否暂时替代原服务；
+6. 原服务恢复后，对账 refs、权限、审计和下游 cache，再决定切换或保留恢复端。
+
+不要创建“内容看起来一样”的新 commit 代替原 gitlink OID。若只有新实现而没有原对象，必须把它当作依赖升级，重新走评审、兼容和发布顺序。恢复仓库中的 ref 也不自动成为长期生产来源，所有权、保留和回切条件要写入治理记录。
+
+Subtree 的恢复对象不同：导入后的文件和历史在超级项目自己的 tree 中，普通 clone 通常能取得当前目录，但来源仓库、split 分支、许可证和上游同步证据仍可能缺失。恢复 subtree 时保存导入 commit、prefix、上游 ref、`--squash`/`--rejoin` 选项和 split OID；不要只从当前目录重新复制文件来替换一段历史。
+
 超级项目的普通 `git archive` 也不会替你把外部 submodule tree 递归封装成完整源码包。发布归档应显式组装每个固定 checkout，记录清单和摘要，再按[源码、制品与部署证据链](../part-08/03-source-artifact-deployment-evidence.md)验证制品。
 
 ## Submodule 失败时先判断是哪一个仓库
