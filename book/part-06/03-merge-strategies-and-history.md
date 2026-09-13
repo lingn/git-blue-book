@@ -112,6 +112,100 @@ git range-diff "$base".."$feature" "$target".."$rebased_feature"
 
 `range-diff` 用补丁序列帮助评审重建前后关系，输出不是永久对象，也不证明运行行为相同。依赖变化、冲突解决和提交顺序仍要单独审查。
 
+## Tree 相同不代表提交证据相同
+
+两种合并方式可能得到相同的根 tree，但这只说明当前文件视图的 Git 内容相同。下面几项仍可能不同：
+
+| 观察维度 | 可能不同的事实 |
+| --- | --- |
+| commit OID | 父提交、作者/提交者、时间、说明或签名不同 |
+| parent 列表 | merge commit 保留目标与功能两条父边，squash 通常只有目标父 |
+| 可达性 | 原功能提交可能仍在主线祖先中，也可能只留在评审或恢复引用中 |
+| 归因粒度 | `bisect`、`log`、审计查询命中的提交数量不同 |
+| 发布与回滚 | 标签、制品来源、revert 入口和恢复范围不同 |
+| 外部上下文 | 评审候选、队列位置、检查 attempt 和审批可能绑定不同对象 |
+
+在包含候选的仓库中，至少分别比较 tree、父列表和对象类型：
+
+~~~bash
+first_candidate="<第一个完整候选 OID>"
+second_candidate="<第二个完整候选 OID>"
+git show --no-patch --format='%H%n%P%n%T%n%aI%n%cI' \
+  "$first_candidate" "$second_candidate"
+git diff --quiet "$first_candidate^{tree}" "$second_candidate^{tree}"
+~~~
+
+前置条件是两个 OID 都来自同一对象格式、对象在本地可读，且命令在一次性或只读副本执行。`git diff --quiet` 成功只能说明 tree 没有差异，不代表 commit 相同；若对象缺失、仓库处于 shallow 边界或表达式解析失败，命令应停止并保留错误。不要把 tree 相同写成“合并结果完全相同”。
+
+## 回滚单位由最终历史形状决定
+
+选择合并方式时，先回答错误发生后要撤销什么：
+
+~~~text
+merge commit：可能只撤销一次集成，必须选择 mainline
+squash：通常一次 revert 撤销整个功能快照差异
+rebase merge：可能逐个 revert 重建后的提交
+~~~
+
+这只是 Git 对象层的回滚入口。数据库 schema、异步消息、缓存、LFS payload、制品和运行实例仍需分别处理。一个 squash 提交容易定位为单个 Git 变化，却可能包含多个不可逆外部动作；一个 merge commit 可以保留功能分支的父关系，却不自动生成可逆的部署批次。
+
+在决定合并方式之前，写出回滚记录：
+
+~~~text
+failure_scope: <代码、配置、schema、消息或运行实例>
+git_rollback_unit: <merge/squash/rebased commit series>
+mainline_or_parent: <仅 merge 需要>
+external_compensation: <向前修复、数据恢复或消息处置>
+verification: <如何证明代码和外部状态都已收敛>
+~~~
+
+没有外部补偿方案时，不应把“Git revert 可以生成”当作发布可回退。回滚动作也会产生新候选，必须重新经过评审、检查和条件引用更新。
+
+## `bisect` 和历史归因看见的是你留下的图
+
+Merge commit 让 `bisect` 可能先命中集成提交，再进入功能提交；squash 把多条功能意图压成一个候选，故障定位粒度变粗；rebase merge 保留逐提交形状，却使用新 OID，旧评审评论和外部日志需要映射。团队不能一边选择压平历史，一边要求未来调查拥有原功能分支的逐提交证据，除非另行保存来源映射。
+
+最小的归因记录至少包含：
+
+~~~text
+source_feature_range: <原功能提交范围>
+final_mainline_range: <最终主线提交范围>
+candidate_oid / final_oid:
+parent_oids:
+mapping_method: <range-diff、patch-id、平台事件或人工审阅>
+known_granularity_loss: <squash、生成物或合并简化造成的缺口>
+~~~
+
+`patch-id` 或相同 tree 只能帮助寻找候选，不能证明父关系、作者、签名、评审或运行输入一致。需要调查“谁引入了问题”时，先声明当前历史形状和查询范围，再解释结论能否回到原始评审对象。
+
+## 签名要重新绑定到最终对象
+
+原功能提交的签名不会自动转移到 merge、squash 或 rebase 后生成的 commit。即使原提交仍可达，最终主线对象也可能没有相同签名。发布流程应分别记录：
+
+1. 来源提交有哪些签名，以及 key 是否在当时可信；
+2. 最终候选或发布 tag 是否由允许主体重新签名；
+3. 签名主体、评审主体、合并服务和发布机器人是否是不同身份；
+4. 最终签名覆盖哪个 OID、策略版本和发布动作。
+
+密码学验证、key/principal 映射和组织授权由[签名与信任策略](../part-10/04-signatures.md)负责。本章只确定历史形状会让签名绑定对象发生变化，不能把来源对象签名复制到新对象的证据记录中。
+
+## 最终验收按对象链执行
+
+合并服务或发布负责人验收时，建议按下面顺序保存证据：
+
+~~~text
+target_before -> final_mainline
+feature_before -> candidate -> final_mainline
+candidate_kind and parent_oids
+tree comparison and path diff
+approval/check/reporting identities
+signature and trust-policy result
+rollback unit and external compensation
+platform ref event and artifact/deployment OID
+~~~
+
+先确认服务器目标 ref 的 old/new OID，再读取最终 commit 的父列表和 tree，随后核对来源映射、评审/检查身份、签名、回滚和制品。任何一项只有分支名、短 OID、页面截图或“tree 没变”的说法，都标记为未验证。这样可以把历史形状的差异传递到发布与事故调查，而不是在合并按钮完成后才发现证据已经丢失。
+
 ## 三种方式的工程后果
 
 | 维度 | Merge commit | Squash | Rebase merge |

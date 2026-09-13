@@ -180,6 +180,7 @@
 - [x] 将第二篇核心十二页迁入 `book/part-02/` v2 权威路径，合并 stash/worktree 补充入口；第二篇承担本地操作模型，第三篇承担 index 数据结构，旧 `book/part-2/` 页面改为 `legacy-redirect`。
 - [x] 将旧第四篇代码评审前准备页拆分迁入第六篇评审状态机、可审查变更和第八篇候选提交，旧页改为 `legacy-redirect`，清理旧路径上的第二份评审正文。
 - [x] 实质扩写第六篇评审状态机，补充证据键、事件幂等/乱序、`stale` 与 `inconclusive` 分流、评论/审批/检查时间线和本地 Git 与平台控制面边界。
+- [x] 实质扩写第六篇 merge/squash/rebase merge 章节，补充 tree 相同与提交证据差异、回滚单位、bisect 粒度、最终对象签名和对象链验收顺序。
 
 - [x] 扩写受保护分支章节，建立平台控制面与 Git 引用更新的分层模型。
 - [x] 为平台事实建立版本与核对登记表。
@@ -395,6 +396,8 @@
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 旧第四篇评审前准备页迁为兼容入口，入站链接切换到第六篇和第八篇权威章节，207 个公开页面、75 个兼容迁移页 |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第六篇评审状态机实质扩写，证据键、事件重放和 stale/inconclusive 分流通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第六篇评审状态机实质扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第六篇 merge/squash/rebase merge 章节实质扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
+| 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第六篇合并历史后果扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 
