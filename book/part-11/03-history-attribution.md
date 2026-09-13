@@ -53,6 +53,34 @@ timeout=60 首次进入哪条可见历史？它相对候选父提交改变了什
 
 没有候选 commit、路径、字符串或时间范围时，先采集，不要从当前工作树的第一行 blame 开始讲故事。
 
+## 结论要有置信度和反例清单
+
+历史调查的输出不应只有一个 OID。建议为每个结论保存：
+
+~~~text
+claim: <待回答的问题和范围>
+candidate_oids: <候选集合>
+query_manifest: <命令、参数、Git 版本、refs 快照>
+mechanical_evidence: <blame/diff/pickaxe/tree 结果>
+external_evidence: <评审、CI、制品、部署或运行事件>
+counterexamples_checked: <rename、merge、revert、生成文件、浅边界>
+confidence: verified | supported | inferred | inconclusive
+next_evidence: <仍需取得的来源>
+~~~
+
+`verified` 只表示指定范围内的对象和外部记录互相吻合，不表示调查覆盖了所有隐藏 refs 或所有业务因果。`supported` 表示多条证据方向一致但仍有未排除假设，`inferred` 适合仅来自提交消息或时间邻近的线索，`inconclusive` 表示范围、对象、外部事件或时间线缺失。没有反例清单时，不要把 `blame` 的单一结果升级为 `verified`。
+
+至少检查这些替代解释：
+
+| 替代解释 | 为什么会误导 | 需要的对照 |
+| --- | --- | --- |
+| 代码从别处复制 | 当前行最后由复制提交写入，逻辑更早存在 | `-C`、旧路径、tree/diff 和首次字符串变化 |
+| 纯格式化或机械迁移 | 行号归因改变，行为可能没变 | `ignore-rev` 对照、工具版本和语义测试 |
+| merge/revert | 目标提交只是选择或抵消另一侧变化 | 每个父的 diff、revert 对象和分支图 |
+| 生成文件 | 提交写入的是生成结果，源逻辑在别处 | 生成器、输入、构建清单和制品来源 |
+| 浅/部分 clone | 本地“首次出现”只是历史或对象缺失 | shallow boundary、promisor、完整 donor |
+| 时间邻近 | commit 时间不是接收、部署或事故时间 | 服务端事件、CI、制品和运行时钟 |
+
 ## 先看提交图，再看一行
 
 ~~~bash
