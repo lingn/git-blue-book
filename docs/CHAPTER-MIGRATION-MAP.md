@@ -164,7 +164,7 @@ book/part-13/  故障排查手册
 | `book/part-07/06-rebase-model-and-workflow.md` | `book/part-4/10-rebase-model.md`、`book/part-4/11-rebase-workflow.md` | 已于 2026-09-05 合并迁入；承担普通 rebase 模型、范围、通用冲突状态机、中止、range-diff、签名、评审和显式租约 |
 | `book/part-07/07-cherry-pick.md` | `book/part-4/12-cherry-pick.md` | 已于 2026-09-05 迁入；承担来源/目标 OID、顺序、冲突、空提交和共享边界 |
 | `book/part-07/08-revert-shared-history.md` | `book/part-5/07-revert.md` | 已于 2026-09-05 迁入；承担共享历史反向提交、冲突、merge mainline、再次启用和运行状态边界 |
-| `book/part-07/09-public-history-policy.md` | `book/part-5/08-public-history.md` | 已于 2026-09-06 迁入；承担共享历史改写边界和团队恢复政策 |
+| `book/part-07/09-public-history-policy.md` | `book/part-5/08-public-history.md` | 已于 2026-09-06 迁入，2026-09-13 完成第一轮跨章去重；只承担公开定义、改写许可、外部坐标与团队恢复政策，revert、租约、远端事故和 reflog 命令改为链接权威章 |
 | `book/part-07/10-explicit-force-lease.md` | `book/part-5/09-force-with-lease.md` | 已于 2026-09-05 迁入；承担服务器基线、expected-old、竞态、拒绝、恢复和授权边界 |
 | `book/part-07/11-reset.md` | `book/part-5/10-reset.md` | 已于 2026-09-05 迁入；承担 soft/mixed/hard、路径形式、未跟踪边界、分离 HEAD 和本地恢复 |
 | `book/part-07/12-reflog-and-recovery-refs.md` | `book/part-5/11-reflog.md`、`book/part-11/02-object-forensics-and-recovery.md` | 已于 2026-09-06 迁入；承担日常引用恢复、ORIG_HEAD、日志过期和 recovery ref，物理对象取证仍由第十一篇负责 |

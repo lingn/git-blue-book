@@ -62,17 +62,7 @@ amend、rebase、reset 后分支可以指向新节点：
 
 ## 为什么共享主线优先 revert
 
-共享提交的效果有问题时，通常追加反向提交：
-
-~~~bash
-git fetch origin
-git show --format=fuller --stat <bad-commit>
-git revert <bad-commit>
-git diff --staged --check
-git commit -m "revert: disable broken settlement path"
-~~~
-
-revert 保留旧提交和后续历史，新的提交说明“曾经引入、后来撤销”这条事实。它只能撤销 Git tree 中的变化，数据库、消息、外部 API 和已运行实例要单独处理。
+共享提交的效果有问题时，通常追加反向提交。revert 保留旧提交和后续历史，新的提交说明“曾经引入、后来撤销”这条事实。完整的单提交、冲突、批量和 merge mainline 流程见[revert 共享历史](08-revert-shared-history.md)。
 
 如果坏提交是 merge commit，需要选择 mainline。若回退会破坏已经写入的数据或消息，可能应采用向前修复，而不是简单 revert。决定必须基于发布和数据证据。
 
@@ -88,35 +78,18 @@ revert 保留旧提交和后续历史，新的提交说明“曾经引入、后�
 6. 平台规则和审计允许条件更新；
 7. 新历史的测试、签名和发布记录会重新生成。
 
-推送时使用显式 expected-old 租约：
-
-~~~bash
-expected_remote=<改写前远端完整 OID>
-git push --force-with-lease=refs/heads/feature/search:"$expected_remote" \
-  origin HEAD:refs/heads/feature/search
-~~~
-
-租约只防止远端 ref 已经偏离 expected value。它不证明没有其他副本、不提供备份，也不能替代通知和平台授权。
+获批改写仍要按[显式租约](10-explicit-force-lease.md)保存服务器基线并条件更新远端。租约只防止远端 ref 已经偏离 expected value；它不证明没有其他副本、不提供备份，也不能替代通知和平台授权。
 
 ## 协作者如何恢复
 
-发现共享分支被改写后，先保存旧 OID 和当前 refs：
-
-~~~bash
-git fetch origin
-git branch recovery/old-shared <old-commit-id>
-git log --graph --decorate --oneline --all
-git log --left-right --oneline recovery/old-shared...origin/feature/search
-~~~
-
-然后按团队决定：
+发现共享分支被改写后，先固定旧/新 OID、当前 refs、远端事件和未发布工作，再按团队决定：
 
 - 把本地未发布工作 rebase 到新的远端；
 - 从旧恢复分支 cherry-pick 尚未包含的提交；
 - 对比补丁等价性，避免重复应用；
 - 如果远端改写未经授权，冻结写入并启动事件响应。
 
-不要直接 reset --hard 到 origin/feature/search，除非已备份本地工作并确认旧提交无须保留。重新 clone 是最后的同步方式之一，不是第一反应。
+具体的 ahead/behind、补丁等价、rebase abort 和恢复路线见[远端历史事故](14-remote-history-rewrite.md)。不要直接 reset --hard 到 origin/feature/search，除非已备份本地工作并确认旧提交无须保留。重新 clone 是最后的同步方式之一，不是第一反应。
 
 ## 标签、制品和评审不会自动迁移
 
@@ -132,16 +105,7 @@ git log --left-right --oneline recovery/old-shared...origin/feature/search
 
 ## 版本和恢复窗口
 
-reflog 和不可达对象的保留受仓库配置、维护、对象过期和备份策略影响。查看配置和候选：
-
-~~~bash
-git config --show-origin --get-regexp '^(gc|core\.logAllRefUpdates)'
-git reflog --all --date=iso-strict
-git fsck --no-reflogs --unreachable
-git count-objects -v
-~~~
-
-这些命令可能显示内部路径和对象，外发前脱敏。事故响应期间暂停自动清理，先建立恢复 refs 和独立备份。窗口过去后，Git 本地可能无法恢复，需依赖其他 clone、镜像或对象库。
+reflog 和不可达对象的保留受仓库配置、维护、对象过期和备份策略影响。日常日志与 recovery ref 见[reflog 章节](12-reflog-and-recovery-refs.md)，对象缺失、pack 损坏和 donor 恢复见[第十一篇对象取证](../part-11/02-object-forensics-and-recovery.md)。事故响应期间暂停自动清理，先建立恢复 refs 和独立备份。窗口过去后，Git 本地可能无法恢复，需依赖其他 clone、镜像或对象库。
 
 ## 失败路径和恢复
 
