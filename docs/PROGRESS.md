@@ -261,6 +261,7 @@
 - [x] 扩写第七篇 reflog 与 recovery ref 章节，增加“日志线索/对象可读性”候选矩阵，以及 reset/reflog 实验的前置条件、状态变化、预期输出和远端边界。
 - [x] 扩写第七篇本地与远程恢复章节，增加 `PRESERVED` 到 `CLOSED` 的恢复状态机、每步证据和停止条件，明确引用恢复不等于共享收敛或运行验证。
 - [x] 扩写第七篇远端历史改写事故章，补充 fetch/`ls-remote` 观察分离、`ahead/behind` 四阶段状态变化、rebase abort 证据和隔离实验执行契约。
+- [x] 扩写第七篇 cherry-pick 章节，补充来源/目标/picked OID 的三坐标记录、非快进后 rebase 与维护分支挑选实验契约，以及本地 Git 与发布系统证据边界。
 
 ## 回归状态
 
@@ -462,6 +463,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-reset-reflog.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇 reflog 与 recovery ref 候选矩阵及实验契约扩写通过专项实验与文档门禁 |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇本地与远程恢复状态机、证据和停止条件扩写通过文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-remote-history-rewrite.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇远端历史改写事故的观察分离、四阶段状态和实验契约扩写通过专项实验与文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-part-4-history.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇 cherry-pick 来源/目标/picked OID 实验契约扩写通过专项实验与文档门禁 |
 
 ## 已知风险
 

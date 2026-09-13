@@ -173,6 +173,33 @@ verification: <测试、构建和部署证据>
 
 这份记录比在提交说明中写一个短 ID 更耐用。平台评审、制品和部署系统也要绑定目标新 OID，不能继续引用来源分支上的旧提交。
 
+## 来源、目标和 picked OID 的实验契约
+
+本章的隔离实验从仓库根目录执行，要求 Git、Bash 和 `mktemp` 可用。脚本在临时目录中创建 bare 远端、Alice/Bob 克隆、维护分支和 develop 分支，不读取当前项目的 remote、配置或工作区：
+
+```bash
+git --version
+TMPDIR=/private/tmp bash scripts/verify-part-4-history.sh
+```
+
+成功输出为：
+
+```text
+Part 4 rejection, fetch, rebase, and cherry-pick experiments passed.
+```
+
+实验先让 Bob 在旧目标上产生本地提交，验证 Alice 已推进远端后普通 push 被拒绝，再 fetch、rebase 并核对新 OID、最终 tree 和 `range-diff`。随后在 release/1.x 上从 develop 挑选维护修复，记录三个不同坐标：
+
+```text
+source_commit: develop 上的完整 OID
+target_before: cherry-pick 前 release/1.x 的完整 OID
+picked_commit: cherry-pick 后 release/1.x 的完整 OID
+```
+
+验收重点是 `picked_commit` 的第一父等于 `target_before`，`picked_commit` 通常不等于 `source_commit`，工作区干净，且目标文件包含修复。source OID 仍属于 develop 的历史，不能用 picked OID 反向声称来源分支已更新。
+
+实验通过只证明本地 Git 的非快进、rebase、来源/目标对象和 picked 提交关系。它不证明真实维护分支权限、评审审批、制品签名、部署准入或安全修复已经发布；生产记录仍需保存源提交、目标提交、picked OID、测试和部署证据。
+
 ## 失败路径和恢复
 
 | 现象 | 先收集 | 处理 |
