@@ -100,6 +100,51 @@ git count-objects -vH > object-count.snapshot
 
 这些命令保存本地引用移动、当前可发现的不可达对象和对象库统计。结果受 reflog、替代对象库、最近 GC 和配置影响；它不是服务端全量对象清单。取证副本应只读或写保护，输出权限要限制，因为 reflog message、路径和对象内容本身可能含敏感数据。
 
+## 扫描结论必须带范围状态
+
+“扫描通过”至少要拆成范围、执行和处置三个维度。建议使用下面的状态，不把缺权限、超时和未接入的副本写成 `clean`：
+
+| 状态 | 含义 | 能否作为发布/关闭证据 |
+| --- | --- | --- |
+| `clean-in-scope` | 已声明输入完整读取，规则和扫描器成功结束，未发现命中 | 只能说明该输入范围和时间点 |
+| `findings-open` | 发现结果尚未撤销、隔离、清理或复核 | 不能作为安全通过 |
+| `inconclusive` | 输入缺失、权限不足、超时、解析失败或外部副本未核对 | 不能降级为 clean |
+| `not-scanned` | 明确未纳入该范围，例如旧 clone、LFS payload 或平台日志 | 只能作为风险声明，不能作为关闭条件 |
+| `remediated` | 处置动作完成，但需用新的范围快照和规则重新扫描 | 旧扫描结果不自动继承 |
+
+每份报告还应保存扫描器版本、规则集摘要、输入 refs/tree、LFS/外部副本清单、开始/结束时间、权限主体、错误与跳过计数。扫描器在中途超时后只输出部分结果，必须标为 `inconclusive`，不能把已有命中数为零解释为完整扫描。
+
+### 处置与扫描是两条闭环
+
+发现秘密后的闭环顺序通常是：
+
+~~~text
+发现 -> 固定最小证据 -> 撤销/冻结凭据 -> 隔离继续传播的副本
+      -> 决定是否重写 Git 历史 -> 重新生成 refs/归档/制品
+      -> 在 fresh 输入上复扫 -> 由 owner 关闭风险
+~~~
+
+撤销凭据和历史重写可以并行，但重新扫描必须使用新的候选范围和新规则版本。清理前的报告用于证明暴露，清理后的报告用于证明当前范围；两者不能覆盖写成一份“最终扫描”。历史清理未覆盖的 fork、mirror、LFS、CI artifact 或备份，应保留明确的 `not-scanned`/`inconclusive` 状态和责任人。
+
+## 归档交付要绑定 manifest，而不是只给一个压缩包
+
+源码归档、扫描结果和制品应由一个 manifest 连接：
+
+~~~text
+source_commit / source_tree
+archive_path / archive_sha256 / archive_size
+archive_tool / Git_version / attributes_source
+path_manifest_sha256
+scanner_version / ruleset_digest / scan_scope
+symlink_and_archive_safety_result
+external_inputs: LFS, submodule, generated files
+publisher / verified_at / retention
+~~~
+
+其中 `archive_sha256` 证明下载的归档字节没有变化，`source_tree` 说明它从哪个 Git tree 生成，`path_manifest_sha256` 证明扫描的路径集合没有被替换。三者缺一，不能把“扫描过归档”与“下载者拿到同一归档”关联起来。
+
+发布者应在导出后从一个全新临时目录重新读取归档、计算摘要、检查路径和运行扫描器。不要在同一个工作目录先生成归档、再修改文件、最后复用旧摘要。归档里若包含 LFS pointer，manifest 要明确列出 pointer 与 payload 是否分别扫描，以及发布对象是否要求水合后的字节。
+
 ## 扫描器会漏什么
 
 provider pattern、通用 token pattern、熵规则和上下文启发式各有边界：
