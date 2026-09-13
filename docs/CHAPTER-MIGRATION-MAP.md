@@ -104,9 +104,9 @@ book/part-13/  故障排查手册
 | `book/part-4/01-remote-model.md` | `book/part-05/01-remote-state-model.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/02-clone.md` | `book/part-05/02-clone-and-initial-state.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/03-remote.md` | `book/part-05/03-remotes-and-refspecs.md` | 已于 2026-09-14 与 refspec 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-4/04-fetch.md` | `book/part-05/04-fetch-and-fetch-head.md` | 合并扩写 |
-| `book/part-4/05-remote-tracking.md` | `book/part-05/04-fetch-and-fetch-head.md` | 合并 |
-| `book/part-4/06-pull.md` | `book/part-05/05-pull-as-composition.md` | 保留重写 |
+| `book/part-4/04-fetch.md` | `book/part-05/04-fetch-and-fetch-head.md` | 已于 2026-09-14 合并扩写；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-4/05-remote-tracking.md` | `book/part-05/04-fetch-and-fetch-head.md` | 已于 2026-09-14 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-4/06-pull.md` | `book/part-05/05-pull-as-composition.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/07-push.md` | `book/part-05/06-push-upstream-and-ref-updates.md` | 保留重写 |
 | `book/part-4/08-push-rejection.md` | `book/part-05/07-rejection-atomic-push-and-options.md` | 扩写原子推送与 push options |
 | `book/part-4/09-review-ready.md` | `book/part-06/02-review-request-model.md`、`book/part-06/04-reviewable-changes.md` | 拆分 |

@@ -34,7 +34,7 @@
 | merge quit | 移除进行中 merge 的元数据，但保留当前 index 和工作区，不等同于中止 | [解决、中止与验收](../part-04/07-resolve-abort-and-verify.md) |
 | 标签 | `refs/tags/` 下指向对象的名字；轻量标签直接指向目标，附注标签先指向 tag object | [标签与发布引用](../part-04/09-tags-and-release-refs.md) |
 | 远程仓库 | 当前仓库通过路径或网络访问的另一个仓库 | [远程状态模型](../part-05/01-remote-state-model.md) |
-| 远程跟踪分支 | 本地记录最近一次通信时远程分支位置的引用 | [远程跟踪](../part-4/05-remote-tracking.md) |
+| 远程跟踪分支 | 本地记录最近一次通信时远程分支位置的引用 | [Fetch 与 FETCH_HEAD](../part-05/04-fetch-and-fetch-head.md) |
 | 远程引用漂移 | 远端当前 refs、本地远程跟踪缓存、上游配置或平台控制面之间出现未解释差异的状态 | [远程引用漂移](../part-13/07-remote-ref-drift-failures.md) |
 | 远端默认分支 | 远端 symbolic `HEAD` 或平台控制面声明的默认入口；不是每个客户端实时读取的值 | [远程引用漂移](../part-13/07-remote-ref-drift-failures.md) |
 | 引用快照 | 在明确时间和查询上下文中记录的一组 refs、OID 和 symbolic ref 响应 | [远程引用漂移](../part-13/07-remote-ref-drift-failures.md) |
