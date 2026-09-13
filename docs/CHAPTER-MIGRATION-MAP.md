@@ -90,10 +90,10 @@ book/part-13/  故障排查手册
 | `book/part-3/04-switch-branch.md` | `book/part-04/02-create-and-switch-branches.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-3/05-first-merge.md` | `book/part-04/03-merge-base.md` | 已于 2026-09-14 合并扩写；旧页同时链接快进/合并提交章并保留 `legacy-redirect` |
 | `book/part-3/06-merge-shapes.md` | `book/part-04/04-fast-forward-and-merge-commits.md` | 已于 2026-09-14 重写迁移；协作后果链接 v2 第六篇，旧页保留 `legacy-redirect` |
-| `book/part-3/07-conflict-model.md` | `book/part-03/05-index-internals.md`、`book/part-04/05-three-way-merge-and-ort.md` | 拆分冲突阶段与策略语义 |
-| `book/part-3/08-resolve-conflict.md` | `book/part-04/07-resolve-abort-and-verify.md` | 保留重写 |
+| `book/part-3/07-conflict-model.md` | `book/part-03/05-index-internals.md`、`book/part-04/05-three-way-merge-and-ort.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 并链接复杂路径与解决章 |
+| `book/part-3/08-resolve-conflict.md` | `book/part-04/07-resolve-abort-and-verify.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-3/09-tags.md` | `book/part-04/09-tags-and-release-refs.md`、`book/part-10/04-signatures.md` | 拆分；签名证明进入第十篇 |
-| `book/part-3/10-complex-conflicts-rerere.md` | `book/part-04/05-three-way-merge-and-ort.md`、`book/part-04/06-complex-path-conflicts.md`、`book/part-04/08-rerere.md` | 过渡新增后拆分；index stage、策略、路径冲突和解决复用各归入唯一权威章 |
+| `book/part-3/10-complex-conflicts-rerere.md` | `book/part-04/05-three-way-merge-and-ort.md`、`book/part-04/06-complex-path-conflicts.md`、`book/part-04/08-rerere.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 并链接解决/验收章 |
 | `book/part-3/exercise.md` | `book/part-04/exercise.md` | 保留重写 |
 
 ## 第四篇现有页面
@@ -149,7 +149,7 @@ book/part-13/  故障排查手册
 | `book/part-6/04-history-search.md` | `book/part-11/03-history-attribution.md` | 已于 2026-09-02 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/05-hotfix.md` | `book/part-08/08-incident-to-release.md` | 已于 2026-09-02 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/06-release.md` | `book/part-08/03-source-artifact-deployment-evidence.md` 至 `book/part-08/08-incident-to-release.md` | 已于 2026-08-30 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-6/07-conflict-report.md` | `book/part-3/10-complex-conflicts-rerere.md`、`book/part-06/04-reviewable-changes-and-stacks.md` | 已于 2026-09-02 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-6/07-conflict-report.md` | `book/part-04/07-resolve-abort-and-verify.md`、`book/part-06/04-reviewable-changes-and-stacks.md` | 已于 2026-09-02 迁出协作报告，2026-09-14 将机制链接收束到 v2 第四篇；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/08-commit-quality.md` | `book/part-2/07-commit.md`、`book/part-06/04-reviewable-changes-and-stacks.md` | 已于 2026-09-02 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/09-protected-branches.md` | `book/part-06/02-review-state-machine.md`、`book/part-06/05-ownership-approvals-and-stale-decisions.md`、`book/part-06/06-required-checks-and-merge-queues.md`、`book/part-06/08-protected-refs-and-exceptions.md`、`book/part-12/03-policy-rules-and-exceptions.md` | 已于 2026-08-31 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-6/10-troubleshooting.md` | `book/part-13/README.md`、`book/part-13/01-evidence-first.md` | 已于 2026-09-05 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |

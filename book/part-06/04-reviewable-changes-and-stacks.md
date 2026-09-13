@@ -109,7 +109,7 @@ git diff --stat "$parent"..."$child"
 
 冲突标记被删除、测试变绿，只能说明当前工作区可以继续。评审还需要知道：冲突发生在哪个共同祖先、哪些路径有多个候选版本、最终选择怎样满足接口或数据约束，以及解决后的候选是否在干净环境重新验证。
 
-在完成 merge、rebase 或 cherry-pick 后，先在最终候选所在的临时分支固定对象。具体的 index stage、AUTO_MERGE 和 rerere 机制见[第三篇复杂冲突](../part-3/10-complex-conflicts-rerere.md)。
+在完成 merge、rebase 或 cherry-pick 后，先在最终候选所在的临时分支固定对象。具体的 index stage、`AUTO_MERGE` 和 rerere 机制见[Index 内部结构](../part-03/05-index-internals.md)、[`ort` 三方合并](../part-04/05-three-way-merge-and-ort.md)和[Rerere](../part-04/08-rerere.md)。
 
 ~~~bash
 git status --short --branch

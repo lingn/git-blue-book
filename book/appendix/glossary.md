@@ -23,12 +23,12 @@
 | merge base | 两个或多个提交的最佳共同祖先，三方合并据此计算各侧变化 | [Merge base 与三方合并](../part-04/03-merge-base.md) |
 | 合并 | 把另一条历史中当前分支尚未包含的变化整合进来 | [Merge base 与三方合并](../part-04/03-merge-base.md) |
 | 快进 | 当前提交是目标提交祖先，只需向前移动分支 | [快进与合并提交](../part-04/04-fast-forward-and-merge-commits.md) |
-| 冲突 | Git 无法替人决定最终内容时留下的未完成整合状态 | [冲突模型](../part-3/07-conflict-model.md) |
+| 冲突 | Git 无法替人决定最终内容时留下的未完成整合状态 | [`ort` 三方合并](../part-04/05-three-way-merge-and-ort.md) |
 | index stage | 冲突期间 index 保存的共同祖先、当前侧和合入侧条目；普通 merge 中分别是 stage 1、2、3 | [Index 内部结构](../part-03/05-index-internals.md) |
 | porcelain | 按用户意图编排一个或多个 Git 数据层的高层接口；分类本身不代表无副作用 | [Porcelain 与 plumbing](../part-03/06-porcelain-and-plumbing.md) |
 | plumbing | 直接操作对象、引用、index 等底层结构的原语；调用者承担更多前置条件与恢复责任 | [Porcelain 与 plumbing](../part-03/06-porcelain-and-plumbing.md) |
-| `ort` | Git 新版本对单分支普通合并采用的三方合并策略，负责组合 tree 和处理 rename 等机械语义 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
-| `AUTO_MERGE` | `ort` 冲突现场记录初始自动合并工作区内容的临时 tree 引用 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
+| `ort` | Git 新版本对单分支普通合并采用的三方合并策略，负责组合 tree 和处理 rename 等机械语义 | [`ort` 三方合并](../part-04/05-three-way-merge-and-ort.md) |
+| `AUTO_MERGE` | `ort` 冲突现场记录初始自动合并工作区内容的临时 tree 引用 | [`ort` 三方合并](../part-04/05-three-way-merge-and-ort.md) |
 | rerere | 记录冲突 preimage 与已解决 postimage，并在相似冲突中复用编辑结果的机制 | [Rerere](../part-04/08-rerere.md) |
 | merge abort | 尝试恢复普通 merge 开始前的 `HEAD`、index、工作区和状态；合并前脏状态与 autostash 会扩大恢复边界 | [解决、中止与验收](../part-04/07-resolve-abort-and-verify.md) |
 | merge quit | 移除进行中 merge 的元数据，但保留当前 index 和工作区，不等同于中止 | [解决、中止与验收](../part-04/07-resolve-abort-and-verify.md) |

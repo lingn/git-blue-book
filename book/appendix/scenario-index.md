@@ -17,7 +17,7 @@
 | 个人评审分支变基后要更新远程 | [force-with-lease](../part-07/10-explicit-force-lease.md) |
 | 错误 reset 或误删分支 | [恢复案例](../part-07/13-local-and-remote-recovery.md) |
 | push 被拒绝 | [推送拒绝](../part-4/08-push-rejection.md) |
-| pull 后发生冲突 | [冲突模型](../part-3/07-conflict-model.md) |
+| pull 后发生冲突 | [解决、中止与验收](../part-04/07-resolve-abort-and-verify.md) |
 | 冲突已经解决，需向同事说明 | [可审查变更中的冲突报告](../part-06/04-reviewable-changes-and-stacks.md) |
 | 开发中途需要处理紧急任务 | [stash](../part-02/11-stash.md) 或 [worktree](../part-02/12-multiple-worktrees.md) |
 | 需要把一个修复迁到发布分支 | [事故到发布中的热修复](../part-08/08-incident-to-release.md) |
