@@ -258,6 +258,7 @@
 - [x] 扩写第六篇 CI 身份与状态回报章节，新增外部报告者登记、候选 OID、流水线版本、错误报告者、过期状态和报告者撤销的隔离求值实验，并接入全量验证。
 - [x] 扩写第六篇必需检查与合并队列章节，补充队列实验的前置条件、`Q1`/`Q2` 状态变化、NUL 路径和 expected-old 失败后的重建边界。
 - [x] 扩写第七篇共享历史改写政策，增加 `local-only`、`remote-published`、`externally-referenced`、`platform-unknown` 和保留期状态，补充改写决策包、证据缺口和例外退出条件，避免与远端事故命令章混写。
+- [x] 扩写第七篇 reflog 与 recovery ref 章节，增加“日志线索/对象可读性”候选矩阵，以及 reset/reflog 实验的前置条件、状态变化、预期输出和远端边界。
 
 ## 回归状态
 
@@ -456,6 +457,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第六篇 CI 身份与状态回报正文、实验接入后的整库回归，207 个公开页面、75 个兼容迁移页与 73 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第六篇必需检查与合并队列实验契约扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇共享历史改写政策的共享状态分级、决策包和例外退出条件扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-reset-reflog.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇 reflog 与 recovery ref 候选矩阵及实验契约扩写通过专项实验与文档门禁 |
 
 ## 已知风险
 
