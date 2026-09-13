@@ -47,6 +47,50 @@ recovery_point = {
 
 跨系统无法原子快照时，记录每个组件的时间窗口和一致性策略。例如 Git ref 已到 C，但对应 LFS payload 尚未进入备份，就不能把 C 宣布为完整恢复点。
 
+## 恢复点必须有可用性状态
+
+恢复点不是一个文件夹名称，而是跨系统证据的组合。建议至少使用以下状态：
+
+| 状态 | 判断条件 | 允许的用途 |
+| --- | --- | --- |
+| `complete-for-scope` | Git refs/objects 和声明的 LFS、submodule、平台、制品与密钥输入均有摘要、保留和恢复证据 | 可进入空环境恢复演练，仍需批准切换 |
+| `git-only` | Git bundle/mirror 可验证，但外部 payload 或控制面尚未纳入 | 只能恢复 Git 数据面或作为 donor，不能宣布服务可用 |
+| `partial-chain` | 增量 bundle 缺少基线、链段、key 或对象 | 不可恢复；先补齐前置或重新生成完整基线 |
+| `inconclusive` | 捕获时间不一致、权限/分页失败、摘要缺失或副本来源不明 | 不能用于 RPO/RTO 宣告，需重新采集 |
+| `superseded` | 新恢复点已经取代它，但仍在保留窗口内 | 只读调查和回到旧时间点，不更新“latest”指针 |
+
+状态变化要写入 recovery-point manifest，不能靠目录名或备份平台的绿色任务状态推断。`git bundle verify` 成功最多把 Git 层标为可用，不能把 `git-only` 自动升级为 `complete-for-scope`。
+
+### 增量链要像数据库日志一样验收
+
+每个增量 bundle 保存：
+
+~~~text
+base_recovery_point / prerequisite_oids
+source_refs_manifest / advertised_refs
+bundle_digest / object_format
+created_at / source_snapshot_window
+encryption_key_version / retention
+verification_result / restore_attempt_id
+~~~
+
+恢复演练从最老仍在保留窗口内的完整基线开始，按顺序导入每个增量，逐次比较 refs manifest 和关键 tree。任何一层 prerequisite 缺失、摘要变化或时间窗口重叠未解释，都停止在该层，并把后续增量标为不可用；不能跳过损坏层直接导入最新文件。
+
+链长、完整基线频率和跨区域复制策略要按实际 RPO/RTO 设计。越长的增量链节省日常空间，却提高恢复时间和单点失败概率；一个只在生产主站保存完整基线的方案，仍不能抵抗主站与备份故障域同时丢失。
+
+### 跨系统恢复点不能只看最大时间
+
+如果 Git refs 在 12:00、LFS payload 在 11:55、平台评审导出在 11:40，恢复点不能标成“12:00 完整”。可以给每层声明时间窗：
+
+~~~text
+git_refs: 12:00:00
+lfs_payload: complete through 11:55:00
+platform_review: export cursor through 11:40:00
+artifact_registry: digest set at 11:58:00
+~~~
+
+然后按业务契约决定这是 `complete-for-scope`、`partial` 还是 `inconclusive`。如果候选 Git commit 在 11:50 引用了 11:55 才备份的 LFS payload，Git 层与 LFS 层没有共同可用点，不能把两份最新数据拼成一个“恢复成功”。
+
 ## 一份 Git 仓库服务实际包含哪些资产
 
 | 资产层 | Git bundle/mirror | 额外备份 |

@@ -193,6 +193,7 @@
 - [x] 实质扩写第十一篇对象取证与恢复，补充候选来源记录、donor 信任分层、恢复 ref 停止条件和恢复动作 before/after 不变量。
 - [x] 以对象取证专项实验复核 fsck 根、lost-found、alternate、replace ref、pack/idx 和 donor 恢复边界，保持恢复候选不直接升级为生产 ref。
 - [x] 实质扩写第十一篇历史归因，补充结论置信度、反例清单、查询 manifest 和 blame/pickaxe/merge 结果与外部时间线的证据边界。
+- [x] 实质扩写第十一篇 bundle/mirror/备份恢复，补充恢复点状态、增量 prerequisite 链、跨系统时间窗和完整恢复点判定。
 
 - [x] 扩写受保护分支章节，建立平台控制面与 Git 引用更新的分层模型。
 - [x] 为平台事实建立版本与核对登记表。
@@ -432,6 +433,8 @@
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-object-forensics-recovery.sh` | 通过 | 对象 fsck、lost-found、alternate、replace ref、pack 恢复专项实验通过 |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十一篇历史归因置信度与反例清单扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十一篇历史归因正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十一篇 bundle/mirror/备份恢复状态与跨系统时间窗扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
+| 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十一篇备份恢复正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 
