@@ -11,8 +11,8 @@
 | 多条未推送提交需要改说明或合并 | [交互式变基](../part-07/05-interactive-rebase.md) |
 | 提交后继续改代码，想保留一条提交 | [amend 一条提交](../part-07/04-amend-one-commit.md) |
 | 想删除远端提交、拆分混合提交或修订已推送提交 | [amend 一条提交](../part-07/04-amend-one-commit.md) |
-| fetch 后突然显示 `ahead N, behind M`，怀疑远端历史被改写 | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
-| rebase abort 后又回到旧分支状态 | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
+| fetch 后突然显示 `ahead N, behind M`，怀疑远端历史被改写 | [远端历史改写](../part-07/14-remote-history-rewrite.md) |
+| rebase abort 后又回到旧分支状态 | [远端历史改写](../part-07/14-remote-history-rewrite.md) |
 | 已推送错误需要回滚 | [git revert](../part-07/08-revert-shared-history.md) |
 | 个人评审分支变基后要更新远程 | [force-with-lease](../part-07/10-explicit-force-lease.md) |
 | 错误 reset 或误删分支 | [恢复案例](../part-07/13-local-and-remote-recovery.md) |

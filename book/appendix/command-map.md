@@ -37,8 +37,8 @@
 | 只获取远程历史 | `git fetch` | [获取](../part-4/04-fetch.md) |
 | 获取并整合 | `git pull` | [拉取](../part-4/06-pull.md) |
 | 发布提交或标签 | `git push` | [推送](../part-4/07-push.md) |
-| 计算本地与上游各自独有的提交数 | `git rev-list --left-right --count` | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
-| 判断本地提交是否有上游补丁等价项 | `git cherry -v`、`git range-diff` | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
+| 计算本地与上游各自独有的提交数 | `git rev-list --left-right --count` | [远端历史改写](../part-07/14-remote-history-rewrite.md) |
+| 判断本地提交是否有上游补丁等价项 | `git cherry -v`、`git range-diff` | [远端历史改写](../part-07/14-remote-history-rewrite.md) |
 
 ## 撤销与恢复
 
@@ -54,7 +54,7 @@
 | 有条件更新个人远程分支 | `git push --force-with-lease` | [租约保护](../part-07/10-explicit-force-lease.md) |
 | 移动分支并选择区域更新范围 | `git reset` | [reset 三模式](../part-07/11-reset.md) |
 | 查找引用旧位置 | `git reflog` | [引用日志](../part-07/12-reflog-and-recovery-refs.md) |
-| 证明 fetch 非快进更新及 rebase abort 返回位置 | `git reflog show origin/<branch>`、`git reflog show HEAD` | [远端历史改写](../part-5/14-remote-history-rewrite.md) |
+| 证明 fetch 非快进更新及 rebase abort 返回位置 | `git reflog show origin/<branch>`、`git reflog show HEAD` | [远端历史改写](../part-07/14-remote-history-rewrite.md) |
 
 ## 工程调查
 

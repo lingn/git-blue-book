@@ -121,7 +121,7 @@ book/part-13/  故障排查手册
 
 | 当前文件 | v2 目标 | 动作 |
 | --- | --- | --- |
-| `book/part-5/README.md` | `book/part-07/README.md` | 保留重写 |
+| `book/part-5/README.md` | `book/part-07/README.md` | 已于 2026-09-13 完成主线迁移；旧目录保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/01-decision-matrix.md` | `book/part-07/01-state-and-sharing-matrix.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/02-restore-worktree.md` | `book/part-07/02-restore-worktree.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/03-unstage.md` | `book/part-07/03-unstage.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
@@ -134,6 +134,8 @@ book/part-13/  故障排查手册
 | `book/part-5/10-reset.md` | `book/part-07/11-reset.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/11-reflog.md` | `book/part-07/12-reflog-and-recovery-refs.md`、`book/part-11/02-object-forensics-and-recovery.md` | 已于 2026-09-06 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/12-recovery-cases.md` | `book/part-07/13-local-and-remote-recovery.md`、`book/part-13/02-missing-files-and-commits.md` | 已于 2026-09-06 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-5/13-rewrite-commit-playbook.md` | `book/part-07/04-amend-one-commit.md` | 已于 2026-09-05 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-5/14-remote-history-rewrite.md` | `book/part-07/14-remote-history-rewrite.md` | 已于 2026-09-13 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-5/exercise.md` | `book/part-07/exercise.md` | 已于 2026-09-06 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
 ## 第六篇现有页面
@@ -167,6 +169,7 @@ book/part-13/  故障排查手册
 | `book/part-07/11-reset.md` | `book/part-5/10-reset.md` | 已于 2026-09-05 迁入；承担 soft/mixed/hard、路径形式、未跟踪边界、分离 HEAD 和本地恢复 |
 | `book/part-07/12-reflog-and-recovery-refs.md` | `book/part-5/11-reflog.md`、`book/part-11/02-object-forensics-and-recovery.md` | 已于 2026-09-06 迁入；承担日常引用恢复、ORIG_HEAD、日志过期和 recovery ref，物理对象取证仍由第十一篇负责 |
 | `book/part-07/13-local-and-remote-recovery.md` | `book/part-5/12-recovery-cases.md`、`book/part-13/02-missing-files-and-commits.md` | 已于 2026-09-06 迁入；承担误删分支、reset、rebase、强推和恢复验收，症状分流仍由第十三篇负责 |
+| `book/part-07/14-remote-history-rewrite.md` | `book/part-5/14-remote-history-rewrite.md` | 已于 2026-09-13 迁入；承担 ahead/behind、forced-update、远程跟踪 reflog、补丁等价、rebase abort 和恢复路线 |
 | `book/part-07/exercise.md` | `book/part-5/exercise.md` | 已于 2026-09-06 迁入；承担状态矩阵到恢复验收的综合案例与本地实验边界 |
 | `book/part-6/exercise.md` | `book/part-08/08-incident-to-release.md` | 已于 2026-09-05 收束迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
