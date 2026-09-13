@@ -256,6 +256,7 @@
 - [x] 扩写第六篇受保护引用章节，补充引用更新的状态变化、stale push 与远程跟踪缓存的隔离实验、保护 ref 与评审 ref 的边界，以及本地 hook 不能证明平台身份、审批和审计的限制。
 - [x] 扩写第六篇所有权与审批章节，新增候选之外的 trusted ownership snapshot、独立审批、候选自修改所有权文件、stale 决定和 owner 缺失的隔离求值实验，并接入全量验证。
 - [x] 扩写第六篇 CI 身份与状态回报章节，新增外部报告者登记、候选 OID、流水线版本、错误报告者、过期状态和报告者撤销的隔离求值实验，并接入全量验证。
+- [x] 扩写第六篇必需检查与合并队列章节，补充队列实验的前置条件、`Q1`/`Q2` 状态变化、NUL 路径和 expected-old 失败后的重建边界。
 
 ## 回归状态
 
@@ -452,6 +453,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-ci-identity-status-boundaries.sh` | 通过 | 第六篇 CI 身份与状态回报新增实验，验证候选绑定、报告者主体、流水线版本、旧状态和撤销主体边界 |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第六篇 CI 身份与状态回报正文和实验契约通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第六篇 CI 身份与状态回报正文、实验接入后的整库回归，207 个公开页面、75 个兼容迁移页与 73 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第六篇必需检查与合并队列实验契约扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 
 ## 已知风险
 

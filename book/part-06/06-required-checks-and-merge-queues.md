@@ -91,6 +91,35 @@ only if current == expected_old
 
 本书的本地实验用 `git update-ref <ref> <new> <old>` 验证 expected-old 条件更新。它能证明 Git 引用比较机制，不能证明托管平台把审批、检查和队列事件原子地接到同一次更新。
 
+### 队列实验的执行契约
+
+本章对应的隔离实验从仓库根目录执行，要求 Git、Bash、`mktemp` 和支持 NUL 输入的 shell 工具可用。它只在临时仓库中创建提交和本地引用，不读取当前项目的 remote、配置或工作区：
+
+```bash
+git --version
+TMPDIR=/private/tmp bash scripts/verify-ci-trigger-queue.sh
+```
+
+成功输出为：
+
+```text
+CI path selection, stale candidate, queue order, and conditional ref updates passed.
+```
+
+实验按下面的顺序保存对象和状态：
+
+| 阶段 | 状态变化 | 验收重点 |
+| --- | --- | --- |
+| 建立 `T0`、功能提交和共享构建输入 | 形成两个从同一基线分叉的功能头 | `merge-base` 和路径字节可重放 |
+| 主线从 `T0` 前进到 `T1` | 功能头没有变化，目标 OID 已变化 | 基于 `T0` 的候选不能直接解释 `T1` |
+| 以 `T1` 先合入 payment | 生成 `Q1`，其第一父为 `T1` | `Q1` 看到的是最新共享构建输入 |
+| 在 `Q1` 上再合入 search | 生成 `Q2`，其第一父为 `Q1` | `Q2` 的检查属于队列第二个位置，不能复用入队前结果 |
+| 用 `T1` 作为 expected-old 写入 `Q2` | 条件不满足时更新返回非零，`main` 保持 `Q1` | 目标前进必须让候选过期并重建 |
+
+脚本还用包含换行的路径验证 `diff --name-only -z` 的边界，防止路径过滤把字节拆错。临时目录由 `trap` 清理；实验成功不改变当前仓库。实验失败时先阅读失败断言对应的 OID、父提交、tree 和 ref，再重跑，不要把脚本里的本地 `update-ref` 或 merge 操作直接套到共享仓库。
+
+这组实验只证明本地 Git 的候选构造、路径字节、队列前缀和 expected-old 逻辑。它不证明托管平台如何投递事件、保存检查状态、锁定分布式队列、验证 reporter、处理管理员/API 绕过或记录审计。平台验收仍需固定产品、版本、权限、套餐、测试仓库、队列事件和最终引用 OID。
+
 ## 失败方式和恢复
 
 | 症状 | 先固定 | 安全动作 |
@@ -109,4 +138,3 @@ only if current == expected_old
 ## 小结
 
 必需检查是一份带身份和对象绑定的证据，不是一个绿色名称。合并队列为当前目标和当前顺序重建组合候选，解决并发合并让旧结果过期的问题。最终更新仍要比较 expected-old，并把候选、检查、队列和引用事件保存在同一条证据链中。
-
