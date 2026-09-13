@@ -30,8 +30,8 @@
 
 | 目标 | 命令 | 详解 |
 | --- | --- | --- |
-| 查看或创建分支 | `git branch` | [分支模型](../part-3/02-branch-as-reference.md) |
-| 切换分支 | `git switch` | [切换分支](../part-3/04-switch-branch.md) |
+| 查看或创建分支 | `git branch` | [分支与分离 HEAD](../part-04/01-branches-and-detached-head.md) |
+| 切换分支 | `git switch` | [创建和切换分支](../part-04/02-create-and-switch-branches.md) |
 | 合并历史 | `git merge` | [快进与合并提交](../part-04/04-fast-forward-and-merge-commits.md) |
 | 计算共同祖先并判断快进条件 | `git merge-base`、`git merge-base --is-ancestor` | [Merge base 与三方合并](../part-04/03-merge-base.md) |
 | 标记版本 | `git tag` | [标签](../part-3/09-tags.md) |

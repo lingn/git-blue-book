@@ -84,12 +84,12 @@ book/part-13/  故障排查手册
 | 当前文件 | v2 目标 | 动作 |
 | --- | --- | --- |
 | `book/part-3/README.md` | `book/part-04/README.md` | 保留重写；对象模型内容由新第三篇承担 |
-| `book/part-3/01-commit-graph.md` | `book/part-03/04-commit-graph-and-reachability.md`、`book/part-04/03-merge-base.md` | 拆分 |
-| `book/part-3/02-branch-as-reference.md` | `book/part-03/03-refs-head-and-reflog.md`、`book/part-04/01-branches-and-detached-head.md` | 拆分 |
-| `book/part-3/03-head.md` | `book/part-03/03-refs-head-and-reflog.md` | 合并 |
-| `book/part-3/04-switch-branch.md` | `book/part-04/02-create-and-switch-branches.md` | 保留重写 |
-| `book/part-3/05-first-merge.md` | `book/part-04/03-merge-base.md` | 合并扩写 |
-| `book/part-3/06-merge-shapes.md` | `book/part-04/04-fast-forward-and-merge-commits.md` | 保留重写 |
+| `book/part-3/01-commit-graph.md` | `book/part-03/04-commit-graph-and-reachability.md`、`book/part-04/03-merge-base.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-3/02-branch-as-reference.md` | `book/part-03/03-refs-head-and-reflog.md`、`book/part-04/01-branches-and-detached-head.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-3/03-head.md` | `book/part-03/03-refs-head-and-reflog.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口，分离工作流链接 v2 第四篇 |
+| `book/part-3/04-switch-branch.md` | `book/part-04/02-create-and-switch-branches.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-3/05-first-merge.md` | `book/part-04/03-merge-base.md` | 已于 2026-09-14 合并扩写；旧页同时链接快进/合并提交章并保留 `legacy-redirect` |
+| `book/part-3/06-merge-shapes.md` | `book/part-04/04-fast-forward-and-merge-commits.md` | 已于 2026-09-14 重写迁移；协作后果链接 v2 第六篇，旧页保留 `legacy-redirect` |
 | `book/part-3/07-conflict-model.md` | `book/part-03/05-index-internals.md`、`book/part-04/05-three-way-merge-and-ort.md` | 拆分冲突阶段与策略语义 |
 | `book/part-3/08-resolve-conflict.md` | `book/part-04/07-resolve-abort-and-verify.md` | 保留重写 |
 | `book/part-3/09-tags.md` | `book/part-04/09-tags-and-release-refs.md`、`book/part-10/04-signatures.md` | 拆分；签名证明进入第十篇 |
@@ -210,8 +210,8 @@ book/part-13/  故障排查手册
 | `book/part-03/README.md` | 原路径 | 新写；建立对象模型、格式、引用、提交图、index、pack 和 plumbing 的 v2 权威入口，只导航已落盘章节 |
 | `book/part-03/01-object-identity-and-formats.md` | `book/part-1/04-snapshots.md`、`book/part-1/05-first-model.md` | 新写并收束对象规范输入、四类对象、完整/缩写 OID、SHA-1/SHA-256、跨格式和签名边界；第一篇继续保留入门直觉 |
 | `book/part-03/02-pack-delta-and-lifecycle.md` | `book/part-1/05-first-model.md`、`book/part-09/01-measure-before-optimizing.md` | 新写并建立 loose/pack/index/delta、可达根、reflog、GC/prune/maintenance、alternate/promisor 和恢复窗口的权威模型；第九篇继续承担性能测量 |
-| `book/part-03/03-refs-head-and-reflog.md` | `book/part-3/02-branch-as-reference.md`、`book/part-3/03-head.md`、`book/part-07/12-reflog-and-recovery-refs.md` | 新写并建立逻辑/物理引用、符号引用、unborn/附着/分离 `HEAD`、特殊操作状态、reflog、linked worktree 和条件引用更新的模型层权威来源；第七篇继续承担恢复操作，旧第三篇页面在第四篇分支操作迁移前保留正文 |
-| `book/part-03/04-commit-graph-and-reachability.md` | `book/part-3/01-commit-graph.md`、`book/part-09/01-measure-before-optimizing.md` | 新写并建立 commit 父边、拓扑/时间、查询根、revision 集合、merge-base/fork-point、浅边界、replace refs、commit-graph 和 generation data 的模型层权威来源；第九篇继续承担性能测量，旧第三篇页面在第四篇 merge-base 操作章落地前保留正文 |
+| `book/part-03/03-refs-head-and-reflog.md` | `book/part-3/02-branch-as-reference.md`、`book/part-3/03-head.md`、`book/part-07/12-reflog-and-recovery-refs.md` | 新写并建立逻辑/物理引用、符号引用、unborn/附着/分离 `HEAD`、特殊操作状态、reflog、linked worktree 和条件引用更新的模型层权威来源；第七篇继续承担恢复操作，旧第三篇两页已于 2026-09-14 迁为兼容入口 |
+| `book/part-03/04-commit-graph-and-reachability.md` | `book/part-3/01-commit-graph.md`、`book/part-09/01-measure-before-optimizing.md` | 新写并建立 commit 父边、拓扑/时间、查询根、revision 集合、merge-base/fork-point、浅边界、replace refs、commit-graph 和 generation data 的模型层权威来源；第九篇继续承担性能测量，旧提交图页已于 2026-09-14 迁为兼容入口 |
 | `book/part-03/05-index-internals.md` | `book/part-2/05-three-areas.md`、`book/part-3/07-conflict-model.md`、`book/part-3/10-complex-conflicts-rerere.md`、`book/part-09/04-sparse-partial-workflows.md` | 新写并建立 index entry/mode/OID/stage/stat、格式/扩展/锁、替代 index、冲突 stage 0/1/2/3、sparse-directory 和标志边界的模型层权威来源；第二篇保留日常操作，第四篇承担合并策略，第九篇承担受限工作流决策 |
 | `book/part-03/06-porcelain-and-plumbing.md` | `book/part-1/05-first-model.md`、各篇底层命令说明 | 新写并建立高层编排与底层原语的责任边界，覆盖对象构造、引用条件更新、index/工作区不同步、机器接口、batch 读取、hooks/签名和平台控制面缺口；不把 plumbing 分类当作风险等级 |
 | `book/part-04/README.md` | `book/part-3/README.md` | 新写；建立分支、合并、冲突与标签的 v2 操作层入口，只导航已落盘章节，旧第三篇在全部目标章迁移前继续承担兼容教学 |

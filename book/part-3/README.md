@@ -1,19 +1,27 @@
-# 第三篇：用分支组织并行工作
+# 旧第三篇：分支、合并与冲突迁移目录
 
-这一篇先解释提交之间如何连接，再引入分支与 `HEAD`。读者不会在理解这些名字之前被要求执行合并。
+本目录保留既有 URL。提交图、分支、`HEAD`、切换和基础合并已经迁入 v2 第三、四篇；冲突、rerere、标签和综合练习在目标章节完成前继续保留原正文。
 
-## 本篇内容
+## 已迁移主题
 
-1. [提交如何组成历史：从父提交读懂提交图](01-commit-graph.md)
-2. [分支是引用：给提交位置一个可移动的名字](02-branch-as-reference.md)
-3. [当前所在位置：HEAD 如何连接分支与工作区](03-head.md)
-4. [创建和切换分支：移动 HEAD 前先保护工作区](04-switch-branch.md)
-5. [第一次合并：先确定接收方，再判断能否快进](05-first-merge.md)
-6. [快进、分叉与合并提交：把历史形状讲清楚](06-merge-shapes.md)
-7. [冲突不是报错：理解三方合并](07-conflict-model.md)
-8. [完整处理一次冲突](08-resolve-conflict.md)
-9. [给重要提交命名：标签引用、附注对象与发布边界](09-tags.md)
-10. [复杂冲突不是“选一边”：ort、index 阶段与 rerere](10-complex-conflicts-rerere.md)
-11. [综合场景：功能开发中插入紧急修复](exercise.md)
+1. [v2 第三篇：对象模型决定命令行为](../part-03/README.md)
+2. [v2 第四篇：分支、合并与冲突](../part-04/README.md)
 
-完成本篇后，你应当能先画出提交图，再决定切换、合并或解决冲突，而不是根据分支名猜测历史关系。
+旧 URL 兼容入口：
+
+- [提交图](01-commit-graph.md)
+- [分支引用](02-branch-as-reference.md)
+- [`HEAD`](03-head.md)
+- [创建和切换分支](04-switch-branch.md)
+- [合并方向与共同祖先](05-first-merge.md)
+- [快进与合并提交](06-merge-shapes.md)
+
+## 尚未迁移的正文
+
+1. [冲突不是报错：理解三方合并](07-conflict-model.md)
+2. [完整处理一次冲突](08-resolve-conflict.md)
+3. [给重要提交命名：标签引用、附注对象与发布边界](09-tags.md)
+4. [复杂冲突不是“选一边”：ort、index 阶段与 rerere](10-complex-conflicts-rerere.md)
+5. [综合场景：功能开发中插入紧急修复](exercise.md)
+
+迁移完成以 `docs/CHAPTER-MIGRATION-MAP.md`、对应隔离实验和整库回归为准。旧路径保留不表示旧正文仍是权威来源。
