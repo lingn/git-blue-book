@@ -28,7 +28,7 @@
 
 ## 第五篇（v2）：远程仓库、协议与认证
 
-先把服务器 refs、本次查询、本地 remote-tracking refs、本地分支、upstream、`FETCH_HEAD` 和平台控制面分开。Clone 章区分普通、no-checkout、bare、mirror 与空仓库初态；remotes/refspec 章拆开连接地址、pushURL 与正负引用映射；fetch/pull 章节再区分远端观察点更新和本地整合。
+先把服务器 refs、本次查询、本地 remote-tracking refs、本地分支、upstream、`FETCH_HEAD` 和平台控制面分开。Clone 与 fetch/pull 章节解释取得和整合，push 章节再按 source/destination、old/new OID、租约、atomic、push options 和服务端拒绝逐层验收。
 
 ## 第四篇：与远程仓库和团队协作
 

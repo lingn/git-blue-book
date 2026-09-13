@@ -231,6 +231,8 @@ book/part-13/  故障排查手册
 | `book/part-05/03-remotes-and-refspecs.md` | `book/part-4/03-remote.md`、`book/part-4/14-refspec-partial-clone.md` | 新写并承担 remote name、fetch URL/pushURL、正/负 fetch refspec、push refspec、rename/remove、prune、多远程、mirror 和 URL 迁移；受限 clone 留给第九章 |
 | `book/part-05/04-fetch-and-fetch-head.md` | `book/part-4/04-fetch.md`、`book/part-4/05-remote-tracking.md` | 新写并承担 fetch 对象/ref/FETCH_HEAD/prune/atomic/tags/失败副作用、强制 remote-tracking 更新和 fetch 后整合判断；平台远端事实与受限 clone 分别引用前后章节 |
 | `book/part-05/05-pull-as-composition.md` | `book/part-4/06-pull.md` | 新写并承担 fetch/整合两阶段、ff-only、merge、rebase、配置来源、autostash、上游缺失、状态机失败、远端竞态和何时拆开 pull |
+| `book/part-05/06-push-upstream-and-ref-updates.md` | `book/part-4/07-push.md` | 新写并承担 push source/destination、对象/ref 两阶段、创建/快进/删除、显式 refspec、upstream/pushRemote/tracking、dry-run、标签和成功后证据链 |
+| `book/part-05/07-rejection-atomic-push-and-options.md` | `book/part-4/08-push-rejection.md` | 新写并承担拒绝分层、non-fast-forward、显式租约、force-if-includes、atomic、多 ref 部分成功、push options、receive hooks 和失败恢复清单 |
 | `book/part-06/README.md` | 原路径 | 新写；第六篇只导航已经落盘的共享历史、评审与受保护更新正文，不预列占位章 |
 | `book/part-06/01-branch-models-and-integration.md` | `book/part-4/09-review-ready.md`、`book/part-6/05-hotfix.md` | 新写并建立分支状态与整合拓扑的权威来源；承担主干、功能、发布、维护和堆叠分支的状态、责任与恢复契约 |
 | `book/part-06/02-review-state-machine.md` | `book/part-4/09-review-ready.md`、`book/part-6/09-protected-branches.md` | 新写并建立厂商无关评审请求状态机；承担功能头、目标基线、候选、审批、检查、策略版本和条件引用更新的失效与重算 |

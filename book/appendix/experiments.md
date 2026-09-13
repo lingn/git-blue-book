@@ -29,6 +29,7 @@
 - fetch URL/pushURL 分离、正负 refspec、排除分支独有对象、显式 push 目标、remote rename/remove 与服务器保留边界；
 - fetch `--atomic --prune`、新增/删除/强制移动 remote-tracking ref、`FETCH_HEAD` 覆盖/追加/不写、失败保留旧缓存和标签恢复入口；
 - pull 的 fetch/整合分层，`--ff-only` 快进与拒绝、拒绝后的 tracking 更新、`--no-rebase` 二父 merge 和 `--rebase` 本地提交重建；
+- push 显式 refspec 创建/快进/删除、upstream、dry-run、标签覆盖拒绝、push options 服务端接收和 atomic hook 拒绝的全 ref 不变量；
 - 首次提交、身份作用域与条件 include、工作区/index/HEAD 状态矩阵、取消暂存恢复、差异、提交失败与空提交、`.gitignore`、`.gitattributes` 和换行属性；
 - 分支、快进、分叉合并、冲突中止与解决、标签；
 - index stage 1/2/3、`AUTO_MERGE`、rerere 复用与忘记、rename/delete 和目录重命名；

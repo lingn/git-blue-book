@@ -49,6 +49,8 @@
   * [Remotes 与 refspec：连接目标和引用映射是两类配置](part-05/03-remotes-and-refspecs.md)
   * [Fetch 与 FETCH_HEAD：取得远端状态，不替本地分支做决定](part-05/04-fetch-and-fetch-head.md)
   * [Pull 是 fetch 加本地整合：两阶段必须分开诊断](part-05/05-pull-as-composition.md)
+  * [Push 与远端引用更新：发布的是对象和 ref 请求](part-05/06-push-upstream-and-ref-updates.md)
+  * [Push 拒绝、原子更新与 options：服务端接受条件要逐层证明](part-05/07-rejection-atomic-push-and-options.md)
 * [兼容入口：旧第三篇正文已迁入 v2 第三、四篇](part-3/README.md)
   * [兼容入口：提交图正文已拆入 v2 第三、四篇](part-3/01-commit-graph.md)
   * [兼容入口：分支引用正文已拆入 v2 第三、四篇](part-3/02-branch-as-reference.md)

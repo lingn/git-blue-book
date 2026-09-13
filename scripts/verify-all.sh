@@ -23,6 +23,7 @@ verification_scripts=(
   scripts/verify-remotes-refspecs.sh
   scripts/verify-fetch-remote-tracking.sh
   scripts/verify-pull-composition.sh
+  scripts/verify-push-ref-updates.sh
   scripts/verify-part-2.sh
   scripts/verify-part-3-basics.sh
   scripts/verify-part-3-conflicts.sh
