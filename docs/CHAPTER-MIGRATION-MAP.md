@@ -83,7 +83,7 @@ book/part-13/  故障排查手册
 
 | 当前文件 | v2 目标 | 动作 |
 | --- | --- | --- |
-| `book/part-3/README.md` | `book/part-04/README.md` | 保留重写；对象模型内容由新第三篇承担 |
+| `book/part-3/README.md` | `book/part-04/README.md` | 已于 2026-09-14 完成整篇迁移；旧目录保留 `legacy-redirect`，对象模型入口指向 v2 第三篇 |
 | `book/part-3/01-commit-graph.md` | `book/part-03/04-commit-graph-and-reachability.md`、`book/part-04/03-merge-base.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-3/02-branch-as-reference.md` | `book/part-03/03-refs-head-and-reflog.md`、`book/part-04/01-branches-and-detached-head.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-3/03-head.md` | `book/part-03/03-refs-head-and-reflog.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口，分离工作流链接 v2 第四篇 |
@@ -92,9 +92,9 @@ book/part-13/  故障排查手册
 | `book/part-3/06-merge-shapes.md` | `book/part-04/04-fast-forward-and-merge-commits.md` | 已于 2026-09-14 重写迁移；协作后果链接 v2 第六篇，旧页保留 `legacy-redirect` |
 | `book/part-3/07-conflict-model.md` | `book/part-03/05-index-internals.md`、`book/part-04/05-three-way-merge-and-ort.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 并链接复杂路径与解决章 |
 | `book/part-3/08-resolve-conflict.md` | `book/part-04/07-resolve-abort-and-verify.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-3/09-tags.md` | `book/part-04/09-tags-and-release-refs.md`、`book/part-10/04-signatures.md` | 拆分；签名证明进入第十篇 |
+| `book/part-3/09-tags.md` | `book/part-04/09-tags-and-release-refs.md`、`book/part-10/04-signatures.md` | 已于 2026-09-14 拆分迁移；发布制品边界链接第八篇，旧页保留 `legacy-redirect` |
 | `book/part-3/10-complex-conflicts-rerere.md` | `book/part-04/05-three-way-merge-and-ort.md`、`book/part-04/06-complex-path-conflicts.md`、`book/part-04/08-rerere.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 并链接解决/验收章 |
-| `book/part-3/exercise.md` | `book/part-04/exercise.md` | 保留重写 |
+| `book/part-3/exercise.md` | `book/part-04/exercise.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
 ## 第四篇现有页面
 
@@ -214,7 +214,7 @@ book/part-13/  故障排查手册
 | `book/part-03/04-commit-graph-and-reachability.md` | `book/part-3/01-commit-graph.md`、`book/part-09/01-measure-before-optimizing.md` | 新写并建立 commit 父边、拓扑/时间、查询根、revision 集合、merge-base/fork-point、浅边界、replace refs、commit-graph 和 generation data 的模型层权威来源；第九篇继续承担性能测量，旧提交图页已于 2026-09-14 迁为兼容入口 |
 | `book/part-03/05-index-internals.md` | `book/part-2/05-three-areas.md`、`book/part-3/07-conflict-model.md`、`book/part-3/10-complex-conflicts-rerere.md`、`book/part-09/04-sparse-partial-workflows.md` | 新写并建立 index entry/mode/OID/stage/stat、格式/扩展/锁、替代 index、冲突 stage 0/1/2/3、sparse-directory 和标志边界的模型层权威来源；第二篇保留日常操作，第四篇承担合并策略，第九篇承担受限工作流决策 |
 | `book/part-03/06-porcelain-and-plumbing.md` | `book/part-1/05-first-model.md`、各篇底层命令说明 | 新写并建立高层编排与底层原语的责任边界，覆盖对象构造、引用条件更新、index/工作区不同步、机器接口、batch 读取、hooks/签名和平台控制面缺口；不把 plumbing 分类当作风险等级 |
-| `book/part-04/README.md` | `book/part-3/README.md` | 新写；建立分支、合并、冲突与标签的 v2 操作层入口，只导航已落盘章节，旧第三篇在全部目标章迁移前继续承担兼容教学 |
+| `book/part-04/README.md` | `book/part-3/README.md` | 新写并完成十章正文与综合练习；旧第三篇已于 2026-09-14 全部迁为兼容入口 |
 | `book/part-04/01-branches-and-detached-head.md` | `book/part-3/02-branch-as-reference.md`、`book/part-3/03-head.md` | 新写并承担分支工作线、附着/分离/unborn `HEAD`、可达关系、本地/远程跟踪/upstream、命名、worktree 占用和删除恢复；底层 ref/reflog 格式仍引用第三篇 |
 | `book/part-04/02-create-and-switch-branches.md` | `book/part-3/04-switch-branch.md` | 新写并承担 branch/switch、明确起点、tracked/staged/未跟踪覆盖保护、可携带修改、upstream、分离候选、worktree 和 checkout 迁移边界 |
 | `book/part-04/03-merge-base.md` | `book/part-3/01-commit-graph.md`、`book/part-3/05-first-merge.md` | 新写并承担 receiver/incoming 方向、最佳共同祖先、多个/缺失 base、三棵 tree、自动合并候选、冲突输入、shallow/replace 边界和证据清单；提交图定义仍引用第三篇 |
