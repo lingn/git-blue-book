@@ -59,6 +59,30 @@ candidate_oid / artifact_digest:
 
 签名证据还要绑定最终对象。merge、squash、rebase、tag retarget 或候选重建都会产生新的 OID；来源 commit 的有效签名不能替代最终候选或发布 tag 的验证。构建清单中的 candidate、签名记录和 artifact digest 不一致时，发布状态应为 `inconclusive` 或 `blocked`，不能按相邻字段推断“仍然是同一份代码”。
 
+### 签名结论也有生命周期
+
+一个签名对象从发现到可用于发布，至少经过以下状态：
+
+```text
+DISCOVERED
+  -> CRYPTO_VALIDATED
+  -> IDENTITY_MAPPED
+  -> AUTHORIZED
+  -> QUARANTINED
+  -> RETIRED
+```
+
+| 状态 | 进入条件 | 必须保存 | 停止条件 |
+| --- | --- | --- | --- |
+| `DISCOVERED` | 对象、签名格式和 key fingerprint 已取得 | object OID、tag target、原始验证输出和时间 | payload 或对象来源不完整 |
+| `CRYPTO_VALIDATED` | 签名与对象 payload 和公钥匹配 | verifier/tool 版本、算法和 key 状态来源 | 签名损坏、对象改变或工具失败 |
+| `IDENTITY_MAPPED` | key 映射到候选之外的 principal | trust policy 版本、fingerprint、映射记录 | 只有邮箱/显示名或策略不可读 |
+| `AUTHORIZED` | principal 在相关时间被允许执行具体 action | candidate/artifact、action、审批、策略摘要和服务端事件 | candidate 改变、key 撤销/过期或制品不匹配 |
+| `QUARANTINED` | 发现泄漏、离职、策略漂移或来源不可信 | 影响对象、发布/引用、撤销时间和处置 owner | 未完成影响枚举或旧证据被覆盖 |
+| `RETIRED` | 对象/策略不再用于新动作，保留期和历史验证已安排 | 退役原因、最后使用、替代 key/policy 和保留期限 | 仍有生产 tag、制品或恢复依赖 |
+
+`CRYPTO_VALIDATED` 不是 `AUTHORIZED` 的缩写；`QUARANTINED` 也不能通过删除 allowed signers 文件直接变成 `RETIRED`。候选改变、策略版本更新、签名 key 撤销或 artifact digest 变化时，旧授权回到 `DISCOVERED`/`INCONCLUSIVE`，必须按新对象重新评估。状态记录要与第十篇机器身份生命周期和第八篇制品证据关联。
+
 ### 历史身份、传输身份和签名身份互不替代
 
 一次推送可能同时出现多种身份：
