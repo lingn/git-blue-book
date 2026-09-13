@@ -266,6 +266,7 @@
 - [x] 扩写第七篇 reset 章节，增加 `before_ref`、index/worktree 快照、target/mode/recovery ref 的前后对账契约，明确 `--hard` 和路径形式的验收不变量。
 - [x] 扩写第七篇 amend 章节，增加 old/new tip、tree、parent、recovery ref、index scope 和共享状态的前后对账契约，区分内容 amend 与说明 amend 的验收差异。
 - [x] 扩写第七篇交互式 rebase 章节，增加 `rewrite_base`、`original_tip`、`current_head` 和 todo 状态对账，明确 edit/exec/skip/abort 的逐提交证据要求。
+- [x] 扩写第十篇机器身份章节，增加 `PROPOSED`、`ACTIVE`、`ROTATING`、`QUARANTINED`、`REVOKED`、`RETIRED` 生命周期状态、证据字段和撤销停止条件。
 
 ## 回归状态
 
@@ -472,6 +473,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-reset-reflog.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇 reset 前后快照和模式验收不变量扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-part-5-local-history.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇 amend 前后 OID/tree/index 对账契约扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-interactive-rebase.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇交互式 rebase todo 与逐提交状态对账扩写通过专项实验与文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-machine-credential-boundaries.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇机器身份生命周期状态、撤销传播和服务端证据边界扩写通过专项实验与文档门禁 |
 
 ## 已知风险
 

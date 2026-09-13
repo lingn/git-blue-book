@@ -249,6 +249,30 @@ Broker 或 OIDC 不可用时，不要自动回退到仓库里保存的万能 PAT
 
 停止受影响 job，保存 run/principal/token ID 与签发时间，不复制 token 本体；撤销派生 token 或禁用主体/角色；检查有效窗口内的 API、ref update、下载和部署；修复泄漏入口；重新签发最小能力；必要时按上一章处理进入 Git 历史、日志、cache 或 artifact 的值。等自然过期只能缩短未来风险，不能代替窗口调查。
 
+### 生命周期状态不能靠一个 enabled 字段
+
+机器身份登记至少应区分以下状态：
+
+```text
+PROPOSED
+  -> ACTIVE
+  -> ROTATING
+  -> QUARANTINED
+  -> REVOKED
+  -> RETIRED
+```
+
+| 状态 | 允许的动作 | 必须保留的证据 | 转移停止条件 |
+| --- | --- | --- | --- |
+| `PROPOSED` | 只做登记和策略评审 | principal、owner、资源/动作、根凭据位置、TTL | owner、撤销路径或审计查询缺失时不得签发 |
+| `ACTIVE` | 按最小权限运行 | 签发、使用、ref/OID、run/job 和服务端结果 | 发现越权、泄漏或 owner 失效时立即隔离 |
+| `ROTATING` | 新旧凭据按批准窗口并行 | 新旧 fingerprint/token ID、消费者、开始/截止时间 | 无法列出消费者或旧值仍被使用时不得结束轮换 |
+| `QUARANTINED` | 停止新签发和高风险写入，保留取证读取 | 触发原因、传播窗口、受影响 runs、撤销动作 | 影响范围未枚举或服务端仍接受写入时不得恢复 |
+| `REVOKED` | 不允许新动作，按预案处理已有会话 | 撤销时间、传播确认、旧 token 使用调查 | 需要恢复时必须重新审批，不直接改回 ACTIVE |
+| `RETIRED` | 不再使用 | 下线原因、最后使用、残留扫描、保留期限 | 仍有消费者或缓存副本时不能删除登记 |
+
+状态转移必须以服务端观察为准。删除本地 secret、停止一个 runner 或把账号标记 disabled，只证明客户端动作，不证明已签发的自包含 token、缓存会话、LFS/package/API 入口和其他副本已经失效。每次转移还要保存受影响的候选 OID、ref old/new、制品摘要和部署事件，以便把身份事故接入第八篇发布证据链和第十二篇权限收敛流程。
+
 ## 按证据诊断失败
 
 | 现象 | 优先检查 | 恢复与安全边界 |
@@ -276,7 +300,7 @@ Broker 或 OIDC 不可用时，不要自动回退到仓库里保存的万能 PAT
 
 实验先在 `credential.useHttpPath=false` 时把一枚凭据批准给同一 HTTPS 主机，并证明另一个仓库路径也会取得该凭据；这验证 Git 默认凭据上下文的复用风险，不表示服务端一定接受 token。随后启用 path，把只读与发布合成 token 分别绑定两个仓库路径，证明读取、拒绝和保留按 path 分离。
 
-实验还故意把合成 token 嵌入 remote URL、把合成 Authorization header 写入 local config，断言两者会出现在 `.git/config`，再改回无 secret URL并删除 header。这个过程只为了给门禁提供可观察 fixture，绝不是生产注入方式。
+实验还故意把合成 token 嵌入 remote URL、把合成 Authorization header 写入 local config，断言两者会出现在 `.git/config`，再改回无 secret URL 并删除 header。这个过程只为了给门禁提供可观察 fixture，绝不是生产注入方式。
 
 成功时只输出：
 
