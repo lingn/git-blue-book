@@ -18,6 +18,6 @@
 12. [兼容入口：恢复案例正文已迁入第七篇](12-recovery-cases.md)
 13. [兼容入口：提交改写操作手册已迁入第七篇](13-rewrite-commit-playbook.md)
 14. [远端历史被重写后为什么同时 ahead 和 behind](14-remote-history-rewrite.md)
-15. [综合场景：四类事故的恢复决策](exercise.md)
+15. [兼容入口：第七篇综合场景已迁移](exercise.md)
 
 高风险实验全部在验证脚本创建的临时仓库中运行。真实项目发生事故时，先保护现场和记录提交 ID，不要边搜索边试命令。

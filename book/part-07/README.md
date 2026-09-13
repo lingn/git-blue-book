@@ -23,6 +23,7 @@
 11. [reset：移动引用，并按模式重置另外两个区域](11-reset.md)
 12. [reflog 与 recovery ref：保存引用移动的本地证据](12-reflog-and-recovery-refs.md)
 13. [本地与远程恢复：先保留候选，再验证共享状态](13-local-and-remote-recovery.md)
+14. [综合场景：四类事故的恢复决策](exercise.md)
 
 第七篇的正文迁移已经覆盖状态判断、工作区和 index、提交改写、rebase/cherry-pick、revert、显式租约、reset、共享政策、reflog 和恢复案例。旧路径仍保留兼容入口，直到整书主导航完成最终审校。
 
