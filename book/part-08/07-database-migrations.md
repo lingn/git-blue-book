@@ -62,6 +62,36 @@ design and compatibility review
 
 每个箭头都需要执行前检查、执行中指标、失败停止条件和恢复动作。`contract` 不是 `revert` 的同义词，一旦删除列、压缩数据、改变枚举含义或发送不可逆外部副作用，旧制品和旧脚本可能已经无法恢复。
 
+### 迁移批次要有可验证的状态
+
+迁移状态描述数据库和应用已经发生的事实，不能只复用部署状态或 Git 提交状态：
+
+```text
+DESIGNED
+  -> EXPAND_APPLIED
+  -> BACKFILLING
+  -> BACKFILL_VERIFIED
+  -> READ_SWITCHED
+  -> CONTRACT_ELIGIBLE
+  -> CONTRACTED
+
+任一阶段 -> PAUSED / INCONCLUSIVE / FORWARD_FIX_REQUIRED
+```
+
+| 状态 | 进入条件 | 必须保存 | 停止条件 |
+| --- | --- | --- | --- |
+| `DESIGNED` | 前置 schema、兼容矩阵、锁预算和恢复点已批准 | migration code digest、batch ID、目标 schema、rollback class | 兼容范围或恢复来源不清 |
+| `EXPAND_APPLIED` | schema introspection 证明新增结构真实存在且可访问 | 实际 schema 摘要、DDL 审计、节点/区域和耗时 | 旧应用读写失败、复制未追上或锁超时 |
+| `BACKFILLING` | 回填按可重放 checkpoint 分批执行 | 每批范围、成功/失败行、重试、双写差异和 lag | 失败行增长、checkpoint 不可重放或数据不一致 |
+| `BACKFILL_VERIFIED` | 覆盖率、空值、约束和业务不变量通过 | 查询结果、抽样、校验摘要和观察窗口 | 新旧值不一致或验证范围不完整 |
+| `READ_SWITCHED` | 新读写路径在兼容窗口内启用并可观测 | 配置版本、实例 digest、流量和消息协议 | 旧消费者无法理解、错误率超阈值或回退目标失效 |
+| `CONTRACT_ELIGIBLE` | 旧应用、任务、报表和消费者已围栏，备份可恢复 | 依赖清单、围栏证据、批准人和截止时间 | 仍有旧访问、备份/权限/锁条件未知 |
+| `CONTRACTED` | 删除或收紧旧结构后 schema/data 验收通过 | 新 schema 摘要、迁移记录、验证和清理时间 | 任何依赖遗漏或恢复要求未满足 |
+| `PAUSED` / `INCONCLUSIVE` | 证据缺失、执行中断或外部服务不可用 | 原始错误、已完成批次、checkpoint 和缺口 | 缺口未补齐不得继续或宣布成功 |
+| `FORWARD_FIX_REQUIRED` | contract 或数据变化已不可逆，旧版本无法安全运行 | 当前 schema、受影响应用/数据和向前修复计划 | 未验证修复前不得直接降级制品 |
+
+状态更新必须引用实际数据库观察和 `migration_batch_id`，不能由客户端退出码单独推进。迁移重试是新 attempt，继承原批次但不覆盖原始日志；发现新数据或旧消费者后，状态可以回退到 `PAUSED`，不能把失败记录改写成 `COMPLETE`。
+
 ### Expand：先增加，不要先删除
 
 Expand 阶段新增结构通常应保持旧应用可用，例如增加可空列、兼容索引或新表。新增约束要考虑旧数据是否已经满足，默认值是否会触发表重写，DDL 是否会长时间持锁。迁移前要记录预计锁范围、超时、取消方式和对线上流量的影响。
