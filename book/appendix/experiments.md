@@ -15,6 +15,7 @@
 - blob 复用、tree、commit、附注/轻量标签和 repack 后的对象身份；
 - SHA-1/SHA-256 对象格式、相同 payload 的跨格式 OID、repack 身份不变、不可达对象发现和可销毁仓库的立即 prune 边界；
 - unborn/附着/分离 `HEAD`、条件引用更新、packed refs、recovery ref、linked worktree 的共享分支与独立 `HEAD` 日志，以及 reflog 不随 clone 传输；
+- 根/普通/合并 commit 的父关系、分叉左右计数、merge-base、时间偏移后代、显式可达根、commit-graph 逻辑不变量和浅克隆边界恢复；
 - 首次提交、身份作用域与条件 include、工作区/index/HEAD 状态矩阵、取消暂存恢复、差异、提交失败与空提交、`.gitignore`、`.gitattributes` 和换行属性；
 - 分支、快进、分叉合并、冲突中止与解决、标签；
 - index stage 1/2/3、`AUTO_MERGE`、rerere 复用与忘记、rename/delete 和目录重命名；

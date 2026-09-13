@@ -29,6 +29,7 @@
   * [对象身份与格式：同一内容在不同仓库格式中怎样命名](part-03/01-object-identity-and-formats.md)
   * [Pack、delta 与对象生命周期：物理整理不会改写历史](part-03/02-pack-delta-and-lifecycle.md)
   * [引用、HEAD 与 reflog：名字怎样移动，旧位置怎样留下证据](part-03/03-refs-head-and-reflog.md)
+  * [提交图与可达性：父关系比时间和分支名更可靠](part-03/04-commit-graph-and-reachability.md)
 * [第三篇：用分支组织并行工作](part-3/README.md)
   * [提交如何组成历史：从父提交读懂提交图](part-3/01-commit-graph.md)
   * [分支是引用：给提交位置一个可移动的名字](part-3/02-branch-as-reference.md)
