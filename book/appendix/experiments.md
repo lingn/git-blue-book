@@ -24,6 +24,7 @@
 - `--autostash` 冲突后的 abort 恢复、quit 保留 index/工作区、pre-commit 拒绝 continue、修复门禁后重试和最终二父 tree 验收；
 - 轻量/附注标签类型与 peel、分支/标签短名碰撞、显式 tag push、同名拒绝、条件恢复和远端删除边界；
 - 功能/热修复分叉、ff-only 拒绝、15/10/30 三方配置、第三种结果、二父整合、main 快进、双附注标签和已合入分支清理；
+- server ref、`ls-remote` 响应、remote-tracking ref、本地分支、upstream、`FETCH_HEAD` 与 remote symbolic `HEAD` 的独立变化；
 - 首次提交、身份作用域与条件 include、工作区/index/HEAD 状态矩阵、取消暂存恢复、差异、提交失败与空提交、`.gitignore`、`.gitattributes` 和换行属性；
 - 分支、快进、分叉合并、冲突中止与解决、标签；
 - index stage 1/2/3、`AUTO_MERGE`、rerere 复用与忘记、rename/delete 和目录重命名；
