@@ -260,6 +260,7 @@
 - [x] 扩写第七篇共享历史改写政策，增加 `local-only`、`remote-published`、`externally-referenced`、`platform-unknown` 和保留期状态，补充改写决策包、证据缺口和例外退出条件，避免与远端事故命令章混写。
 - [x] 扩写第七篇 reflog 与 recovery ref 章节，增加“日志线索/对象可读性”候选矩阵，以及 reset/reflog 实验的前置条件、状态变化、预期输出和远端边界。
 - [x] 扩写第七篇本地与远程恢复章节，增加 `PRESERVED` 到 `CLOSED` 的恢复状态机、每步证据和停止条件，明确引用恢复不等于共享收敛或运行验证。
+- [x] 扩写第七篇远端历史改写事故章，补充 fetch/`ls-remote` 观察分离、`ahead/behind` 四阶段状态变化、rebase abort 证据和隔离实验执行契约。
 
 ## 回归状态
 
@@ -460,6 +461,7 @@
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇共享历史改写政策的共享状态分级、决策包和例外退出条件扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-reset-reflog.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇 reflog 与 recovery ref 候选矩阵及实验契约扩写通过专项实验与文档门禁 |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇本地与远程恢复状态机、证据和停止条件扩写通过文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-remote-history-rewrite.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇远端历史改写事故的观察分离、四阶段状态和实验契约扩写通过专项实验与文档门禁 |
 
 ## 已知风险
 

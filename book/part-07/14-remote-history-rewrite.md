@@ -257,6 +257,8 @@ git cherry-pick <genuine-local-oid-1> <genuine-local-oid-2>
 7. 处理后核对本地 HEAD、远端 OID、评审、CI、制品和部署引用。
 8. 需要追责时查平台审计，不从本地 reflog 猜操作者。
 
+事故记录不要只保存最终的 `ahead/behind` 数字。至少保存一次 fetch 前后的远程跟踪 OID、服务器查询结果、共同祖先、左右提交列表、补丁等价结论、rebase 状态和恢复引用。fetch 会更新本地远程跟踪 ref，`git ls-remote` 只读取服务器，不会更新本地缓存；两类观察必须分开记录。
+
 ## 隔离实验
 
 运行：
@@ -266,6 +268,30 @@ git cherry-pick <genuine-local-oid-1> <genuine-local-oid-2>
 ```
 
 实验会在临时目录中创建旧三条提交，随后在远端的新六条基线上重建这三条变化并强制更新。脚本验证 `ahead 3, behind 9`、补丁等价、远程跟踪 reflog 的 `forced-update`、rebase abort 返回旧分支头，以及建立恢复分支后同步到新远端。它不模拟托管平台审计、分支保护、真实网络、评审、CI 或业务测试。
+
+执行契约如下：
+
+```bash
+git --version
+TMPDIR=/private/tmp bash scripts/verify-remote-history-rewrite.sh
+```
+
+成功输出为：
+
+```text
+Remote rewrite ahead/behind counts, evidence, abort, and recovery passed.
+```
+
+实验的状态变化可以按四个阶段理解：
+
+| 阶段 | 预期状态 | 关键证据 |
+| --- | --- | --- |
+| 旧历史 | client 和 server 都指向旧三条提交 | `HEAD == old_tip` |
+| 远端重写后 fetch | client 仍在旧 tip，`origin/feature/rewrite` 指向新 tip | `ahead 3, behind 9`、`forced-update`、远程跟踪 reflog |
+| rebase 被中止 | rebase 暂停在新基线上，abort 后 client 回到旧 tip | `.git/rebase-merge`、HEAD reflog 的 start/abort 记录 |
+| 明确接受新历史 | 旧 tip 由 recovery ref 保留，当前分支与新远端一致 | recovery ref、`rev-list --left-right --count` 为 `0 0` |
+
+脚本退出时清理临时目录；它不会修改当前仓库的 refs、工作区或 remote。若实验中途失败，先保留输出和退出位置，不要把脚本中的 `reset --hard` 或 force push 直接用于真实分支。实验只证明本地 Git 的提交图、补丁比较、远程跟踪 reflog、rebase 状态和恢复引用行为，不证明平台审计、保护规则、协作者获取范围、CI、制品或业务数据已经收敛。
 
 ## 小结
 
