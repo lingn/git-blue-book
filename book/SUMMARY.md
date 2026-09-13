@@ -93,7 +93,7 @@
   * [兼容入口：Pull 正文已迁入 v2 第五篇](part-4/06-pull.md)
   * [兼容入口：Push 正文已迁入 v2 第五篇](part-4/07-push.md)
   * [兼容入口：Push 拒绝正文已迁入 v2 第五篇](part-4/08-push-rejection.md)
-  * [代码评审前整理什么：把候选、范围和验证绑定起来](part-4/09-review-ready.md)
+  * [兼容入口：代码评审前整理正文已迁入第六篇](part-4/09-review-ready.md)
   * [兼容入口：rebase 模型正文已迁入第七篇](part-4/10-rebase-model.md)
   * [兼容入口：rebase 安全工作流正文已迁入第七篇](part-4/11-rebase-workflow.md)
   * [兼容入口：cherry-pick 正文已迁入第七篇](part-4/12-cherry-pick.md)

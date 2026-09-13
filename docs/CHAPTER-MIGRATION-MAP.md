@@ -109,7 +109,7 @@ book/part-13/  故障排查手册
 | `book/part-4/06-pull.md` | `book/part-05/05-pull-as-composition.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/07-push.md` | `book/part-05/06-push-upstream-and-ref-updates.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/08-push-rejection.md` | `book/part-05/07-rejection-atomic-push-and-options.md` | 已于 2026-09-14 扩写原子推送与 push options；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-4/09-review-ready.md` | `book/part-06/02-review-request-model.md`、`book/part-06/04-reviewable-changes.md` | 拆分 |
+| `book/part-4/09-review-ready.md` | `book/part-06/02-review-state-machine.md`、`book/part-06/04-reviewable-changes-and-stacks.md`、`book/part-08/02-candidate-commits.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/10-rebase-model.md` | `book/part-07/06-rebase-model-and-workflow.md` | 已于 2026-09-05 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/11-rebase-workflow.md` | `book/part-07/06-rebase-model-and-workflow.md` | 已于 2026-09-05 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/12-cherry-pick.md` | `book/part-07/07-cherry-pick.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |

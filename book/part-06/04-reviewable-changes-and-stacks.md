@@ -4,7 +4,7 @@
 
 ## 进入条件与完成标准
 
-本章从[评审前准备](../part-4/09-review-ready.md)继续，假设候选仍在未共享或明确允许整理的功能分支。命令在开发者 clone 的仓库根目录执行，`base` 和 `candidate` 必须先赋值为完整 OID：
+本章承接[评审请求状态机](02-review-state-machine.md)，假设候选仍在未共享或明确允许整理的功能分支。命令在开发者 clone 的仓库根目录执行，`base` 和 `candidate` 必须先赋值为完整 OID：
 
 ~~~bash
 git fetch origin
