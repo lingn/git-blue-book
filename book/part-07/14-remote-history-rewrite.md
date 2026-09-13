@@ -1,8 +1,8 @@
 # 远端历史被重写后为什么同时 ahead 和 behind
 
-本地与上游同时 ahead/behind 时，先从提交图区分 forced-update 线索、远程跟踪 reflog、rebase abort 和真正未发布的本地变化，再选择不覆盖协作者提交的恢复路线。
+本地与上游同时 ahead/behind 时，先从提交图区分 forced-update 线索、远程跟踪引用的 reflog、rebase abort 和真正未发布的本地变化，再选择不覆盖协作者提交的恢复路线。
 
-本地分支突然显示 `ahead 3, behind 9`，并不表示 Git 算错了，也不等于“本地还有 3 条新工作、远端比我多 9 条业务需求”。它只说明：以当前本地分支和远程跟踪分支的共同祖先为界，本地一侧有 3 个只在本地可达的 commit，远端一侧有 9 个只在远端可达的 commit。远程跟踪 ref 的来源和新鲜度见[Fetch 与 FETCH_HEAD](../part-05/04-fetch-and-fetch-head.md)。
+本地分支突然显示 `ahead 3, behind 9`，并不表示 Git 算错了，也不等于“本地还有 3 条新工作、远端比我多 9 条业务需求”。它只说明：以当前本地分支和远程跟踪引用的共同祖先为界，本地一侧有 3 个只在本地可达的 commit，远端一侧有 9 个只在远端可达的 commit。远程跟踪引用的来源和新鲜度见[Fetch 与 FETCH_HEAD](../part-05/04-fetch-and-fetch-head.md)。
 
 当远端历史被 rebase、reset 或其他非快进方式改写时，同一批业务变化可能以新 OID 再出现。旧提交于是被计入 ahead，新提交被计入 behind。判断它们是不是同一批变化，需要继续比较补丁和最终 tree，不能只看数量或提交说明。
 
@@ -257,7 +257,7 @@ git cherry-pick <genuine-local-oid-1> <genuine-local-oid-2>
 7. 处理后核对本地 HEAD、远端 OID、评审、CI、制品和部署引用。
 8. 需要追责时查平台审计，不从本地 reflog 猜操作者。
 
-事故记录不要只保存最终的 `ahead/behind` 数字。至少保存一次 fetch 前后的远程跟踪 OID、服务器查询结果、共同祖先、左右提交列表、补丁等价结论、rebase 状态和恢复引用。fetch 会更新本地远程跟踪 ref，`git ls-remote` 只读取服务器，不会更新本地缓存；两类观察必须分开记录。
+事故记录不要只保存最终的 `ahead/behind` 数字。至少保存一次 fetch 前后的远程跟踪 OID、服务器查询结果、共同祖先、左右提交列表、补丁等价结论、rebase 状态和恢复引用。fetch 会更新本地远程跟踪引用，`git ls-remote` 只读取服务器，不会更新本地缓存；两类观察必须分开记录。
 
 ## 隔离实验
 
@@ -267,7 +267,7 @@ git cherry-pick <genuine-local-oid-1> <genuine-local-oid-2>
 ./scripts/verify-remote-history-rewrite.sh
 ```
 
-实验会在临时目录中创建旧三条提交，随后在远端的新六条基线上重建这三条变化并强制更新。脚本验证 `ahead 3, behind 9`、补丁等价、远程跟踪 reflog 的 `forced-update`、rebase abort 返回旧分支头，以及建立恢复分支后同步到新远端。它不模拟托管平台审计、分支保护、真实网络、评审、CI 或业务测试。
+实验会在临时目录中创建旧三条提交，随后在远端的新六条基线上重建这三条变化并强制更新。脚本验证 `ahead 3, behind 9`、补丁等价、远程跟踪引用的 reflog 中出现 `forced-update`、rebase abort 返回旧分支头，以及建立恢复分支后同步到新远端。它不模拟托管平台审计、分支保护、真实网络、评审、CI 或业务测试。
 
 执行契约如下：
 
@@ -287,12 +287,12 @@ Remote rewrite ahead/behind counts, evidence, abort, and recovery passed.
 | 阶段 | 预期状态 | 关键证据 |
 | --- | --- | --- |
 | 旧历史 | client 和 server 都指向旧三条提交 | `HEAD == old_tip` |
-| 远端重写后 fetch | client 仍在旧 tip，`origin/feature/rewrite` 指向新 tip | `ahead 3, behind 9`、`forced-update`、远程跟踪 reflog |
+| 远端重写后 fetch | client 仍在旧 tip，`origin/feature/rewrite` 指向新 tip | `ahead 3, behind 9`、`forced-update`、远程跟踪引用的 reflog |
 | rebase 被中止 | rebase 暂停在新基线上，abort 后 client 回到旧 tip | `.git/rebase-merge`、HEAD reflog 的 start/abort 记录 |
 | 明确接受新历史 | 旧 tip 由 recovery ref 保留，当前分支与新远端一致 | recovery ref、`rev-list --left-right --count` 为 `0 0` |
 
-脚本退出时清理临时目录；它不会修改当前仓库的 refs、工作区或 remote。若实验中途失败，先保留输出和退出位置，不要把脚本中的 `reset --hard` 或 force push 直接用于真实分支。实验只证明本地 Git 的提交图、补丁比较、远程跟踪 reflog、rebase 状态和恢复引用行为，不证明平台审计、保护规则、协作者获取范围、CI、制品或业务数据已经收敛。
+脚本退出时清理临时目录；它不会修改当前仓库的 refs、工作区或 remote。若实验中途失败，先保留输出和退出位置，不要把脚本中的 `reset --hard` 或 force push 直接用于真实分支。实验只证明本地 Git 的提交图、补丁比较、远程跟踪引用的 reflog、rebase 状态和恢复引用行为，不证明平台审计、保护规则、协作者获取范围、CI、制品或业务数据已经收敛。
 
 ## 小结
 
-`ahead 3, behind 9` 是提交图的左右可达数量，不是业务变化数量。远端改写后，旧三条和重建后的三条即使内容相似，也因为父关系变化而成为不同 commit。强制更新由 fetch 输出和远程跟踪 reflog 证明，rebase abort 回到旧状态由 HEAD reflog 证明。真正的处理依据，是每条本地提交是否仍含远端没有的工作，而不是哪边数字更大。
+`ahead 3, behind 9` 是提交图的左右可达数量，不是业务变化数量。远端改写后，旧三条和重建后的三条即使内容相似，也因为父关系变化而成为不同 commit。强制更新由 fetch 输出和远程跟踪引用的 reflog 证明，rebase abort 回到旧状态由 HEAD reflog 证明。真正的处理依据，是每条本地提交是否仍含远端没有的工作，而不是哪边数字更大。

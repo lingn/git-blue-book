@@ -248,22 +248,9 @@ shared_refs: <评审、CI、发布和部署引用>
 
 ## 变基后的推送
 
-未推送过的新分支可以普通首次推送。已经推送过的分支，由于远端仍指向旧提交，普通 push 通常会拒绝。若团队明确允许改写，先查询并保存远端旧值：
+未推送过的新分支可以普通首次推送。已经推送过的分支通常会因新历史不是远端旧提交的后代而拒绝普通 push。此时本章只负责确认本地重建已经通过：保存 `new_tip`、`range-diff`、最终 tree、测试、签名和评审影响，并判断目标分支是否允许改写。
 
-~~~bash
-expected_remote="$(git ls-remote origin refs/heads/feature/search | awk '{print $1}')"
-new_tip="$(git rev-parse HEAD)"
-printf 'expected_remote=%s\nnew_tip=%s\n' "$expected_remote" "$new_tip"
-~~~
-
-在确认分支所有权、评审影响、恢复来源和平台规则后，才考虑显式租约：
-
-~~~bash
-git push --force-with-lease=refs/heads/feature/search:"$expected_remote" \
-  origin HEAD:refs/heads/feature/search
-~~~
-
-租约只检查远端 ref 是否仍为 expected value，不提供权限、备份或绝对锁。查询和推送之间仍有竞态，拒绝后要重新 fetch、比较 OID 和通知协作者。不得用无条件 git push --force 代替协调。
+远端当前 OID 的查询、恢复引用、显式 expected-old、条件推送、拒绝后的并发分流和错误更新恢复统一由[显式租约](10-explicit-force-lease.md)负责。不要在 rebase 流程中临时拼一条 `--force` 命令，也不要把本地 `origin/...` 缓存当成服务器实时状态。若共享状态不明，先按[共享历史改写政策](09-public-history-policy.md)停在决策阶段。
 
 ## 失败路径和恢复
 

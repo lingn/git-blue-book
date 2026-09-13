@@ -147,7 +147,7 @@ git log --graph --decorate --oneline --all
 git for-each-ref --format='%(refname) %(objectname)'
 ~~~
 
-status 可能刷新 index 缓存；log 和 show 读取对象；for-each-ref 读取引用。fetch 会写对象、FETCH_HEAD 和 remote-tracking refs，不能在取证记录中称为完全只读。restore、reset、clean、stash、merge、rebase、revert、push 和维护命令都应明确列为有副作用。
+status 可能刷新 index 缓存；log 和 show 读取对象；for-each-ref 读取引用。fetch 会写对象、FETCH_HEAD 和远程跟踪引用，不能在取证记录中称为完全只读。restore、reset、clean、stash、merge、rebase、revert、push 和维护命令都应明确列为有副作用。
 
 ## 常见错误判断
 

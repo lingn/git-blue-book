@@ -251,8 +251,8 @@
 - [x] 建立 v2 第七篇目标路径，把第五篇恢复正文按迁移表合并、拆分并留下旧链接兼容页，完成第六至八篇的连续导航。
 - [x] 继续迁移第五篇 reflog 和恢复案例，处理与远端历史改写新增章节的职责重叠。
 - [ ] 在专用托管平台测试仓库验证第六篇的审批失效、代码所有者、同名检查报告者、合并队列、管理员/API 绕过和审计事件，并把产品、版本、权限、套餐和核对日期写入事实登记表。
-- [ ] 对第七篇执行整篇跨章去重和术语审校，重点检查 amend/交互式 rebase/rebase 工作流、共享政策/租约/远端改写之间的重复边界。
-- [ ] 继续审校显式租约与远端改写事故的证据清单重复，并对第七篇执行术语和命令首次出现检查。
+- [x] 完成第七篇第二轮跨章去重和术语审校：amend 只承担最近提交，交互式 rebase 只承担 todo/拆分，普通 rebase 只承担通用状态机，共享政策负责授权判断，显式租约独占条件推送，远端改写章负责事故诊断与恢复路线。
+- [x] 收束显式租约与远端改写事故的重复命令和证据清单：删除普通 rebase 章中的第二份远端查询/租约推送流程，统一“远程跟踪引用”术语，并确认完整租约命令只保留在权威章和综合练习。
 - [x] 扩写第六篇受保护引用章节，补充引用更新的状态变化、stale push 与远程跟踪缓存的隔离实验、保护 ref 与评审 ref 的边界，以及本地 hook 不能证明平台身份、审批和审计的限制。
 - [x] 扩写第六篇所有权与审批章节，新增候选之外的 trusted ownership snapshot、独立审批、候选自修改所有权文件、stale 决定和 owner 缺失的隔离求值实验，并接入全量验证。
 - [x] 扩写第六篇 CI 身份与状态回报章节，新增外部报告者登记、候选 OID、流水线版本、错误报告者、过期状态和报告者撤销的隔离求值实验，并接入全量验证。
@@ -496,6 +496,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-deploy-rollback.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第八篇部署 generation 条件更新、过期继续请求和暂停状态保留扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-database-migrations.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第八篇数据库迁移批次状态、schema/回填/切换/contract 证据与向前修复边界扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-incident-to-release.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第八篇事故到发布状态门禁、回退条件和多组件验证边界扩写通过专项实验与文档门禁 |
+| 2026-09-14 | 第七篇重复命令/术语扫描、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 普通 rebase 移除重复显式租约流程，租约章继续作为高风险命令权威来源，事故章只保留诊断与恢复，远程跟踪引用术语已统一 |
 
 ## 已知风险
 
