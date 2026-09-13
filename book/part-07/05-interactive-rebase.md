@@ -158,6 +158,21 @@ git rebase -i "$rewrite_base" --exec './scripts/test.sh'
 
 对于大型仓库，逐条构建每个提交可能成本很高。可以用快速静态检查逐条验证，完成后再对最终分支运行完整测试，但要在评审说明中记录实际覆盖范围。
 
+## 逐提交记录执行进度
+
+交互式 rebase 进行中时，至少同时保存四个坐标：
+
+```text
+rewrite_base: 重建范围的共同基线
+original_tip: 开始前分支尖端
+current_head: 当前已经重放到的临时提交
+todo_state: 已执行动作、当前动作、待执行动作
+```
+
+`git status`、`git rebase --show-current-patch` 和 `git rebase --edit-todo` 分别提供状态、当前补丁和剩余计划的不同部分。`--edit-todo` 只改变尚未执行的计划，不能把已经生成的提交重新解释成未执行。`exec` 失败时，当前 `HEAD` 可能已经移动到一个可读但未验收的中间提交，不能直接用最终 tree 作为成功证据。
+
+每次 `edit`、冲突或 `exec` 停止，都记录：当前原提交 OID、当前新 `HEAD`、index 未合并路径、已执行 todo 摘要、剩余 todo 和恢复分支。使用 `--continue` 前验证当前提交的 tree；使用 `--skip` 前记录被放弃的原 OID 和理由；使用 `--abort` 后确认分支回到 `original_tip`，而不是只看工作区暂时干净。
+
 ## 验证提交序列和最终 tree
 
 完成后先保存新分支头：
