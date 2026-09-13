@@ -21,6 +21,31 @@ sha256_file() {
   fi
 }
 
+transition_deployment() {
+  local deployment_file="$1"
+  local expected_state="$2"
+  local expected_generation="$3"
+  local next_state="$4"
+  local current_state current_generation next_generation temporary_file
+
+  current_state="$(sed -n 's/^state=//p' "$deployment_file")"
+  current_generation="$(sed -n 's/^generation=//p' "$deployment_file")"
+  if test "$current_state" != "$expected_state" ||
+    test "$current_generation" != "$expected_generation"; then
+    return 42
+  fi
+
+  next_generation=$((current_generation + 1))
+  temporary_file="$deployment_file.next"
+  awk -F= -v state="$next_state" -v generation="$next_generation" '
+    BEGIN { OFS = "=" }
+    $1 == "state" { $2 = state }
+    $1 == "generation" { $2 = generation }
+    { print }
+  ' "$deployment_file" > "$temporary_file"
+  mv "$temporary_file" "$deployment_file"
+}
+
 repo="$lab_dir/source"
 mkdir -p "$repo/service"
 git -C "$repo" init --quiet --initial-branch=main
@@ -58,6 +83,7 @@ deployment="$lab_dir/environments/prod/deployment.env"
 printf '%s\n' \
   'deployment_id=deploy-001' \
   'state=requested' \
+  'generation=1' \
   "source_commit=$candidate_commit" \
   "artifact_digest=$candidate_digest" \
   'configuration_version=config-v2' \
@@ -80,6 +106,7 @@ grep -Fqx 'health=fail' "$canary/observation.env"
 printf '%s\n' \
   'deployment_id=deploy-001' \
   'state=paused' \
+  'generation=2' \
   "source_commit=$candidate_commit" \
   "artifact_digest=$candidate_digest" \
   'configuration_version=config-v2' \
@@ -87,10 +114,24 @@ printf '%s\n' \
   'pause_reason=canary_health_failed' \
   > "$deployment"
 grep -Fqx 'state=paused' "$deployment"
+grep -Fqx 'generation=2' "$deployment"
 if grep -Fq 'traffic_percent=100' "$canary/observation.env"; then
   printf 'failed canary unexpectedly received all traffic.\n' >&2
   exit 1
 fi
+
+paused_record_digest="$(sha256_file "$deployment")"
+stale_transition_status=0
+transition_deployment "$deployment" requested 1 progressing ||
+  stale_transition_status=$?
+if test "$stale_transition_status" -ne 42; then
+  printf 'Expected stale rollout transition to return status 42, got %s.\n' \
+    "$stale_transition_status" >&2
+  exit 1
+fi
+test "$(sha256_file "$deployment")" = "$paused_record_digest"
+grep -Fqx 'state=paused' "$deployment"
+grep -Fqx 'generation=2' "$deployment"
 
 old_instance="$lab_dir/environments/prod/instances/old"
 mkdir -p "$old_instance"
@@ -110,6 +151,7 @@ printf '%s\n' \
 printf '%s\n' \
   'deployment_id=deploy-001' \
   'state=rolled_back' \
+  'generation=3' \
   "source_commit=$known_good_commit" \
   "artifact_digest=$known_good_digest" \
   'configuration_version=config-v1' \
@@ -119,6 +161,7 @@ printf '%s\n' \
 test "$(sha256_file "$canary/application.tar")" = "$known_good_digest"
 test "$(sha256_file "$old_instance/application.tar")" = "$known_good_digest"
 grep -Fqx 'state=rolled_back' "$deployment"
+grep -Fqx 'generation=3' "$deployment"
 grep -Fqx 'configuration_version=config-v1' "$deployment"
 
 printf 'configuration_version=config-v2\n' > "$lab_dir/environments/prod/config.env"

@@ -274,6 +274,7 @@
 - [x] 扩写第十篇秘密扫描与归档导出章节，增加 `CANDIDATE_FIXED`、`ARCHIVE_GENERATED`、`CONTENT_VALIDATED`、`MANIFEST_SEALED`、`PUBLISHED`、`REVOKED/RETIRED` 归档生命周期和重新生成失效规则。
 - [x] 扩写第十二篇审计日志与证据留存章节，增加 `PLANNED`、`COLLECTING`、`COMPLETE/PARTIAL/INCONCLUSIVE`、`FROZEN`、`EXPIRED`、`DESTROYED` 留存状态及 legal hold、manifest 和销毁证据边界。
 - [x] 扩写第十二篇仓库健康与容量维护章节，增加健康快照与维护任务的联合状态模型，明确 `WARN/FAIL/INCONCLUSIVE` 的动作边界、快照过期和维护阻断条件。
+- [x] 扩展第八篇部署与回退实验，给 rollout 记录加入 generation 条件，验证金丝雀暂停后过期继续请求被拒绝且状态、暂停原因和记录摘要保持不变。
 
 ## 回归状态
 
@@ -488,6 +489,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-secret-scanning-and-exports.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇归档候选、内容扫描、manifest sealing、发布与撤销状态扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-audit-evidence-retention.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇审计留存状态、采集完整性、legal hold 和销毁证据扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-repository-health-capacity.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇健康快照与维护任务联合状态、容量/恢复阻断条件扩写通过专项实验与文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-deploy-rollback.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第八篇部署 generation 条件更新、过期继续请求和暂停状态保留扩写通过专项实验与文档门禁 |
 
 ## 已知风险
 
