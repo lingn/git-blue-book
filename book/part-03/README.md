@@ -15,9 +15,10 @@ Git 的多数高风险操作都能还原成三个问题：对象是否已经写�
 3. [引用、HEAD 与 reflog：名字怎样移动，旧位置怎样留下证据](03-refs-head-and-reflog.md)
 4. [提交图与可达性：父关系比时间和分支名更可靠](04-commit-graph-and-reachability.md)
 5. [Index 内部结构：下一棵 tree、冲突候选与稀疏目录](05-index-internals.md)
+6. [Porcelain 与 plumbing：便利工作流和底层原语的责任边界](06-porcelain-and-plumbing.md)
 
-后续章节将继续落地 porcelain/plumbing 的边界。未落地主题仍按 `docs/CHAPTER-MIGRATION-MAP.md` 管理，不创建短篇占位页。
+第三篇规划的模型主题已经落盘，接下来按迁移表处理旧第三篇与 v2 第四篇的职责，并进行跨章术语、重复和出版审校。自动检查通过只能证明当前链接与实验不变量，不能替代技术编辑、目标环境验证和全书验收。
 
 ## 实验边界
 
-本篇实验在 `mktemp` 目录创建 SHA-1 和 SHA-256 仓库，写入合成对象，并在可销毁仓库中运行 repack 和立即 prune。引用实验另外构造 unborn、附着和分离 `HEAD`、packed refs、linked worktree 与本地 clone；提交图实验构造分叉、合并、时钟偏移、不可达 commit、commit-graph 和浅边界；index 实验覆盖普通/冲突 entries、替代 index 与 sparse-directory。它不迁移真实仓库，不连接远端，也不验证平台、LFS、签名服务或生产备份。真实事故现场不得照抄立即过期和清理命令。
+本篇实验在 `mktemp` 目录创建 SHA-1 和 SHA-256 仓库，写入合成对象，并在可销毁仓库中运行 repack 和立即 prune。引用实验另外构造 unborn、附着和分离 `HEAD`、packed refs、linked worktree 与本地 clone；提交图实验构造分叉、合并、时钟偏移、不可达 commit、commit-graph 和浅边界；index 实验覆盖普通/冲突 entries、替代 index 与 sparse-directory；plumbing 实验逐层构造对象并发布条件引用。它不迁移真实仓库，不连接远端，也不验证平台、LFS、签名服务或生产备份。真实事故现场不得照抄立即过期和清理命令。

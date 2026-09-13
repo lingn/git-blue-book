@@ -16,7 +16,7 @@
 
 ## 第三篇（v2）：对象模型决定命令行为
 
-深入对象的规范输入、SHA-1/SHA-256 格式、完整与缩写 OID、loose object、pack/index、delta 和对象生命周期，再进入逻辑引用、`HEAD`、reflog、提交图、可达性与 index 内部结构。这里区分逻辑身份、物理存储、当前入口、父关系、下一棵 tree、冲突 stages 与 sparse-directory，为后面的分支、恢复、性能和取证提供共同模型。
+深入对象的规范输入、SHA-1/SHA-256 格式、完整与缩写 OID、loose object、pack/index、delta 和对象生命周期，再进入逻辑引用、`HEAD`、reflog、提交图、可达性与 index 内部结构。最后用 porcelain/plumbing 边界解释高层工作流怎样组合底层原语，以及工具作者接管了哪些锁、恢复与策略责任。
 
 ## 第三篇：用分支组织并行工作
 

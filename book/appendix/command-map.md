@@ -17,6 +17,15 @@
 | 比较内容 | `git diff` | [差异](../part-2/08-diff.md) |
 | 查看历史 | `git log`、`git show` | [历史](../part-2/09-history.md) |
 
+## 内部模型与工具接口
+
+| 目标 | 命令 | 详解 |
+| --- | --- | --- |
+| 读取对象类型、大小或内容 | `git cat-file`、`git cat-file --batch-check` | [Porcelain 与 plumbing](../part-03/06-porcelain-and-plumbing.md) |
+| 从字节、条目和 index 构造对象 | `git hash-object`、`git mktree`、`git write-tree`、`git commit-tree` | [Porcelain 与 plumbing](../part-03/06-porcelain-and-plumbing.md) |
+| 读取或条件更新逻辑引用 | `git for-each-ref`、`git symbolic-ref`、`git update-ref` | [引用、HEAD 与 reflog](../part-03/03-refs-head-and-reflog.md) |
+| 读取 index mode、OID、stage 和稀疏目录 | `git ls-files --stage -z`、`git ls-files --sparse` | [Index 内部结构](../part-03/05-index-internals.md) |
+
 ## 分支与整合
 
 | 目标 | 命令 | 详解 |

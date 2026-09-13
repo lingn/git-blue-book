@@ -23,6 +23,8 @@
 | 快进 | 当前提交是目标提交祖先，只需向前移动分支 | [第一次合并](../part-3/05-first-merge.md) |
 | 冲突 | Git 无法替人决定最终内容时留下的未完成整合状态 | [冲突模型](../part-3/07-conflict-model.md) |
 | index stage | 冲突期间 index 保存的共同祖先、当前侧和合入侧条目；普通 merge 中分别是 stage 1、2、3 | [Index 内部结构](../part-03/05-index-internals.md) |
+| porcelain | 按用户意图编排一个或多个 Git 数据层的高层接口；分类本身不代表无副作用 | [Porcelain 与 plumbing](../part-03/06-porcelain-and-plumbing.md) |
+| plumbing | 直接操作对象、引用、index 等底层结构的原语；调用者承担更多前置条件与恢复责任 | [Porcelain 与 plumbing](../part-03/06-porcelain-and-plumbing.md) |
 | `ort` | Git 新版本对单分支普通合并采用的三方合并策略，负责组合 tree 和处理 rename 等机械语义 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
 | `AUTO_MERGE` | `ort` 冲突现场记录初始自动合并工作区内容的临时 tree 引用 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
 | rerere | 记录冲突 preimage 与已解决 postimage，并在相似冲突中复用编辑结果的机制 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
