@@ -166,6 +166,30 @@ git cat-file -e 'recovery/remote-before-force^{commit}'
 | 源码与测试 | tree 差异、构建和测试通过 | 远端、制品或部署已更新 |
 | 共享与运行状态 | 远端 ID、CI、制品摘要、部署记录 | 数据副作用已经自动撤销 |
 
+## 恢复也有进行中的状态
+
+“恢复完成”不能只由一个 `git branch recovery/...` 命令决定。事故记录至少保留下面的状态序列，状态只能在对应证据存在后前进：
+
+```text
+PRESERVED
+  -> CANDIDATE_VALIDATED
+  -> REF_RESTORED
+  -> SHARED_CONVERGED
+  -> RUNTIME_VERIFIED
+  -> CLOSED
+```
+
+| 状态 | 进入条件 | 不允许宣称的结论 |
+| --- | --- | --- |
+| `PRESERVED` | 现场快照、old/new OID、操作日志和外部证据已冻结 | 候选正确或恢复已经开始 |
+| `CANDIDATE_VALIDATED` | 对象类型、tree、父关系、补丁范围和来源均已核对 | 正式分支、远端或制品已恢复 |
+| `REF_RESTORED` | 本地或服务器引用按 expected-old 条件指向批准候选 | 协作者、评审、CI 和缓存已经收敛 |
+| `SHARED_CONVERGED` | 远端 OID、评审/CI、制品摘要和协作者迁移结果一致 | 线上数据副作用已经撤销 |
+| `RUNTIME_VERIFIED` | 运行版本、业务指标、消息/任务和数据库状态通过验收 | 证据可以立即删除 |
+| `CLOSED` | 责任人、清理时间、保留期和复盘行动项已记录 | 无需再保留恢复引用或原始日志 |
+
+任一步骤失败都停留在当前状态并记录 `blocked_reason`，不能通过删除失败记录或重复运行命令强行进入下一状态。比如 `REF_RESTORED` 只说明引用坐标恢复，旧制品仍可能在实例中运行；`RUNTIME_VERIFIED` 也不自动允许删除 bundle、recovery ref 或审计证据。
+
 恢复分支至少保留到评审、发布和协作者迁移完成。事故记录应包含原始目标、误操作命令、候选来源、完整对象 ID、恢复命令、测试证据、远端结果和清理时间。
 
 本篇的 `verify-interactive-rebase.sh`、`verify-reset-reflog.sh` 和 `verify-force-with-lease.sh` 分别覆盖 rebase 中止、引用恢复和远端条件恢复。它们使用临时本地仓库，只证明 Git 行为，不模拟平台审计、CI 或生产部署。
