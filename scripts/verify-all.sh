@@ -8,6 +8,7 @@ cd "$repo_dir"
 verification_scripts=(
   scripts/verify-object-model.sh
   scripts/verify-object-format-lifecycle.sh
+  scripts/verify-refs-head-reflog.sh
   scripts/verify-part-2.sh
   scripts/verify-part-3-basics.sh
   scripts/verify-part-3-conflicts.sh

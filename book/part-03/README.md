@@ -12,10 +12,10 @@ Git 的多数高风险操作都能还原成三个问题：对象是否已经写�
 
 1. [对象身份与格式：同一内容在不同仓库格式中怎样命名](01-object-identity-and-formats.md)
 2. [Pack、delta 与对象生命周期：物理整理不会改写历史](02-pack-delta-and-lifecycle.md)
+3. [引用、HEAD 与 reflog：名字怎样移动，旧位置怎样留下证据](03-refs-head-and-reflog.md)
 
-后续章节将继续落地 refs、符号引用与 reflog，提交图、可达性与 generation data，index 结构和冲突阶段，以及 porcelain/plumbing 的边界。未落地主题仍按 `docs/CHAPTER-MIGRATION-MAP.md` 管理，不创建短篇占位页。
+后续章节将继续落地提交图、可达性与 generation data，index 结构和冲突阶段，以及 porcelain/plumbing 的边界。未落地主题仍按 `docs/CHAPTER-MIGRATION-MAP.md` 管理，不创建短篇占位页。
 
 ## 实验边界
 
-本篇实验在 `mktemp` 目录创建 SHA-1 和 SHA-256 仓库，写入合成对象，并在可销毁仓库中运行 repack 和立即 prune。它不迁移真实仓库，不连接远端，也不验证平台、LFS、签名服务或生产备份。真实事故现场不得照抄立即过期和清理命令。
-
+本篇实验在 `mktemp` 目录创建 SHA-1 和 SHA-256 仓库，写入合成对象，并在可销毁仓库中运行 repack 和立即 prune。引用实验另外构造 unborn、附着和分离 `HEAD`、packed refs、linked worktree 与本地 clone。它不迁移真实仓库，不连接远端，也不验证平台、LFS、签名服务或生产备份。真实事故现场不得照抄立即过期和清理命令。

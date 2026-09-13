@@ -210,6 +210,7 @@ book/part-13/  故障排查手册
 | `book/part-03/README.md` | 原路径 | 新写；建立对象模型、格式、引用、提交图、index、pack 和 plumbing 的 v2 权威入口，只导航已落盘章节 |
 | `book/part-03/01-object-identity-and-formats.md` | `book/part-1/04-snapshots.md`、`book/part-1/05-first-model.md` | 新写并收束对象规范输入、四类对象、完整/缩写 OID、SHA-1/SHA-256、跨格式和签名边界；第一篇继续保留入门直觉 |
 | `book/part-03/02-pack-delta-and-lifecycle.md` | `book/part-1/05-first-model.md`、`book/part-09/01-measure-before-optimizing.md` | 新写并建立 loose/pack/index/delta、可达根、reflog、GC/prune/maintenance、alternate/promisor 和恢复窗口的权威模型；第九篇继续承担性能测量 |
+| `book/part-03/03-refs-head-and-reflog.md` | `book/part-3/02-branch-as-reference.md`、`book/part-3/03-head.md`、`book/part-07/12-reflog-and-recovery-refs.md` | 新写并建立逻辑/物理引用、符号引用、unborn/附着/分离 `HEAD`、特殊操作状态、reflog、linked worktree 和条件引用更新的模型层权威来源；第七篇继续承担恢复操作，旧第三篇页面在第四篇分支操作迁移前保留正文 |
 | `book/part-06/README.md` | 原路径 | 新写；第六篇只导航已经落盘的共享历史、评审与受保护更新正文，不预列占位章 |
 | `book/part-06/01-branch-models-and-integration.md` | `book/part-4/09-review-ready.md`、`book/part-6/05-hotfix.md` | 新写并建立分支状态与整合拓扑的权威来源；承担主干、功能、发布、维护和堆叠分支的状态、责任与恢复契约 |
 | `book/part-06/02-review-state-machine.md` | `book/part-4/09-review-ready.md`、`book/part-6/09-protected-branches.md` | 新写并建立厂商无关评审请求状态机；承担功能头、目标基线、候选、审批、检查、策略版本和条件引用更新的失效与重算 |
