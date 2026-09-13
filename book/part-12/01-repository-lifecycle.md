@@ -88,6 +88,61 @@ ARCHIVED -> PENDING_DELETE -> DELETED_TOMBSTONE
 
 把状态写进仓库内一个 YAML 文件可以帮助发现和评审，却不能成为唯一权威。仓库管理员可能在删除仓库时连同声明一起删除，也可能改分支绕过；组织登记系统应从平台/身份/备份等源采集事实并保留独立审计。
 
+## 以三方对账决定状态转换
+
+生命周期门禁至少比较三组信息：
+
+| 信息 | 典型来源 | 回答什么 |
+| --- | --- | --- |
+| 声明（declared） | 资产登记、批准的 owner/分类/生命周期记录 | 组织希望资产处于什么状态 |
+| 观测（observed） | 平台 API、Git refs、身份目录、备份、CI/LFS/制品采集 | 当前系统实际上发生了什么 |
+| 行动（action） | 转换工单、审批、执行日志、old/new OID、tombstone | 谁在何时改变了哪些系统 |
+
+三者不能互相替代。登记写着 `archived` 而平台仍接受 push，是声明与观测漂移；平台显示 Archived 但没有冻结机器人、LFS、package 或 webhook，是行动不完整；API 没权限返回空集合，是 `inconclusive`，不是“没有成员”或“没有依赖”。
+
+每次状态转换都生成一个独立记录：
+
+~~~text
+repository_id / old_state / requested_state
+declared_snapshot / observed_snapshot
+dependency_snapshot / backup_recovery_point
+approver / executor / delegated_principal
+started_at / completed_at / expiry_or_review_at
+system_actions / old_new_ids / failures
+result: pass | fail | inconclusive | rolled_back
+~~~
+
+`pass` 只表示声明、观测和行动在规定范围内一致；`rolled_back` 仍需保留失败转换和已经产生的外部副作用。没有完整观测或行动记录时，不要直接把状态写成下一阶段，尤其是 `ARCHIVED -> PENDING_DELETE` 和 `PENDING_DELETE -> DELETED_TOMBSTONE`。
+
+### 归档的完成判定
+
+归档转换至少要证明：
+
+1. 所有已知写入入口已冻结或转为只读，包括人、机器人、API、webhook、LFS、package 和 release；
+2. 归档 recovery point 的 Git refs、LFS、submodule、制品、评审和审计范围已登记；
+3. 普通读取者能取得只读资产，写入探针按预期拒绝，管理员旁路已独立记录；
+4. 依赖方、文档链接和构建任务已迁移或明确接受只读依赖；
+5. 复核日期、保留期、恢复负责人和 pending-delete 条件已经写入资产记录。
+
+某一平台入口无法验证时，状态最多是 `partial` 或 `inconclusive`。不能因为 Git bare 仓库的 receive hook 拒绝了 push，就宣布平台归档完整。
+
+### Pending-delete 的退出条件
+
+观察窗口不是等待计时器。进入 `pending_delete` 后，要持续重算：依赖图是否仍有消费者、是否出现新 clone/download/build、法务或安全是否加 hold、备份是否能在空环境恢复、外部对象是否已按计划处置。任何一项新证据都能把状态退回 `ARCHIVED` 或 `READ_ONLY_HOLD`，并保留原观察记录。
+
+删除执行后的 tombstone 只保存最小审计事实。它不能包含不应继续保留的源码、秘密或完整 Git 对象；若法律或事故要求保留，必须把保留副本放到独立、受控的证据存储，并在 tombstone 中只引用其受控 ID。
+
+### 稳定资产 ID 的复用门禁
+
+仓库路径、包名、URL 或平台 repository ID 被释放后，不应立即把同一 locator 分配给新资产。旧客户端、镜像、OIDC subject、webhook 和依赖缓存可能继续把旧名称当作信任边界。至少等到：
+
+- 旧资产 tombstone 和删除事件可查询；
+- 旧凭据、webhook、机器人和环境引用已撤销；
+- 旧 locator 的重定向/缓存窗口已结束或被明确围栏；
+- 新资产获得新的稳定 `repository_id`，并完成独立基线和权限验收。
+
+如果组织策略必须复用名称，所有身份和自动化策略都必须使用稳定资产 ID 或平台不可变 ID，不能用路径字符串判断“是不是原仓库”。
+
 ## 创建仓库前先回答“为什么不能复用已有资产”
 
 仓库泛滥会扩大权限、依赖、扫描、备份和维护面。创建申请至少说明：
