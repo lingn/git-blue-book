@@ -26,6 +26,63 @@
 
 Dangling 不是“坏对象”，missing 也不总是“本地仓库损坏”。Shallow repository 有显式浅边界，partial clone 允许 promisor remote 承诺缺失对象，alternates 允许从外部 object directory 读取。取证要先记录这些契约，再解释缺失。
 
+## 候选恢复需要来源记录和停止条件
+
+找到一个 dangling commit 或 donor 对象后，不要立即把它命名成“正确版本”。为每个候选建立记录：
+
+~~~text
+candidate_oid / object_kind / object_format
+discovery_source: ref | reflog | platform_event | bundle | donor | fsck
+source_snapshot_id / observed_at / collector
+parent_oids / root_tree / required_objects
+replacement_or_alternate_context
+signature_and_policy_result
+business_validation / external_dependencies
+recovery_ref / approver / action_time
+~~~
+
+`discovery_source` 决定证据强度。平台发布事件、受控 bundle 或同一时间点的 ref 快照通常比“fsck 输出中出现一个哈希”更容易解释，但都不能跳过对象和业务验收。`source_snapshot_id` 能把 donor、mirror 或开发 clone 绑定到一个时间点，避免把后来重新生成的相似提交误当成原对象。
+
+恢复到 `refs/recovery/...` 前，至少满足：
+
+1. candidate 对象类型、OID、父关系和 root tree 可完整读取；
+2. 所需 tree/blob 没有 missing，或缺失对象有明确的 promisor/LFS 契约和后续取得计划；
+3. replacement refs、alternates 和 shallow 边界已经记录，并在原始视角与工作视角分别核对；
+4. 候选来源、签名、评审/发布事件和外部 submodule/LFS 输入没有无法解释的冲突；
+5. 恢复负责人批准创建新 recovery ref，且该 ref 不覆盖已有调查引用。
+
+任一条件不满足，状态是 `inconclusive` 或 `blocked`，而不是“先恢复再说”。恢复 ref 只是保护候选，不代表允许切换生产分支、强推远端或宣布事故结束。
+
+### Donor 的可信度也要分层
+
+可用 donor 不一定是可信 donor。选择 donor 时至少比较：
+
+| 检查 | 要求 | 失败含义 |
+| --- | --- | --- |
+| 对象格式 | SHA-1/SHA-256、ref backend 和 Git 版本兼容 | 不能直接搬 pack 或假设 OID 可比 |
+| 时间点 | donor 的 refs/对象快照早于或等于事故窗口，来源可追溯 | 可能混入事故后的改写或污染 |
+| 完整性 | donor 自身 `fsck --full --strict`、pack/idx 和存储摘要通过 | donor 不可作为恢复根 |
+| 来源 | 组织备份、受控 mirror、批准 clone 或平台导出 | 个人未审查 clone 只能作为线索 |
+| 外部依赖 | LFS、submodule、alternates、promisor 一并登记 | 只恢复 Git commit 仍不能构建 |
+
+多个 donor 只在对象 OID、内容和来源时间都能对齐时互相补强。一个 donor 仍可读取对象，不等于它没有被篡改；恢复流程要保存 donor 原始摘要、访问主体和复制动作，不能把 `cat-file` 输出直接写成 provenance。
+
+### 恢复动作的 before/after 不变量
+
+每次在恢复副本执行写入，都保存动作卡：
+
+~~~text
+action / operator / reason
+before_refs / before_HEAD / before_tree
+input_candidate / donor / expected_old
+command / exit_code / stderr_digest
+after_refs / after_HEAD / after_tree
+object_and_external_checks
+rollback_or_discard_condition
+~~~
+
+创建 recovery ref 的预期变化只有指定 ref 和相应 reflog；已有 refs、原始证据目录和工作区不应被覆盖。导入 donor 对象可能增加 object count，但不应自动改当前分支。若 before/after 中出现未声明变化，立即丢弃副本并从同一证据重新派生。
+
 ## 在证据副本建立两个观察视角
 
 假设 evidence_repo 是从已固定原始快照派生、禁止网络且允许销毁的副本：
@@ -55,7 +112,7 @@ GIT_NO_REPLACE_OBJECTS=1 \
   cat-file -p HEAD
 ~~~
 
-refs/replace/<原OID> 可以让很多 Git 命令在请求原对象时使用 replacement；历史 graft 也可能改变父关系解释。普通 show/log/cat-file 输出适合复现操作者当时看到什么，禁用 replacement 的输出适合读取原始对象。两者都要保存，不能发现 replace ref 后直接删除。
+refs/replace/<原 OID> 可以让很多 Git 命令在请求原对象时使用 replacement；历史 graft 也可能改变父关系解释。普通 show/log/cat-file 输出适合复现操作者当时看到什么，禁用 replacement 的输出适合读取原始对象。两者都要保存，不能发现 replace ref 后直接删除。
 
 ## fsck 是检查器，不是自动修复器
 

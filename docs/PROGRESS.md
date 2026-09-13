@@ -190,6 +190,7 @@
 - [x] 实质扩写第十篇签名与信任策略，补充验证时间、撤销/过期状态、策略快照、候选/制品绑定和不可复现证据的 `inconclusive` 边界。
 - [x] 实质扩写第十篇秘密扫描与归档导出，补充 `clean-in-scope`/`inconclusive`/`not-scanned` 状态、处置与复扫闭环，以及 source tree、归档摘要、路径清单和规则集绑定的 manifest。
 - [x] 实质扩写第十一篇现场保护与证据采集，补充采集包完整性状态、scope manifest、低副作用与有写入检查分层，以及逻辑快照、文件系统快照和平台证据的独立边界。
+- [x] 实质扩写第十一篇对象取证与恢复，补充候选来源记录、donor 信任分层、恢复 ref 停止条件和恢复动作 before/after 不变量。
 
 - [x] 扩写受保护分支章节，建立平台控制面与 Git 引用更新的分层模型。
 - [x] 为平台事实建立版本与核对登记表。
@@ -423,6 +424,8 @@
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十篇秘密扫描与归档导出正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十一篇现场保护与证据采集完整性状态、manifest 和副作用分层扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十一篇现场保护正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十一篇对象取证与恢复候选来源、donor 信任和恢复不变量扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
+| 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十一篇对象取证正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 
