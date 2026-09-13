@@ -17,9 +17,12 @@ Git 的“远程”是另一个仓库，不是当前分支自动同步的云端�
 5. [Pull 是 fetch 加本地整合：两阶段必须分开诊断](05-pull-as-composition.md)
 6. [Push 与远端引用更新：发布的是对象和 ref 请求](06-push-upstream-and-ref-updates.md)
 7. [Push 拒绝、原子更新与 options：服务端接受条件要逐层证明](07-rejection-atomic-push-and-options.md)
+8. [传输与认证：连接、身份和授权必须分层排查](08-transport-and-authentication.md)
+9. [协商与受限克隆：少传数据会改变本地证据边界](09-negotiation-and-limited-clones.md)
+10. [综合场景：同步远程主线，再固定可追溯候选](exercise.md)
 
-后续章节按迁移表继续落地传输认证、协商/受限克隆和综合练习。旧第四篇在目标章节完成前继续承担未迁移正文。
+代码评审的候选、审批和合并队列属于第六篇；本篇练习只负责远程观察、历史整合和首次发布。旧第四篇仍保留外部链接兼容，但已不再承载这六页权威正文。
 
 ## 实验边界
 
-当前实验验证远程状态、clone、remote/refspec、fetch/pull、push ref 更新、dry-run、删除、标签拒绝、显式租约、push options 和 atomic 拒绝。它不验证 DNS、SSH/TLS、真实令牌、SSO、平台权限、隐藏 refs、分支保护、审计、复制延迟、LFS 或 CI。
+当前实验验证远程状态、clone、remote/refspec、fetch/pull、push ref 更新、dry-run、删除、标签拒绝、显式租约、push options、atomic 拒绝、传输与凭据助手边界，以及 refspec、shallow、partial clone 和 sparse-checkout。它不验证 DNS、SSH/TLS、真实令牌、SSO、平台权限、隐藏 refs、分支保护、审计、复制延迟、LFS 或 CI。

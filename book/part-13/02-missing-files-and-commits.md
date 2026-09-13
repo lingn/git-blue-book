@@ -101,7 +101,7 @@ git sparse-checkout list
 git ls-files -v -- "$target_path"
 ```
 
-第一条在未启用/不支持的状态可能非零；启用时列出选择规则。`ls-files -v` 的 tag 受 `assume-unchanged` 与 `skip-worktree` 标志影响，不能只凭一个字母直接编辑 index bits；结合 sparse 配置和 `git sparse-checkout reapply`/`set` 的预期范围判断。完整模型见[受限克隆与稀疏检出](../part-4/14-refspec-partial-clone.md)。
+第一条在未启用/不支持的状态可能非零；启用时列出选择规则。`ls-files -v` 的 tag 受 `assume-unchanged` 与 `skip-worktree` 标志影响，不能只凭一个字母直接编辑 index bits；结合 sparse 配置和 `git sparse-checkout reapply`/`set` 的预期范围判断。完整模型见[受限克隆与稀疏检出](../part-05/09-negotiation-and-limited-clones.md)。
 
 若确认路径只因 sparse 未展开，可在受信任 worktree、无冲突且已保护本地修改后扩大范围。例如 cone 模式下目录为 `docs`：
 

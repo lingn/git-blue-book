@@ -2,7 +2,7 @@
 
 “只 checkout 需要的目录”“只下载需要的对象”和“只保留最近几次提交”经常被混成一个优化开关。它们改变的是不同层面的本地状态：refspec 选择引用，shallow 截断历史，partial clone 过滤对象，sparse-checkout 选择工作区路径。任何一层受限，都可能让一个在本地看似成功的命令无法回答完整的工程问题。
 
-本章承接[refspec、浅克隆与部分克隆](../part-4/14-refspec-partial-clone.md)和[性能基线](01-measure-before-optimizing.md)。前一章解释数据面如何传输，本章负责工作流决策：什么时候可以让 CI 或开发者使用受限状态，怎样声明缺失边界，何时必须恢复完整历史、对象或工作区。已有的 `scripts/verify-refspec-partial-clone.sh` 作为机制实验，本章不把它的本地 `file://` 输出当成真实平台能力证明。
+本章承接[协商与受限克隆](../part-05/09-negotiation-and-limited-clones.md)和[性能基线](01-measure-before-optimizing.md)。前一章解释数据面如何传输，本章负责工作流决策：什么时候可以让 CI 或开发者使用受限状态，怎样声明缺失边界，何时必须恢复完整历史、对象或工作区。已有的 `scripts/verify-refspec-partial-clone.sh` 作为机制实验，本章不把它的本地 `file://` 输出当成真实平台能力证明。
 
 本章以 Git 2.49.0、本地 bare 远端和 macOS 为核对基线，日期为 2026-08-23。部分克隆、bundle URI、服务端 filter、sparse-index 兼容、平台缓存和计费会随 Git、服务器、客户端和套餐变化，生产采用前应记录版本、权限、网络、保留和核对日期。
 

@@ -69,10 +69,10 @@
 | 修复来源提交 | 修复最初完成并被验证的 commit，经过 cherry-pick 后可能与发布目标提交不同 | [从事故到发布](../part-08/08-incident-to-release.md) |
 | 修复目标提交 | 修复进入稳定发布线后实际构建和发布的 commit | [从事故到发布](../part-08/08-incident-to-release.md) |
 | 事故关闭条件 | 运行版本、业务指标、数据/消息不变量、证据包和后续行动都满足后的状态转换门槛 | [从事故到发布](../part-08/08-incident-to-release.md) |
-| 上游分支 | 当前本地分支默认比较、拉取和推送的远程关系 | [推送与上游](../part-4/07-push.md) |
-| refspec | 在 fetch 或 push 中选择 source 引用并映射到 destination 引用的表达式 | [Refspec 与受限克隆](../part-4/14-refspec-partial-clone.md) |
-| 浅克隆 | 以 shallow boundary 截断部分祖先历史的仓库 | [Refspec 与受限克隆](../part-4/14-refspec-partial-clone.md) |
-| 部分克隆 | 由 promisor 远端承诺按需提供被过滤对象的克隆 | [Refspec 与受限克隆](../part-4/14-refspec-partial-clone.md) |
+| 上游分支 | 当前本地分支默认比较、拉取和推送的远程关系 | [推送与上游](../part-05/06-push-upstream-and-ref-updates.md) |
+| refspec | 在 fetch 或 push 中选择 source 引用并映射到 destination 引用的表达式 | [Remotes 与 refspec](../part-05/03-remotes-and-refspecs.md) |
+| 浅克隆 | 以 shallow boundary 截断部分祖先历史的仓库 | [协商与受限克隆](../part-05/09-negotiation-and-limited-clones.md) |
+| 部分克隆 | 由 promisor 远端承诺按需提供被过滤对象的克隆 | [协商与受限克隆](../part-05/09-negotiation-and-limited-clones.md) |
 | 变基 | 以新起点重新应用一段变化并生成新提交 | [变基模型](../part-07/06-rebase-model-and-workflow.md) |
 | 挑选提交 | 在当前分支重放指定提交变化并创建新提交 | [cherry-pick](../part-07/07-cherry-pick.md) |
 | 改写历史 | 生成新提交替换原关系，使旧 ID 离开当前分支 | [第七篇状态矩阵](../part-07/01-state-and-sharing-matrix.md) |

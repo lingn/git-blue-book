@@ -107,15 +107,15 @@ book/part-13/  故障排查手册
 | `book/part-4/04-fetch.md` | `book/part-05/04-fetch-and-fetch-head.md` | 已于 2026-09-14 合并扩写；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/05-remote-tracking.md` | `book/part-05/04-fetch-and-fetch-head.md` | 已于 2026-09-14 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/06-pull.md` | `book/part-05/05-pull-as-composition.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-4/07-push.md` | `book/part-05/06-push-upstream-and-ref-updates.md` | 保留重写 |
-| `book/part-4/08-push-rejection.md` | `book/part-05/07-rejection-atomic-push-and-options.md` | 扩写原子推送与 push options |
+| `book/part-4/07-push.md` | `book/part-05/06-push-upstream-and-ref-updates.md` | 已于 2026-09-14 重写迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-4/08-push-rejection.md` | `book/part-05/07-rejection-atomic-push-and-options.md` | 已于 2026-09-14 扩写原子推送与 push options；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/09-review-ready.md` | `book/part-06/02-review-request-model.md`、`book/part-06/04-reviewable-changes.md` | 拆分 |
 | `book/part-4/10-rebase-model.md` | `book/part-07/06-rebase-model-and-workflow.md` | 已于 2026-09-05 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/11-rebase-workflow.md` | `book/part-07/06-rebase-model-and-workflow.md` | 已于 2026-09-05 合并迁移；旧页保留 `legacy-redirect` 兼容入口 |
 | `book/part-4/12-cherry-pick.md` | `book/part-07/07-cherry-pick.md` | 已于 2026-09-05 迁移；旧页保留 `legacy-redirect` 兼容入口 |
-| `book/part-4/13-transport-auth.md` | `book/part-05/08-transport-and-authentication.md`、`book/part-10/01-credentials.md` | 过渡新增后拆分；传输章权威解释身份分层 |
-| `book/part-4/14-refspec-partial-clone.md` | `book/part-05/03-remotes-and-refspecs.md`、`book/part-05/09-negotiation-and-limited-clones.md`、`book/part-09/04-sparse-partial-workflows.md` | 过渡新增后拆分；性能决策只在第九篇扩展 |
-| `book/part-4/exercise.md` | `book/part-05/exercise.md`、`book/part-06/exercise.md` | 拆分远程同步与评审准备 |
+| `book/part-4/13-transport-auth.md` | `book/part-05/08-transport-and-authentication.md`、`book/part-10/01-credentials.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-4/14-refspec-partial-clone.md` | `book/part-05/03-remotes-and-refspecs.md`、`book/part-05/09-negotiation-and-limited-clones.md`、`book/part-09/04-sparse-partial-workflows.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-4/exercise.md` | `book/part-05/exercise.md`、`book/part-06/exercise.md` | 已于 2026-09-14 拆分迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
 ## 第五篇现有页面
 
@@ -233,6 +233,9 @@ book/part-13/  故障排查手册
 | `book/part-05/05-pull-as-composition.md` | `book/part-4/06-pull.md` | 新写并承担 fetch/整合两阶段、ff-only、merge、rebase、配置来源、autostash、上游缺失、状态机失败、远端竞态和何时拆开 pull |
 | `book/part-05/06-push-upstream-and-ref-updates.md` | `book/part-4/07-push.md` | 新写并承担 push source/destination、对象/ref 两阶段、创建/快进/删除、显式 refspec、upstream/pushRemote/tracking、dry-run、标签和成功后证据链 |
 | `book/part-05/07-rejection-atomic-push-and-options.md` | `book/part-4/08-push-rejection.md` | 新写并承担拒绝分层、non-fast-forward、显式租约、force-if-includes、atomic、多 ref 部分成功、push options、receive hooks 和失败恢复清单 |
+| `book/part-05/08-transport-and-authentication.md` | `book/part-4/13-transport-auth.md`、`book/part-10/01-credentials.md` | 新写并承担 endpoint、传输、服务器身份、客户端认证、仓库授权、凭据助手和连接失败分流 |
+| `book/part-05/09-negotiation-and-limited-clones.md` | `book/part-4/14-refspec-partial-clone.md`、`book/part-09/04-sparse-partial-workflows.md` | 新写并承担对象协商、shallow、partial、sparse 与受限证据边界；第九篇负责工作流决策 |
+| `book/part-05/exercise.md` | `book/part-4/exercise.md`、`book/part-06/exercise.md` | 新写并承担远程观察、rebase、候选固定和首次功能分支发布；评审流程由第六篇练习负责 |
 | `book/part-06/README.md` | 原路径 | 新写；第六篇只导航已经落盘的共享历史、评审与受保护更新正文，不预列占位章 |
 | `book/part-06/01-branch-models-and-integration.md` | `book/part-4/09-review-ready.md`、`book/part-6/05-hotfix.md` | 新写并建立分支状态与整合拓扑的权威来源；承担主干、功能、发布、维护和堆叠分支的状态、责任与恢复契约 |
 | `book/part-06/02-review-state-machine.md` | `book/part-4/09-review-ready.md`、`book/part-6/09-protected-branches.md` | 新写并建立厂商无关评审请求状态机；承担功能头、目标基线、候选、审批、检查、策略版本和条件引用更新的失效与重算 |

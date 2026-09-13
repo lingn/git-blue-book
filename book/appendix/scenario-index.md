@@ -16,7 +16,10 @@
 | 已推送错误需要回滚 | [git revert](../part-07/08-revert-shared-history.md) |
 | 个人评审分支变基后要更新远程 | [force-with-lease](../part-07/10-explicit-force-lease.md) |
 | 错误 reset 或误删分支 | [恢复案例](../part-07/13-local-and-remote-recovery.md) |
-| push 被拒绝 | [推送拒绝](../part-4/08-push-rejection.md) |
+| push 被拒绝 | [Push 拒绝、原子更新与 options](../part-05/07-rejection-atomic-push-and-options.md) |
+| SSH、HTTPS、DNS、代理或凭据助手行为异常 | [传输与认证](../part-05/08-transport-and-authentication.md) |
+| shallow、partial、sparse 或 fetch 协商导致本地证据不足 | [协商与受限克隆](../part-05/09-negotiation-and-limited-clones.md) |
+| 需要同步远程主线并固定首次评审候选 | [远程同步综合练习](../part-05/exercise.md) |
 | pull 后发生冲突 | [解决、中止与验收](../part-04/07-resolve-abort-and-verify.md) |
 | 冲突已经解决，需向同事说明 | [可审查变更中的冲突报告](../part-06/04-reviewable-changes-and-stacks.md) |
 | 开发中途需要处理紧急任务 | [stash](../part-02/11-stash.md) 或 [worktree](../part-02/12-multiple-worktrees.md) |

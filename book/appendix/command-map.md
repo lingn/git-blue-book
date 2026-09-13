@@ -46,7 +46,9 @@
 | 管理远程地址和引用映射 | `git remote`、fetch/push refspec | [Remotes 与 refspec](../part-05/03-remotes-and-refspecs.md) |
 | 只获取远程历史并核对 FETCH_HEAD | `git fetch` | [Fetch 与 FETCH_HEAD](../part-05/04-fetch-and-fetch-head.md) |
 | 获取并整合 | `git pull` | [Pull 是 fetch 加本地整合](../part-05/05-pull-as-composition.md) |
-| 发布提交或标签 | `git push` | [推送](../part-4/07-push.md) |
+| 发布提交或标签 | `git push` | [推送与远端引用更新](../part-05/06-push-upstream-and-ref-updates.md) |
+| 分层排查远程连接、认证与授权 | `git remote`、`git ls-remote`、`ssh -G`、`git config --show-origin` | [传输与认证](../part-05/08-transport-and-authentication.md) |
+| 诊断 shallow、partial、sparse 和协商边界 | `git fetch --deepen`、`git clone --filter`、`git sparse-checkout` | [协商与受限克隆](../part-05/09-negotiation-and-limited-clones.md) |
 | 计算本地与上游各自独有的提交数 | `git rev-list --left-right --count` | [远端历史改写](../part-07/14-remote-history-rewrite.md) |
 | 判断本地提交是否有上游补丁等价项 | `git cherry -v`、`git range-diff` | [远端历史改写](../part-07/14-remote-history-rewrite.md) |
 
