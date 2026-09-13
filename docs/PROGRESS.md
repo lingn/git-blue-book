@@ -268,6 +268,7 @@
 - [x] 扩写第七篇交互式 rebase 章节，增加 `rewrite_base`、`original_tip`、`current_head` 和 todo 状态对账，明确 edit/exec/skip/abort 的逐提交证据要求。
 - [x] 扩写第十篇机器身份章节，增加 `PROPOSED`、`ACTIVE`、`ROTATING`、`QUARANTINED`、`REVOKED`、`RETIRED` 生命周期状态、证据字段和撤销停止条件。
 - [x] 扩写第十篇 CI 依赖与供应链章节，增加依赖 `PROPOSED`、`LOCKED`、`RESOLVED`、`EXECUTED`、`ATTESTED`、`QUARANTINED`、`RETIRED` 生命周期状态及 pin、缓存、来源证明和事故隔离停止条件。
+- [x] 扩写第十二篇审计日志与证据留存章节，增加 `PLANNED`、`COLLECTING`、`COMPLETE/PARTIAL/INCONCLUSIVE`、`FROZEN`、`EXPIRED`、`DESTROYED` 留存状态及 legal hold、manifest 和销毁证据边界。
 
 ## 回归状态
 
@@ -476,6 +477,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-interactive-rebase.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇交互式 rebase todo 与逐提交状态对账扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-machine-credential-boundaries.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇机器身份生命周期状态、撤销传播和服务端证据边界扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-ci-dependency-pinning.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇 CI 依赖生命周期、pin/解析/执行/来源证明和隔离停止条件扩写通过专项实验与文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-audit-evidence-retention.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇审计留存状态、采集完整性、legal hold 和销毁证据扩写通过专项实验与文档门禁 |
 
 ## 已知风险
 

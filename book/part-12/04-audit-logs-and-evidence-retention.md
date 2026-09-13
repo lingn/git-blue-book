@@ -210,6 +210,32 @@ Legal hold 是阻止符合范围的数据按常规计划销毁，不是把所有
 
 销毁也要有证据：分区/对象范围、政策依据、批准、执行结果、失败/副本、加密 key 处置和 tombstone。摘要清单仍可能泄漏文件名或标识，是否保留也需政策决定。
 
+### 留存状态要能阻止误删和误关闭
+
+采集与留存任务可以使用下面的状态模型：
+
+```text
+PLANNED
+  -> COLLECTING
+  -> COMPLETE / PARTIAL / INCONCLUSIVE
+  -> FROZEN
+  -> EXPIRED
+  -> DESTROYED
+```
+
+| 状态 | 进入条件 | 必须保留 | 停止条件 |
+| --- | --- | --- | --- |
+| `PLANNED` | scope、来源、留存策略和恢复目标已批准 | case/asset、时间边界、数据分类、owner | 来源、权限或 legal basis 未确认 |
+| `COLLECTING` | collector 使用固定 cursor/page 和 schema 开始采集 | 原始响应、checkpoint、重试和权限主体 | cursor 先推进、schema 未知或来源心跳异常 |
+| `COMPLETE` | 覆盖矩阵、分页、sequence、摘要和权限检查通过 | raw partition、规范化索引和 manifest | 后续发现漏页或来源声明不完整时回退 |
+| `PARTIAL` | 已知部分缺口，但范围可明确 | `gaps-and-unknowns`、责任人、补采计划 | 缺口范围无法界定时升级为 `INCONCLUSIVE` |
+| `INCONCLUSIVE` | 无法判断是否完整、可解析或可访问 | 原始错误、已见数据、查询和重试记录 | 不得作为调查关闭或发布安全证据 |
+| `FROZEN` | 事故/法律保留锁定范围和销毁暂停 | hold、授权、访问和导出记录 | hold 未解除不得进入过期/销毁 |
+| `EXPIRED` | 正常留存期结束且无 hold | 到期计算、审批和副本清单 | 发现仍有案件/监管关联时恢复冻结 |
+| `DESTROYED` | 按批准范围销毁并记录失败副本与 key 处置 | tombstone、执行结果、manifest/审计引用 | 任何未确认副本都不能写成彻底删除 |
+
+状态只能向前推进，发现新缺口时可以从 `COMPLETE` 回退为 `PARTIAL` 或 `INCONCLUSIVE`，但不能覆盖旧 manifest。`DESTROYED` 描述的是已执行的处置范围，不是证明所有平台缓存、备份或外部副本都不存在。调查包、raw 分区、schema、parser 和验证工具的保留必须相互关联，避免多年后只剩一个不可解压的摘要文件。
+
 ## 查询必须可复现，失败也要进入结果
 
 调查结论要保存精确查询：时间范围及边界、时区、仓库资产 ID/历史 locator、actor 映射版本、event types、结果过滤、分页/cursor、查询系统和数据 snapshot/partition 列表。
