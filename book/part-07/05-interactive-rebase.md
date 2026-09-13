@@ -1,6 +1,6 @@
 # 交互式 rebase：重建一段尚未共享的历史
 
-本章是 v2 第七篇的交互计划章节。它负责 todo、reword、squash/fixup、edit 拆分、exec 和重建后的序列验证；通用冲突状态机由[rebase 模型与安全工作流](06-rebase-model-and-workflow.md)承担。
+这里重点处理 todo、reword、squash/fixup、edit 拆分、exec 和重建后的序列验证；通用冲突状态机由[rebase 模型与安全工作流](06-rebase-model-and-workflow.md)承担。
 
 普通 rebase 更换一段提交的起点，交互式 rebase 还允许修改重放计划。它可以改提交说明、调整顺序、合并、删除、暂停修改或拆分提交。所有被重建的提交及其后续提交都会获得新对象 ID。
 

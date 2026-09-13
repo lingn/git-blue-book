@@ -1,6 +1,6 @@
 # 远端历史被重写后为什么同时 ahead 和 behind
 
-本章是 v2 第七篇的远端历史事故章节。它从提交图解释本地与上游同时 ahead/behind，区分 forced-update 线索、远程跟踪 reflog、rebase abort 和真正未发布的本地变化，并给出不覆盖协作者提交的恢复路线。
+本地与上游同时 ahead/behind 时，先从提交图区分 forced-update 线索、远程跟踪 reflog、rebase abort 和真正未发布的本地变化，再选择不覆盖协作者提交的恢复路线。
 
 本地分支突然显示 `ahead 3, behind 9`，并不表示 Git 算错了，也不等于“本地还有 3 条新工作、远端比我多 9 条业务需求”。它只说明：以当前本地分支和远程跟踪分支的共同祖先为界，本地一侧有 3 个只在本地可达的 commit，远端一侧有 9 个只在远端可达的 commit。
 

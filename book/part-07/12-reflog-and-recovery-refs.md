@@ -1,6 +1,6 @@
 # reflog 与 recovery ref：保存引用移动的本地证据
 
-本章是 v2 第七篇的日常恢复章节。它说明 reflog 和显式恢复引用能保存什么、不能替代什么，并把对象取证的物理损坏与本地引用误操作分开。
+reflog 和显式恢复引用能保存本地引用移动线索，但不能替代备份。对象物理损坏与本地引用误操作需要分开处理。
 
 分支从 C 被 reset 到 B 后，普通 `git log main` 只能沿 B 的父关系向前查找，C 看起来像消失了。Git 通常还在本地 reflog 中记录这次引用移动。只要对象尚在，就可以根据记录重新给 C 创建名字。
 
@@ -96,7 +96,7 @@ reflog 适合寻找曾经成为引用目标的对象，例如 reset 前的提交
 - 已经过期且对象已被清理的历史；
 - 平台评审、CI 日志、发布制品和权限状态。
 
-`git add` 可能把文件内容写成 blob，但 reflog 不记录这个 blob。没有 tree、commit 或已知对象 ID 时，从对象库取证属于后面的历史取证主题，不能把它当作常规恢复保证。
+`git add` 可能把文件内容写成 blob，但 reflog 不记录这个 blob。没有 tree、commit 或已知对象 ID 时，应进入[对象取证与恢复](../part-11/02-object-forensics-and-recovery.md)，不能把它当作常规恢复保证。
 
 ## 日志和对象都有保留期限
 
@@ -138,4 +138,4 @@ git status --short --branch
 
 三点 diff 需要两边存在共同祖先；没有共同祖先时会失败，应改为分别检查两个 tree 或使用适合该事故的比较方式。测试通过、协作者确认并完成发布后，再按保留策略清理恢复分支。
 
-上一章的 `verify-reset-reflog.sh` 同时验证 reset 产生的 `ORIG_HEAD`、HEAD reflog 记录和恢复引用。实验只在临时仓库中运行，不模拟日志过期、对象清理或远程服务端保留策略。
+`verify-reset-reflog.sh` 同时验证 reset 产生的 `ORIG_HEAD`、HEAD reflog 记录和恢复引用。实验只在临时仓库中运行，不模拟日志过期、对象清理或远程服务端保留策略。

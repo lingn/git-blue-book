@@ -24,7 +24,16 @@
 - 安全：不要替换成真实凭据、客户数据或生产分支；
 - 完成标准：每个场景都能说明 source、target、共享边界、动作、后置验证和不可恢复范围。
 
-如果目录已经存在，换一个新目录。不要为了重跑练习删除来源不明的仓库。
+先创建一次性目录，再进入实验仓库。下面各节在同一个 shell 中连续执行：
+
+~~~bash
+lab_root="$(mktemp -d "${TMPDIR:-/tmp}/git-blue-book-recovery.XXXXXX")"
+mkdir "$lab_root/work"
+cd "$lab_root/work"
+pwd
+~~~
+
+`mktemp -d` 返回本次实验独占的目录；创建失败时停止，不要换到当前项目继续执行。后续的 `../recovery-server.git`、`../alice` 和 `../bob` 都位于 `lab_root` 内。
 
 ## 1. 丢弃尚未暂存的工作区修改
 
@@ -274,6 +283,18 @@ git count-objects -v
 ~~~
 
 这些脚本在临时仓库中验证工作区、index、amend、reset、reflog、revert 和租约状态。它们不证明真实托管平台权限、文件系统恢复、LFS、子模块、数据库、CI、制品或运行实例。
+
+完成手工练习并确认不再需要其中的恢复引用后，回到实验目录外再清理：
+
+~~~bash
+cd "${TMPDIR:-/tmp}"
+case "$lab_root" in
+  "${TMPDIR:-/tmp}"/git-blue-book-recovery.*) rm -rf -- "$lab_root" ;;
+  *) printf 'refuse to remove unexpected path: %s\n' "$lab_root" >&2; exit 1 ;;
+esac
+~~~
+
+保护条件不匹配时命令拒绝删除。不要删改这段路径校验，也不要把 `lab_root` 改成现有项目目录。
 
 ## 小结
 
