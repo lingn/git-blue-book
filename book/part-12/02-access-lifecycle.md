@@ -32,6 +32,54 @@ Git commit 的 author、committer 和签名者是对象内容或其密码学证�
 
 这些层要通过稳定 principal ID、仓库资产 ID、会话/事件 ID 和对象 OID 连接。显示名和邮箱可变，也可能重复，不能作为唯一关联键。
 
+## 有效授权快照要保留路径，不只保留最终角色
+
+一次权限认证应能回答“为什么主体仍然能做这件事”。扁平结果 `write=true` 不够，至少保存：
+
+~~~text
+principal_id / principal_kind / status
+resource_id / action / context / observed_at
+grant_path: org -> team -> repository -> role
+direct_grants / application_grants / key_grants
+session_or_credential_ids
+policy_version / exception_ids / valid_until
+collector / source_cursor / errors
+decision: pass | fail | inconclusive
+~~~
+
+对每个高风险动作，认证器应输出允许路径和拒绝路径。允许路径说明哪一条 grant 生效，拒绝路径说明为什么目标 ref、环境或策略阻断；只列一个平台角色会丢失继承、例外和到期信息。快照之间比较时，新增、删除、扩大、缩小、过期和来源未知应分开统计。
+
+如果身份 API 只返回“当前用户可访问的仓库”，它无法证明不可见仓库不存在；如果分页、嵌套组、应用安装或会话列表无法取得，结果是 `inconclusive`。在此状态下不应批量回收所有未知 grant，也不应批准管理员、删除或生产发布动作。
+
+### 收敛验证必须测试“未来请求”
+
+离职或转岗处理完成，不等于缓存和既有会话已经失效。收敛验证至少分三次：
+
+1. **即时快照**：身份目录、平台授权、key/token/session、应用和环境角色已按预期更新；
+2. **反向探针**：用被撤销主体的每类合法入口尝试读取和写入专用测试资源，保存拒绝证据；
+3. **传播后复核**：等待平台声明的传播窗口，再重复关键探针并检查日志中是否还有新 actor 事件。
+
+探针只使用专用仓库、测试 ref、虚构数据和最小动作，不能向生产 main 试推。读取成功或写入成功都要记录 endpoint、协议、主体、时间、目标 ref old OID 和服务端 request ID；失败也保存原始错误，区分网络不可达、认证失败、授权拒绝和 ref 规则拒绝。网络不可达不是撤销证明。
+
+如果撤销操作依赖异步 SCIM、缓存或 session revocation，状态应保持 `pending-revocation`，不能在即时快照阶段标成 `pass`。旧会话仍可访问时，先围栏高风险资源并轮换受影响凭据，再继续等待传播；不要恢复被撤销账号只为验证系统是否正常。
+
+### Break-glass 事后复盘要绑定真实动作
+
+Break-glass 使用结束后，不能只把身份标成 revoked。复盘包至少包含：
+
+~~~text
+incident_id / exception_id
+requested_scope / approved_scope / actual_scope
+approver / operator / session_or_credential
+started_at / ended_at / hard_expiry
+commands_or_api_actions
+Git refs old/new OID and platform events
+LFS/package/environment side effects
+revocation_result / follow_up_actions / owner / due_at
+~~~
+
+`actual_scope` 比批准范围更重要，它用于发现管理员命令、API 或机器身份是否做了额外动作。发现范围扩大时，事故状态不能关闭；先围栏剩余入口、保存影响范围并重新进行权限与候选验收。Break-glass 的拒绝、过期和撤销失败也要进入同一审计链，不能只记录成功使用。
+
 ## 有效访问是授权图的并集，再与门禁求交
 
 一个主体对仓库的有效能力可以近似写成：

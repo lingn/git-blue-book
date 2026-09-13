@@ -195,6 +195,7 @@
 - [x] 实质扩写第十一篇历史归因，补充结论置信度、反例清单、查询 manifest 和 blame/pickaxe/merge 结果与外部时间线的证据边界。
 - [x] 实质扩写第十一篇 bundle/mirror/备份恢复，补充恢复点状态、增量 prerequisite 链、跨系统时间窗和完整恢复点判定。
 - [x] 实质扩写第十二篇仓库生命周期，补充声明/观测/行动三方对账、归档完成判定、pending_delete 退出条件和稳定资产 ID 复用门禁。
+- [x] 实质扩写第十二篇权限生命周期，补充授权路径快照、转岗/离职传播窗口反向探针、break-glass 实际动作复盘和三态权限收敛判断。
 
 - [x] 扩写受保护分支章节，建立平台控制面与 Git 引用更新的分层模型。
 - [x] 为平台事实建立版本与核对登记表。
@@ -438,6 +439,8 @@
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十一篇备份恢复正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇仓库生命周期声明/观测/行动对账和删除门禁扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十二篇仓库生命周期正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇权限生命周期授权快照、传播窗口和 break-glass 复盘扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
+| 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十二篇权限生命周期正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 
