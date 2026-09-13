@@ -14,9 +14,11 @@
 2. [创建和切换分支：先证明本地内容不会被覆盖](02-create-and-switch-branches.md)
 3. [Merge base 与三方合并：先固定共同历史，再计算两侧变化](03-merge-base.md)
 4. [快进与合并提交：引用移动和新对象是两种历史结果](04-fast-forward-and-merge-commits.md)
+5. [`ort` 三方合并：策略生成候选 tree，不替团队判断业务](05-three-way-merge-and-ort.md)
+6. [复杂路径冲突：先还原每一侧做了什么，再决定最终布局](06-complex-path-conflicts.md)
 
-后续章节将按迁移表继续落地 `ort`、复杂路径冲突、解决/中止/验收、rerere、标签和综合练习。未落地主题仍由旧第三篇承担，不创建只有标题的占位页。
+后续章节将按迁移表继续落地解决/中止/验收、rerere、标签和综合练习。未落地主题仍由旧第三篇承担，不创建只有标题的占位页。
 
 ## 实验边界
 
-当前实验验证本地分支创建、切换拒绝、分离提交恢复、upstream 配置、linked worktree 占用、merge base、快进、`--ff-only` 拒绝、非快进候选和二父合并提交。它不连接真实远端，不模拟托管平台分支保护、评审、合并队列或审计，也不证明业务测试和发布条件成立。
+当前实验验证本地分支创建、切换拒绝、分离提交恢复、upstream 配置、linked worktree 占用、merge base、快进、非快进候选、`ort`/`ours`、`AUTO_MERGE` 和多类 index stages。它不连接真实远端，不模拟托管平台分支保护、评审、合并队列或审计，也不证明业务测试和发布条件成立。

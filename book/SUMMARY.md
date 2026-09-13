@@ -37,6 +37,8 @@
   * [创建和切换分支：先证明本地内容不会被覆盖](part-04/02-create-and-switch-branches.md)
   * [Merge base 与三方合并：先固定共同历史，再计算两侧变化](part-04/03-merge-base.md)
   * [快进与合并提交：引用移动和新对象是两种历史结果](part-04/04-fast-forward-and-merge-commits.md)
+  * [`ort` 三方合并：策略生成候选 tree，不替团队判断业务](part-04/05-three-way-merge-and-ort.md)
+  * [复杂路径冲突：先还原每一侧做了什么，再决定最终布局](part-04/06-complex-path-conflicts.md)
 * [旧第三篇：分支、合并与冲突迁移目录](part-3/README.md)
   * [兼容入口：提交图正文已拆入 v2 第三、四篇](part-3/01-commit-graph.md)
   * [兼容入口：分支引用正文已拆入 v2 第三、四篇](part-3/02-branch-as-reference.md)
