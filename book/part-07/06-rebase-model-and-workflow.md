@@ -225,7 +225,7 @@ git rebase --autostash origin/main
 
 Git 会创建临时 stash，变基结束后尝试应用。应用阶段仍可能冲突，且 stash 可能把本地未提交内容带回一个不同的基线。高风险重写应先显式提交临时节点或使用独立 worktree，再决定是否允许 autostash。
 
-交互式 rebase 中的 --exec 会在每个重放提交后执行命令。命令的输出、退出码和副作用会影响变基能否继续。它适合在隔离环境运行快速检查，不应调用部署、删除远端 ref 或修改共享系统。需要重排、拆分、reword 和 exec 的完整流程见第五篇。
+交互式 rebase 中的 `--exec` 会在每个重放提交后执行命令。它适合在隔离环境运行快速检查，不应调用部署、删除远端 ref 或修改共享系统。重排、拆分、reword 和 exec 的完整流程见[交互式 rebase](05-interactive-rebase.md)。
 
 ## 变基后的签名、评审与发布记录
 

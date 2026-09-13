@@ -160,8 +160,8 @@ book/part-13/  故障排查手册
 | `book/part-07/02-restore-worktree.md` | `book/part-5/02-restore-worktree.md` | 已于 2026-09-05 迁入；首批 v2 权威章，旧页已改为 `legacy-redirect` |
 | `book/part-07/03-unstage.md` | `book/part-5/03-unstage.md` | 已于 2026-09-05 迁入；首批 v2 权威章，旧页已改为 `legacy-redirect` |
 | `book/part-07/04-amend-one-commit.md` | `book/part-5/04-amend-content.md`、`book/part-5/05-amend-message.md`、`book/part-5/13-rewrite-commit-playbook.md` | 已于 2026-09-05 合并迁入，2026-09-13 完成跨章去重；只承担最近提交的内容/说明 amend、hook、签名与空提交，交互式 rebase、租约和远端事故改为链接权威章 |
-| `book/part-07/05-interactive-rebase.md` | `book/part-5/06-interactive-rebase.md` | 已于 2026-09-05 迁入；承担交互式 todo、重排/拆分、冲突、中止和重建后验证 |
-| `book/part-07/06-rebase-model-and-workflow.md` | `book/part-4/10-rebase-model.md`、`book/part-4/11-rebase-workflow.md` | 已于 2026-09-05 合并迁入；承担普通 rebase 模型、范围、冲突、中止、range-diff、签名、评审和显式租约 |
+| `book/part-07/05-interactive-rebase.md` | `book/part-5/06-interactive-rebase.md` | 已于 2026-09-05 迁入，2026-09-13 完成第一轮跨章去重；承担交互式 todo、重排/拆分、edit-todo、exec 和序列验证，通用冲突与中止改为引用下一章 |
+| `book/part-07/06-rebase-model-and-workflow.md` | `book/part-4/10-rebase-model.md`、`book/part-4/11-rebase-workflow.md` | 已于 2026-09-05 合并迁入；承担普通 rebase 模型、范围、通用冲突状态机、中止、range-diff、签名、评审和显式租约 |
 | `book/part-07/07-cherry-pick.md` | `book/part-4/12-cherry-pick.md` | 已于 2026-09-05 迁入；承担来源/目标 OID、顺序、冲突、空提交和共享边界 |
 | `book/part-07/08-revert-shared-history.md` | `book/part-5/07-revert.md` | 已于 2026-09-05 迁入；承担共享历史反向提交、冲突、merge mainline、再次启用和运行状态边界 |
 | `book/part-07/09-public-history-policy.md` | `book/part-5/08-public-history.md` | 已于 2026-09-06 迁入；承担共享历史改写边界和团队恢复政策 |

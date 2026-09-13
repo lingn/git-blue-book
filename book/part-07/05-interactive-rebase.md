@@ -1,6 +1,6 @@
 # 交互式 rebase：重建一段尚未共享的历史
 
-本章是 v2 第七篇的历史重建章节。它负责 todo 计划、提交拆分、冲突、中止和重建后的验证；共享分支的改写许可与远端租约仍要结合第六篇和后续恢复章节判断。
+本章是 v2 第七篇的交互计划章节。它负责 todo、reword、squash/fixup、edit 拆分、exec 和重建后的序列验证；通用冲突状态机由[rebase 模型与安全工作流](06-rebase-model-and-workflow.md)承担。
 
 普通 rebase 更换一段提交的起点，交互式 rebase 还允许修改重放计划。它可以改提交说明、调整顺序、合并、删除、暂停修改或拆分提交。所有被重建的提交及其后续提交都会获得新对象 ID。
 
@@ -130,46 +130,15 @@ git rebase --continue
 
 示例路径必须替换为仓库中的真实路径。每次提交前检查 `git diff` 和 `git diff --staged`，防止把暂停前就存在的无关文件带入历史。若拆分后遗漏原提交的一部分，最终 tree 比较会暴露差异。
 
-## 冲突时先确认正在重放哪条提交
+## 暂停后可以修改剩余计划
 
-普通 rebase 章节已经解释逐条重放。交互式计划在 reword、squash、重排或 edit 后同样可能冲突。先收集：
-
-```bash
-git status
-git rebase --show-current-patch
-git diff
-```
-
-使用默认 merge 后端时，冲突提示中的 ours 是已经重建的历史及新基线，theirs 是当前正在重放的原提交变化，和普通合并时的直觉可能相反。不要只按 ours/theirs 名称选择整边内容，应根据基线和当前补丁意图编辑最终文件。
-
-解决并暂存所有冲突后继续：
-
-```bash
-git add -- path/to/resolved-file
-git rebase --continue
-```
-
-后续提交可能再次在同一路径冲突，因为每条原提交都要独立重放。`git rebase --skip` 会丢弃当前整条补丁，只有确认其变化已经在新历史中或确实应删除时才使用。
-
-## abort、quit 和 edit-todo 的差异
-
-计划选错、冲突不可控或验证目标不成立时：
-
-```bash
-git rebase --abort
-```
-
-`--abort` 尝试把 `HEAD`、index 和工作区恢复到本次 rebase 开始前，并重新检出原分支。中止后仍要核对 `original_tip` 和恢复分支。
-
-`git rebase --quit` 只结束 rebase 状态，保留当前 `HEAD`、index 和工作区，不恢复原分支；使用 autostash 时，临时 stash 会保留在 stash 列表。它适合明确要接管当前现场的高级操作，不是 abort 的同义词。
-
-rebase 暂停期间需要修改剩余计划，可以运行：
+交互式 rebase 在冲突、`edit` 或 `exec` 失败后暂停时，冲突取证、ours/theirs、`continue`、`skip`、`abort` 和 `quit` 均按[通用 rebase 状态机](06-rebase-model-and-workflow.md)处理。只需要修改尚未执行的计划时运行：
 
 ```bash
 git rebase --edit-todo
 ```
 
-它只编辑尚未执行的 todo，不撤销已经生成的提交。
+它只编辑尚未执行的 todo，不撤销已经生成的提交，也不解决当前冲突。修改后重新检查动作顺序和依赖，再按当前暂停原因继续或中止。
 
 ## 空提交和重复补丁需要明确决定
 
@@ -265,4 +234,4 @@ Interactive rebase rewrite, split, conflict, and abort passed.
 
 ## 共享边界
 
-reword 一条早期提交也会改变其全部后代。已经有同事依赖的功能分支、带发布标签的历史和平台已批准的提交不能未经协调重建。确需更新允许改写的远程评审分支时，先完成本地验证，再使用下一章定义的显式租约流程，并通知评审者旧提交 ID 已失效。
+reword 一条早期提交也会改变其全部后代。已经有同事依赖的功能分支、带发布标签的历史和平台已批准的提交不能未经协调重建。确需更新允许改写的远程评审分支时，先完成本地验证，再按[显式租约](10-explicit-force-lease.md)更新远端，并通知评审者旧提交 ID 已失效。
