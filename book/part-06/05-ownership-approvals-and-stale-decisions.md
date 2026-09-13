@@ -107,6 +107,46 @@ policy_version: <规则版本或摘要>
 
 真实平台对这些场景的事件字段和失效行为可能不同。验收时需要在专用测试仓库中以普通贡献者、所有者、规则管理员和紧急身份分别操作，并保存原始平台输出。本地 Git 实验只能验证路径和对象变化，不能证明平台审批。
 
+## 用候选之外的快照重放审批求值
+
+所有权文件如果和业务代码放在同一个候选里，候选就可能同时修改“谁必须审批”和“我已经获得审批”的解释。一个可重放的求值过程至少把下面三类输入分开保存：
+
+```text
+trusted_ownership_snapshot: 目标基线或组织控制面发布的路径、角色和主体
+candidate_commit: 本次评审实际验证的完整 OID
+approval_events: candidate OID、角色、主体、决定和 policy version
+```
+
+候选中新增或修改所有权文件可以成为待评审内容，但不能立即改变同一候选的有效审批集合。需要改变所有权时，先按规则审批并发布新的信任快照，再让后续候选引用新版本。快照缺失、路径没有 owner 或身份目录无法确认时，结果应是 `inconclusive`，不能把空集合解释为“无需审批”。
+
+### 隔离实验的前置条件和状态变化
+
+实验从仓库根目录执行，只需要 Git、Bash、`mktemp` 和 `awk`，不连接网络、不读取当前仓库的远端，也不修改当前工作区：
+
+```bash
+git --version
+TMPDIR=/private/tmp bash scripts/verify-ownership-approval-boundaries.sh
+```
+
+成功输出为：
+
+```text
+Ownership snapshot, independent approvals, candidate binding, stale decisions, and owner outage boundaries passed.
+```
+
+脚本在临时仓库中先创建基线 `T0` 和外部的 trusted ownership snapshot，再生成候选 `F1`、`F2`。`F2` 同时修改安全策略和候选内的所有权文件，试图把安全审批人替换成作者；求值器仍从临时目录中的可信快照读取 owner。状态变化和验收点如下：
+
+| 场景 | 预期结果 | 说明 |
+| --- | --- | --- |
+| `F1` 只有作者对 `code` 角色的审批 | `deny/self-approval` | 人数为一不代表主体独立 |
+| `F1` 有 `payments-owner` 对当前 OID 的审批 | `allow` | 角色、主体、候选和策略版本均匹配 |
+| `F2` 仍沿用 `F1` 的 `code` 审批 | `deny/missing-owner-approval` | 新候选不能复用旧 OID 的决定 |
+| `F2` 修改候选内所有权文件，但没有可信 `security-owner` 审批 | `deny` | 候选不能自授权或删除外部 owner |
+| 目标从 `T0` 前进后仍使用 `F2` | `deny/candidate-stale` | 目标基线变化使组合结果需要重算 |
+| trusted snapshot 不再为安全路径匹配 owner | `inconclusive` | 身份/责任数据缺失，不能默认放行 |
+
+脚本的 `allow`、`deny` 和 `inconclusive` 是本地求值器输出，不是 GitHub、GitLab 或其他托管平台的 API 响应。它证明的是输入分离和候选绑定的逻辑不变量；真实平台仍要用普通作者、代码所有者、风险审批者、机器人和管理员分别测试，并保存平台原始审批事件、权限快照、规则版本和最终引用 OID。
+
 ## 小结
 
 所有权把变化与责任关联，审批把具体主体对具体候选和范围的决定保存下来。路径、构建图、运行责任和风险角色共同决定谁需要参与；候选、目标或策略变化后，旧决定必须按规则失效。审批数量只有在主体独立、角色有效、范围完整和版本绑定都成立时才有意义。

@@ -4,7 +4,7 @@
 
 ## 当前里程碑
 
-阶段 0 已完成。现有基础教程和实验保持可用，v2 第一至十三篇的已建目录已经落入权威路径，其余旧目录按逐章迁移表继续收束。当前共有 207 个公开页面、75 个兼容迁移页和 71 组隔离实验；正文尚未达到出版标准。
+阶段 0 已完成。现有基础教程和实验保持可用，v2 第一至十三篇的已建目录已经落入权威路径，其余旧目录按逐章迁移表继续收束。当前共有 207 个公开页面、75 个兼容迁移页和 72 组隔离实验；正文尚未达到出版标准。
 
 ## 已完成
 
@@ -254,6 +254,7 @@
 - [ ] 对第七篇执行整篇跨章去重和术语审校，重点检查 amend/交互式 rebase/rebase 工作流、共享政策/租约/远端改写之间的重复边界。
 - [ ] 继续审校显式租约与远端改写事故的证据清单重复，并对第七篇执行术语和命令首次出现检查。
 - [x] 扩写第六篇受保护引用章节，补充引用更新的状态变化、stale push 与远程跟踪缓存的隔离实验、保护 ref 与评审 ref 的边界，以及本地 hook 不能证明平台身份、审批和审计的限制。
+- [x] 扩写第六篇所有权与审批章节，新增候选之外的 trusted ownership snapshot、独立审批、候选自修改所有权文件、stale 决定和 owner 缺失的隔离求值实验，并接入全量验证。
 
 ## 回归状态
 
@@ -444,6 +445,9 @@
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十二篇权限生命周期正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-push-auth-permission-boundaries.sh` | 通过 | 第六篇受保护引用正文新增的本地引用边界实验，验证 stale push、fetch 副作用、bare 接收 hook、保护 ref 与评审 ref 的状态边界 |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第六篇受保护引用实验契约与平台边界说明通过文档门禁，207 个公开页面、75 个兼容迁移页 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-ownership-approval-boundaries.sh` | 通过 | 第六篇所有权与审批新增实验，验证独立审批、候选 OID 绑定、候选自修改 owner 文件、目标前进和 owner 缺失的 `inconclusive` 边界 |
+| 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第六篇所有权与审批正文和实验契约通过文档门禁，207 个公开页面、75 个兼容迁移页 |
+| 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第六篇所有权与审批正文、实验接入后的整库回归，207 个公开页面、75 个兼容迁移页与 72 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 

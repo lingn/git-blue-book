@@ -40,6 +40,7 @@ verification_scripts=(
   scripts/verify-remote-history-rewrite.sh
   scripts/verify-part-6-collaboration.sh
   scripts/verify-part-6-engineering.sh
+  scripts/verify-ownership-approval-boundaries.sh
   scripts/verify-ci-evidence-chain.sh
   scripts/verify-ci-trigger-queue.sh
   scripts/verify-reproducible-build.sh
