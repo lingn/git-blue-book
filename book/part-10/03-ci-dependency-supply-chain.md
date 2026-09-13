@@ -232,6 +232,32 @@ git --git-dir="$audit_root/dependency.git" log \
 
 仅把 `@v4` 改成另一个 tag 不是止损证据。必须证明平台解析到了哪一个精确对象、该对象在哪些 run 中执行，以及这些 run 持有什么能力。若攻击可能修改 Git refs 或发布制品，还应转入凭据泄漏、历史取证与发布恢复流程。
 
+## 依赖也需要生命周期状态
+
+依赖清单不应只有一个 `allowed=true` 字段。可以把一次依赖从提出到退役的状态记录为：
+
+```text
+PROPOSED
+  -> LOCKED
+  -> RESOLVED
+  -> EXECUTED
+  -> ATTESTED
+  -> QUARANTINED
+  -> RETIRED
+```
+
+| 状态 | 进入条件 | 必须保存 | 停止条件 |
+| --- | --- | --- | --- |
+| `PROPOSED` | selector、来源和用途已登记 | owner、资源、动作、预期权限和风险 | 来源或维护责任不明时不进入锁定 |
+| `LOCKED` | old/new 评审后写入精确 commit、digest 或 integrity | lock blob、来源映射、评审和更新时间 | lock 与配置或依赖闭包不一致 |
+| `RESOLVED` | runner/解析器取得锁定对象 | resolver、时间、实际身份、字节摘要、传递输入 | 解析到浮动 ref、重定向或未登记来源 |
+| `EXECUTED` | 依赖在明确 job、runner 和权限中运行 | run/job、candidate、网络、token、cache 和输出 | 运行上下文超出批准范围 |
+| `ATTESTED` | 可信控制面关联输出与 builder/依赖 | attestation、subject、builder、resolved dependencies | signer、builder 或候选绑定不满足策略 |
+| `QUARANTINED` | 依赖或运行结果疑似失陷 | 影响 runs、凭据窗口、cache/artifact、旧新 identity | 受影响范围未枚举或新解析仍在继续 |
+| `RETIRED` | 不再允许新运行，保留期结束条件已明确 | 下线原因、最后使用、镜像/归档和清理批准 | 仍有生产 pipeline、制品或恢复依赖 |
+
+状态转换要由候选之外的策略和平台证据推动。依赖仓库自己提交的 `allowlist`、attestation 或版本说明不能单独把自身从 `QUARANTINED` 改回 `RESOLVED`。当精确对象因上游删除而无法取得时，状态保持 `LOCKED` 但运行不能继续，除非从受控镜像恢复同一对象并记录来源；不能为了恢复流水线把 selector 放宽成 tag 或 branch。
+
 ## 按证据诊断失败
 
 | 现象 | 优先证据 | 恢复与安全边界 |
