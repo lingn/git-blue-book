@@ -4,13 +4,13 @@
 
 | 术语 | 工作定义 | 首次详解 |
 | --- | --- | --- |
-| 版本控制 | 记录文件变化，使历史可识别、比较、恢复和协作 | [为什么需要版本控制](../part-1/01-why-version-control.md) |
-| 分布式版本控制 | 每个参与者可持有完整仓库并交换历史 | [三代方案](../part-1/02-three-generations.md) |
-| 快照 | 项目在某个历史节点上的完整内容视图 | [Git 保存快照](../part-1/04-snapshots.md) |
-| 仓库 | 保存对象、引用、暂存状态和配置的地方 | [对象与仓库](../part-1/05-first-model.md) |
-| blob | 保存文件内容、不保存路径名的不可变对象 | [对象数据库](../part-1/05-first-model.md) |
-| tree | 把路径名和模式关联到 blob 或子 tree 的对象 | [对象数据库](../part-1/05-first-model.md) |
-| 提交 | 指向快照并包含身份、说明和父关系的不可变记录 | [对象与仓库](../part-1/05-first-model.md) |
+| 版本控制 | 记录文件变化，使历史可识别、比较、恢复和协作 | [为什么需要版本控制](../part-01/01-versioned-engineering.md) |
+| 分布式版本控制 | 每个参与者可持有完整仓库并交换历史 | [三代方案](../part-01/02-centralized-and-distributed.md) |
+| 快照 | 项目在某个历史节点上的完整内容视图 | [Git 保存快照](../part-01/04-snapshots-and-diffs.md) |
+| 仓库 | 保存对象、引用、暂存状态和配置的地方 | [对象与仓库](../part-01/05-first-repository-map.md) |
+| blob | 保存文件内容、不保存路径名的不可变对象 | [对象数据库](../part-01/05-first-repository-map.md) |
+| tree | 把路径名和模式关联到 blob 或子 tree 的对象 | [对象数据库](../part-01/05-first-repository-map.md) |
+| 提交 | 指向快照并包含身份、说明和父关系的不可变记录 | [对象与仓库](../part-01/05-first-repository-map.md) |
 | 对象 ID | 由对象类型、长度和内容计算、用于寻址对象的标识 | [对象身份与格式](../part-03/01-object-identity-and-formats.md) |
 | 工作区 | 当前可直接查看和编辑的项目文件 | [三个区域](../part-2/05-three-areas.md) |
 | 暂存区 | 为下一次提交准备快照内容的区域，也叫 index | [三个区域](../part-2/05-three-areas.md) |

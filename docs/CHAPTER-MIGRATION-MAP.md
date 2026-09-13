@@ -54,13 +54,13 @@ book/part-13/  故障排查手册
 
 | 当前文件 | v2 目标 | 动作 |
 | --- | --- | --- |
-| `book/part-1/README.md` | `book/part-01/README.md` | 保留重写 |
-| `book/part-1/01-why-version-control.md` | `book/part-01/01-versioned-engineering.md` | 保留重写，补可追溯、可审查、可恢复三类目标 |
-| `book/part-1/02-three-generations.md` | `book/part-01/02-centralized-and-distributed.md` | 保留重写，压缩代际优劣的重复判断 |
-| `book/part-1/03-birth-of-git.md` | `book/part-01/03-git-design-constraints.md` | 保留重写，区分历史背景与当前工程结论 |
-| `book/part-1/04-snapshots.md` | `book/part-01/04-snapshots-and-diffs.md`、`book/part-03/01-object-model.md` | 拆分；第一篇保留直觉，第三篇承担对象事实 |
-| `book/part-1/05-first-model.md` | `book/part-01/05-first-repository-map.md`、`book/part-03/01-object-model.md`、`book/part-03/02-object-format.md` | 拆分；当前重构稿主体成为第三篇权威来源 |
-| `book/part-1/exercise.md` | `book/part-01/exercise.md` | 保留重写 |
+| `book/part-1/README.md` | `book/part-01/README.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-1/01-why-version-control.md` | `book/part-01/01-versioned-engineering.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-1/02-three-generations.md` | `book/part-01/02-centralized-and-distributed.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-1/03-birth-of-git.md` | `book/part-01/03-git-design-constraints.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-1/04-snapshots.md` | `book/part-01/04-snapshots-and-diffs.md`、`book/part-03/01-object-identity-and-formats.md` | 已于 2026-09-14 拆分迁移；第一篇保留直觉，第三篇承担对象事实；旧页保留兼容入口 |
+| `book/part-1/05-first-model.md` | `book/part-01/05-first-repository-map.md`、`book/part-03/01-object-identity-and-formats.md`、`book/part-03/02-pack-delta-and-lifecycle.md` | 已于 2026-09-14 拆分迁移；第一篇保留入门地图，第三篇承担底层事实；旧页保留兼容入口 |
+| `book/part-1/exercise.md` | `book/part-01/exercise.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
 ## 第二篇现有页面
 
