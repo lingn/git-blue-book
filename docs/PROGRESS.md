@@ -253,6 +253,7 @@
 - [ ] 在专用托管平台测试仓库验证第六篇的审批失效、代码所有者、同名检查报告者、合并队列、管理员/API 绕过和审计事件，并把产品、版本、权限、套餐和核对日期写入事实登记表。
 - [ ] 对第七篇执行整篇跨章去重和术语审校，重点检查 amend/交互式 rebase/rebase 工作流、共享政策/租约/远端改写之间的重复边界。
 - [ ] 继续审校显式租约与远端改写事故的证据清单重复，并对第七篇执行术语和命令首次出现检查。
+- [x] 扩写第六篇受保护引用章节，补充引用更新的状态变化、stale push 与远程跟踪缓存的隔离实验、保护 ref 与评审 ref 的边界，以及本地 hook 不能证明平台身份、审批和审计的限制。
 
 ## 回归状态
 
@@ -441,6 +442,8 @@
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十二篇仓库生命周期正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇权限生命周期授权快照、传播窗口和 break-glass 复盘扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十二篇权限生命周期正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-push-auth-permission-boundaries.sh` | 通过 | 第六篇受保护引用正文新增的本地引用边界实验，验证 stale push、fetch 副作用、bare 接收 hook、保护 ref 与评审 ref 的状态边界 |
+| 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第六篇受保护引用实验契约与平台边界说明通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 
 ## 已知风险
 

@@ -72,6 +72,41 @@ decision = evaluate(
 
 `inconclusive` 表示输入不完整或执行器无法判断。高风险动作不能把 API 超时、检查身份未知或策略版本缺失当成没有违规；如何失败关闭取决于动作风险，但未知状态必须保留下来。
 
+## 三方差异要有可定位的状态记录
+
+规则推广时，至少保存三份不可变快照：
+
+~~~text
+declared_policy: policy_version / digest / scope / mode
+observed_platform: platform_version / effective_rules / inheritance / bypasses
+behavior_probe: test_repository / actor / action / old_new_oid / result
+~~~
+
+把三份快照压成一个 `policy=green` 会隐藏不同类型的问题：声明可能是新版本，平台仍部署旧版本；平台配置可能一致，但行为探针仍接受了不应接受的写入；API 采集权限不足，也可能让观测看起来为空。记录应按下面的组合分流：
+
+| 声明 | 观测 | 行为探针 | 结论 |
+| --- | --- | --- | --- |
+| 一致 | 一致 | 一致 | `pass`，可进入下一 rollout 阶段 |
+| 新旧不同 | 可见 | 任意 | `fail` 或 `drift`，先停止推广 |
+| 一致 | 缺失/部分可见 | 任意 | `inconclusive`，补齐读取权限和分页 |
+| 一致 | 一致 | 接受了应拒绝动作 | `fail`，说明执行入口或 scope 有缺口 |
+| 一致 | 一致 | 拒绝了应允许动作 | `fail`，区分策略错误与基础设施故障 |
+
+行为探针必须用专用仓库、专用主体、测试 ref 和可销毁候选。探针的结果要关联 server request ID、old/new OID、rule ID、policy version 和审计事件；只有配置快照而没有行为证据，不能宣布规则已生效。
+
+### 例外使用后的缓存和会话收敛
+
+例外对象过期或撤销后，策略拒绝并不一定立刻生效。平台缓存、长连接、已签发的 session、队列候选和机器人 token 可能仍携带旧授权。例外的关闭步骤至少包括：
+
+1. 将例外状态从 `ACTIVE` 改为 `REVOKED` 或到期状态，保留时间和操作者；
+2. 撤销或缩短关联 session/token，停止仍在运行的队列/发布任务；
+3. 查询例外使用事件，枚举有效期结束后的 accepted/denied/inconclusive 动作；
+4. 用新的测试主体重复正向/反向行为探针，验证缓存传播已经收敛；
+5. 将例外绑定的 candidate、artifact、部署和 old/new OID 纳入复盘；
+6. 只有审计完整且没有未知写入时，才从治理记录中标记 `REVIEWED`。
+
+如果平台无法撤销已经签发的长寿命 token，应把例外视为仍然有效，先围栏资源或轮换凭据，不能只改策略表。例外使用期间生成的候选与制品不能因为例外后来撤销就自动标记安全，需要按批准范围重新评估。
+
 ## 作用域从稳定资产事实中选择
 
 常见作用域包括：
