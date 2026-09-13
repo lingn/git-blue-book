@@ -145,6 +145,30 @@ publisher / verified_at / retention
 
 发布者应在导出后从一个全新临时目录重新读取归档、计算摘要、检查路径和运行扫描器。不要在同一个工作目录先生成归档、再修改文件、最后复用旧摘要。归档里若包含 LFS pointer，manifest 要明确列出 pointer 与 payload 是否分别扫描，以及发布对象是否要求水合后的字节。
 
+### 归档候选也有生命周期
+
+归档从候选到对外交付，至少经过以下状态：
+
+```text
+CANDIDATE_FIXED
+  -> ARCHIVE_GENERATED
+  -> CONTENT_VALIDATED
+  -> MANIFEST_SEALED
+  -> PUBLISHED
+  -> REVOKED / RETIRED
+```
+
+| 状态 | 进入条件 | 必须保存 | 失效条件 |
+| --- | --- | --- | --- |
+| `CANDIDATE_FIXED` | source commit/tree、tag object 和属性来源已固定 | OID、Git/归档工具版本、对象格式、策略版本 | tag/候选移动或属性来源变化 |
+| `ARCHIVE_GENERATED` | 从固定 tree 生成新字节副本 | archive 路径、size、SHA-256、生成时间 | 归档被修改或重新生成 |
+| `CONTENT_VALIDATED` | 路径、symlink、大小、秘密扫描和外部输入边界通过 | path manifest、规则摘要、扫描范围、LFS/submodule 状态 | 扫描器/规则/范围不完整或结果 inconclusive |
+| `MANIFEST_SEALED` | source、archive、path 和扫描结果绑定为不可变清单 | manifest digest、签名/批准、publisher | 任一字段、文件或摘要变化 |
+| `PUBLISHED` | 消费者取得的字节与 sealed manifest 匹配 | 下载/发布 ID、时间、目标和保留策略 | 发现秘密、错误候选、摘要不符或撤销决定 |
+| `REVOKED/RETIRED` | 停止新分发，并处理已有副本或正常到期 | 原因、影响消费者、替代归档、删除/保留证据 | 仍有未通知消费者或可下载入口时不能宣称完成 |
+
+任何重新生成都回到 `ARCHIVE_GENERATED`，并产生新的 archive digest、path manifest 和 sealed manifest；不能在旧 tar 中删文件后继续沿用原摘要。`PUBLISHED` 也不表示 Git 历史、LFS 服务、CI artifact、bundle 或旧 clone 已经净化，它只证明这一次交付字节与审核清单一致。
+
 ## 扫描器会漏什么
 
 provider pattern、通用 token pattern、熵规则和上下文启发式各有边界：
