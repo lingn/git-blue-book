@@ -155,7 +155,7 @@ git cat-file -e 'recovery/remote-before-force^{commit}'
 4. Git bundle、镜像和仓库备份；
 5. 服务端管理员保留的 reflog、隔离对象或快照。
 
-`git fsck` 可以列出部分不可达对象，但输出需要对象取证知识，运行结果也受对象是否已清理影响。不要在事故现场一边执行 prune，一边尝试 fsck 恢复。v2 的灾难恢复篇会把对象库损坏、bundle 和备份恢复单独展开。
+`git fsck` 可以列出部分不可达对象，但输出需要对象取证知识，运行结果也受对象是否已清理影响。不要在事故现场一边执行 prune，一边尝试 fsck 恢复。对象库损坏、不可达对象、pack/idx 和 donor 恢复以[第十一篇对象取证](../part-11/02-object-forensics-and-recovery.md)为权威来源。
 
 ## 恢复验收同时检查四层
 

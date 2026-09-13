@@ -169,14 +169,7 @@ git reflog show --date=iso HEAD
 
 `ORIG_HEAD` 可能正好是操作前位置，也可能已被后续命令覆盖。reflog 序号会随新操作变化。找到候选后先检查，再创建新引用：
 
-```bash
-candidate="replace-with-the-verified-full-object-id"
-git cat-file -e "${candidate}^{commit}"
-git show --stat "$candidate"
-git branch recovery/reset-candidate "$candidate"
-```
-
-不要把占位符原样输入。`cat-file -e` 成功时没有输出，候选不是可解析提交时返回非零状态。创建恢复分支不会移动当前分支、index 或工作区，比立即再次 `reset --hard` 更适合保护现场。
+候选验证和 recovery ref 的完整步骤见[reflog 与 recovery ref](12-reflog-and-recovery-refs.md)，误 `reset --hard` 的事故编排见[本地与远程恢复](13-local-and-remote-recovery.md)。候选不能解析、对象缺失或日志已过期时转入[第十一篇对象取证](../part-11/02-object-forensics-and-recovery.md)。不要立即再次 `reset --hard`，它可能覆盖尚未保存的工作区和新的恢复线索。
 
 ## 隔离实验验证状态和恢复
 
