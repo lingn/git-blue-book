@@ -11,18 +11,18 @@
 | blob | 保存文件内容、不保存路径名的不可变对象 | [对象数据库](../part-1/05-first-model.md) |
 | tree | 把路径名和模式关联到 blob 或子 tree 的对象 | [对象数据库](../part-1/05-first-model.md) |
 | 提交 | 指向快照并包含身份、说明和父关系的不可变记录 | [对象与仓库](../part-1/05-first-model.md) |
-| 对象 ID | 由对象类型、长度和内容计算、用于寻址对象的标识 | [内容寻址](../part-1/05-first-model.md) |
+| 对象 ID | 由对象类型、长度和内容计算、用于寻址对象的标识 | [对象身份与格式](../part-03/01-object-identity-and-formats.md) |
 | 工作区 | 当前可直接查看和编辑的项目文件 | [三个区域](../part-2/05-three-areas.md) |
 | 暂存区 | 为下一次提交准备快照内容的区域，也叫 index | [三个区域](../part-2/05-three-areas.md) |
 | 未跟踪文件 | 工作区中存在但尚未纳入 Git 记录集合的文件 | [查看状态](../part-2/04-status.md) |
-| 提交图 | 以提交为节点、父提交关系为连线的有向图 | [提交图](../part-3/01-commit-graph.md) |
-| 引用 | 指向 Git 对象的名字 | [分支模型](../part-3/02-branch-as-reference.md) |
+| 提交图 | 以提交为节点、父提交关系为连线的有向图 | [提交图与可达性](../part-03/04-commit-graph-and-reachability.md) |
+| 引用 | 指向 Git 对象的名字 | [引用、HEAD 与 reflog](../part-03/03-refs-head-and-reflog.md) |
 | 分支 | 指向提交并随当前工作线新提交向前移动的引用 | [分支模型](../part-3/02-branch-as-reference.md) |
-| `HEAD` | 表示当前工作位置的特殊引用，通常指向当前分支 | [理解 HEAD](../part-3/03-head.md) |
+| `HEAD` | 表示当前工作位置的特殊引用，通常指向当前分支 | [引用、HEAD 与 reflog](../part-03/03-refs-head-and-reflog.md) |
 | 合并 | 把另一条历史中当前分支尚未包含的变化整合进来 | [第一次合并](../part-3/05-first-merge.md) |
 | 快进 | 当前提交是目标提交祖先，只需向前移动分支 | [第一次合并](../part-3/05-first-merge.md) |
 | 冲突 | Git 无法替人决定最终内容时留下的未完成整合状态 | [冲突模型](../part-3/07-conflict-model.md) |
-| index stage | 冲突期间 index 保存的共同祖先、当前侧和合入侧条目；普通 merge 中分别是 stage 1、2、3 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
+| index stage | 冲突期间 index 保存的共同祖先、当前侧和合入侧条目；普通 merge 中分别是 stage 1、2、3 | [Index 内部结构](../part-03/05-index-internals.md) |
 | `ort` | Git 新版本对单分支普通合并采用的三方合并策略，负责组合 tree 和处理 rename 等机械语义 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
 | `AUTO_MERGE` | `ort` 冲突现场记录初始自动合并工作区内容的临时 tree 引用 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
 | rerere | 记录冲突 preimage 与已解决 postimage，并在相似冲突中复用编辑结果的机制 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |

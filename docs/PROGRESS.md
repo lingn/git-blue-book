@@ -1,10 +1,10 @@
 # v2 重构进度
 
-> 最近更新：2026-09-13。状态只描述已经落盘并验证的工作。
+> 最近更新：2026-09-14。状态只描述已经落盘并验证的工作。
 
 ## 当前里程碑
 
-阶段 0 已完成。现有基础教程和实验保持可用，v2 第二、三、六至十三篇已经落入权威路径，其余旧目录按逐章迁移表继续收束。当前共有 165 个公开页面、32 个兼容迁移页和 57 组隔离实验；正文尚未达到出版标准。
+阶段 0 已完成。现有基础教程和实验保持可用，v2 第二、三、六至十三篇已经落入权威路径，其余旧目录按逐章迁移表继续收束。当前共有 166 个公开页面、32 个兼容迁移页和 58 组隔离实验；正文尚未达到出版标准。
 
 ## 已完成
 
@@ -147,6 +147,8 @@
 - [x] 新增引用与 reflog 隔离实验，验证 expected-old 拒绝、packed refs、recovery ref、worktree 日志范围和 clone 不传输源端 reflog，实验总数增至 56 组。
 - [x] 新增第三篇提交图与可达性权威章，收束 commit 父边、拓扑/时间、查询根、revision 集合、merge-base/fork-point、浅边界、replace refs、commit-graph 和 generation data。
 - [x] 新增提交图隔离实验，验证分叉/合并父关系、左右计数、时钟偏移、显式可达根、commit-graph 逻辑不变量和 unshallow 恢复，实验总数增至 57 组。
+- [x] 新增第三篇 index 内部结构权威章，收束 entry/mode/OID/stage/stat、格式/扩展/锁、替代 index、冲突候选、sparse-directory 和标志边界。
+- [x] 新增 index 隔离实验，验证格式转换、替代文件、两类冲突 stages、stage 0 收束和 sparse-index 展开前后的 tree 不变量，实验总数增至 58 组。
 
 - [x] 扩写受保护分支章节，建立平台控制面与 Git 引用更新的分层模型。
 - [x] 为平台事实建立版本与核对登记表。
@@ -334,6 +336,7 @@
 | 2026-09-13 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第三篇对象格式、pack/delta/生命周期两章及新实验接入后整库回归，163 个公开页面、32 个兼容迁移页与 55 组隔离实验正常 |
 | 2026-09-13 | Write 中文标点门禁、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第三篇引用、`HEAD` 与 reflog 权威章及新实验接入后整库回归，164 个公开页面、32 个兼容迁移页与 56 组隔离实验正常 |
 | 2026-09-13 | Write 中文标点门禁、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第三篇提交图、可达性、merge-base 与 generation data 权威章及新实验接入后整库回归，165 个公开页面、32 个兼容迁移页与 57 组隔离实验正常 |
+| 2026-09-14 | Write 中文标点门禁、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第三篇 index 内部结构、冲突 stages 与 sparse-directory 权威章及新实验接入后整库回归，166 个公开页面、32 个兼容迁移页与 58 组隔离实验正常 |
 | 2026-09-04 | `./scripts/verify-all.sh` | 通过 | 提交改写与远端历史重写场景接入整库回归，141 个公开页面、7 个兼容迁移页与 54 组隔离实验正常 |
 | 2026-09-04 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 新增第五篇正文、索引、实验说明和验收规则通过中文标点、链接覆盖与差异空白检查 |
 | 2026-09-05 | `./scripts/verify-all.sh` | 通过 | 合并远端第五篇历史改写内容后重新验证，141 个公开页面、9 个兼容迁移页与 54 组隔离实验正常 |

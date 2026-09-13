@@ -159,7 +159,7 @@ git ls-files --unmerged
 git status
 ~~~
 
-stage 1、2、3 是 merge-base、ours、theirs 等候选，不是普通的单一 index 版本。此时先决定完成合并、逐路径解决或对应 abort。不要用 restore --staged 或 rm --cached 擦掉冲突证据。
+Stage 1、2、3 是 merge-base、ours、theirs 等候选，不是普通的单一 index 版本。其对象、缺失 stage 和 rebase 视角见[Index 内部结构](../part-03/05-index-internals.md)。此时先决定完成合并、逐路径解决或对应 abort，不要用 `restore --staged` 或 `rm --cached` 擦掉冲突证据。
 
 ## 失败路径和恢复
 

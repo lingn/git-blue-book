@@ -10,6 +10,7 @@ verification_scripts=(
   scripts/verify-object-format-lifecycle.sh
   scripts/verify-refs-head-reflog.sh
   scripts/verify-commit-graph-reachability.sh
+  scripts/verify-index-internals.sh
   scripts/verify-part-2.sh
   scripts/verify-part-3-basics.sh
   scripts/verify-part-3-conflicts.sh

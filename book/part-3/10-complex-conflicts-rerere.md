@@ -46,17 +46,9 @@ git ls-files --unmerged
 
 `status` 给出面向人的路径分类，`diff --diff-filter=U` 列出未合并路径，`ls-files --unmerged` 显示 mode、对象 ID、stage 和路径。对象 ID 与路径随事故变化，排障记录不要省略完整值，也不要把内部路径未经脱敏贴到公开渠道。
 
-## Index 的三阶段是冲突权威输入
+## 用 index stage 固定 `ort` 的冲突输入
 
-未冲突路径通常只有 stage 0，也就是下一次提交候选。未合并路径最多保存三个条目：
-
-| Stage | 普通 merge 中的含义 | 常用读取方式 |
-| --- | --- | --- |
-| 1 | merge-base 的共同祖先版本 | `git show :1:path` |
-| 2 | `HEAD`，即当前/目标分支版本 | `git show :2:path` |
-| 3 | `MERGE_HEAD`，即正在合入的版本 | `git show :3:path` |
-
-这三个版本比工作区标记更稳定。假设冲突路径已经安全赋值：
+Index entry、stage 0/1/2/3、缺失 stage 和 sparse-directory 的完整模型见第三篇的[Index 内部结构](../part-03/05-index-internals.md)。这里把它应用到普通 `git merge`：stage 1、2、3 分别来自 merge base、`HEAD` 和 `MERGE_HEAD`。假设冲突路径已经安全赋值：
 
 ```bash
 conflict_path=service.conf
@@ -65,15 +57,11 @@ git show ":2:$conflict_path"
 git show ":3:$conflict_path"
 ```
 
-命令读取 index 中的 blob，不改变文件。路径包含冒号、换行或其他特殊字节时，不要把这种 revision 语法拼字符串处理；使用支持 `git ls-files -u -z` 和对象 ID 的脚本逐项读取。本章实验使用普通路径以突出阶段语义。
+命令读取 index 中的 blob，不改变文件。路径包含冒号、换行或其他特殊字节时，不要把这种 revision 语法拼字符串处理；使用 `git ls-files -u -z` 取得 mode、OID、stage 和 NUL 终止路径，再按 OID 读取。本章实验使用普通路径以突出 `ort` 的处理过程。
 
 并非每类冲突都有三个 stage。add/add 没有共同祖先条目；modify/delete 会缺少删除一侧；rename 冲突可能把不同 stage 放在旧路径和新路径。不能写死“每个冲突必有三行”，应按 `ls-files -u` 的真实输出判断。
 
-执行 `git add` 或 `git rm` 解决路径时，Git 用最终 stage 0 替换该路径的未合并 stages。这一步表示“这个路径的候选结果已经决定”，不是证明结果正确。所有未合并条目消失后才具备完成 merge 的结构条件。
-
-### Rebase 中的 ours/theirs 会换视角
-
-上表只描述普通 `git merge`。Rebase 会把待重放提交应用到已经检出的新基线上，命令文案中的 ours/theirs 视角因此常与开发者直觉相反。处理 rebase 冲突时应记录当前 `HEAD`、正在重放的提交和 rebase 状态目录，不把普通 merge 的“当前分支/合入分支”标签直接套用。
+执行 `git add` 或 `git rm` 解决路径时，Git 用最终 stage 0 替换该路径的未合并 stages。这一步只表示路径已经有唯一候选。所有未合并条目消失后才具备完成 merge 的结构条件，结果仍需审查和测试。Rebase 的 ours/theirs 视角不同，不能照搬这里的分支标签。
 
 ## Diff3 让共同祖先进入工作区标记
 
