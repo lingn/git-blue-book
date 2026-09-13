@@ -94,6 +94,84 @@ git diff --check "$base"..."$feature"
 
 这里 `base`、`feature` 来自前面的完整 OID。若命令输出与平台 diff 不同，先核对平台候选类型、目标 OID、浅克隆边界和路径过滤，不要凭截图修改本地历史来“对齐”。
 
+## 用证据键重算，而不是保存一个“可合并”布尔值
+
+评审系统可以把状态显示成一个字段，但持久记录至少要保留下面这组证据键：
+
+~~~text
+(repository_id, review_id, target_ref, target_oid,
+ feature_oid, candidate_oid, candidate_kind, policy_version)
+~~~
+
+审批、检查和例外都引用这组键。任一 OID、候选构造方式或策略版本变化，都是新的一次求值。`mergeable=true` 只能作为缓存结果，不能脱离证据键长期复用。
+
+状态也应由事件重放得到，而不是只相信最后一条页面快照。一个最小事件表可以这样写：
+
+| 事件 | 必须携带 | 使哪些结果失效 |
+| --- | --- | --- |
+| 发布新功能头 | `feature_oid`、主体、时间 | 绑定旧功能头的候选、检查和依赖评审 |
+| 目标引用前进 | `target_ref`、旧/新目标 OID | 以旧目标构造的 merge/queue 候选和集成检查 |
+| 候选重建 | 候选类型、父列表或 tree、构造输入 | 旧候选上的审批、检查和发布准备 |
+| 策略或所有权变化 | 策略版本、作用域、变更主体 | 受影响范围内的可合并判断 |
+| 检查完成 | 检查 ID、报告者、候选键、attempt、结果 | 只更新同一候选键的检查记录 |
+| 条件更新结果 | `expected_old`、实际 old/new、服务主体 | 结束当前候选，或把竞态标记为过期 |
+
+事件处理必须幂等。重复收到同一 `event_id` 时，系统应返回已处理结果，不重复撤销审批、不重复生成候选，也不把时间戳改成重放时间。事件乱序时，不能用较旧事件覆盖较新 OID；应按服务端序列或可靠的版本号排序。没有序列号时，至少保存首次观察时间、接收时间和原始响应，把无法排序的区间标为 `inconclusive`。
+
+可以把一次求值写成下面的纯函数：
+
+~~~text
+evaluate(review, evidence_set):
+  key = review.current_evidence_key
+  require feature_oid, target_oid, candidate_oid, policy_version
+  require candidate was constructed from target_oid and feature_oid
+  require every required check matches key and trusted reporter
+  require every required approval matches key and active policy
+  require no unresolved blocking review or unexpired exception conflict
+  return mergeable only when all requirements are proven
+~~~
+
+这个函数不负责把 ref 写入服务器。合并服务在真正更新前还要重新读取目标当前值，并用 `expected_old` 进行条件更新。求值期间目标前进、规则变化或报告者撤销都会让旧结果过期，即使页面还显示绿色。
+
+## 区分“待重算”和“证据不完整”
+
+两种状态都不能进入合并，但修复路径不同：
+
+| 状态 | 含义 | 下一步 |
+| --- | --- | --- |
+| `stale` | 证据完整，但功能头、目标、候选或策略已经变化 | 从当前输入重建候选并重跑受影响检查 |
+| `inconclusive` | 事件、主体、报告者、序列或外部数据缺失，无法判断是否仍有效 | 补采原始事件或升级调查，不能直接重跑覆盖缺口 |
+
+例如，目标 OID 已知从 `T0` 变成 `T1`，这是 `stale`，可以重建 `integrate(T1, F1)`。如果平台只返回“检查通过”却没有报告者和候选 OID，这是 `inconclusive`，重新运行同名检查也不能补齐过去的归属。
+
+评审系统还要保留失效原因，不要只删除旧结果：`feature-updated`、`target-advanced`、`candidate-rebuilt`、`policy-changed`、`reporter-revoked` 和 `event-gap` 应能在调查记录中区分。旧结果可以保留为历史，但门禁求值只能读取当前证据键。
+
+## 把评论、审批和检查分成三条时间线
+
+评论描述人对某一差异的意见，审批表示某个角色在某个范围作出决定，检查表示一个报告者对某个候选执行了程序。三者的时间和失效规则不同：
+
+~~~text
+评论：可映射到旧 diff，未必决定合并
+审批：必须绑定角色、范围、候选和策略
+检查：必须绑定报告者、attempt、候选和输入
+~~~
+
+候选重建后，评论可以按路径或补丁映射保留供阅读；审批和检查是否保留，必须由预先定义的规则决定。不能因为评论看起来相同，就把旧审批或旧绿色结果复制给新 OID。合并队列中的组合候选还要把队列位置和前序候选加入证据键。
+
+## 本地可验证部分与平台缺口
+
+在一次性本地仓库中，下面的命令可以验证最终提交图和条件引用更新：
+
+~~~bash
+git show --no-patch --format='%H%n%P%n%T' <candidate-oid>
+git merge-base --is-ancestor <feature-oid> <candidate-oid>
+git update-ref <target-ref> <candidate-oid> <expected-old-oid>
+~~~
+
+前置条件是所有占位符已经替换为本地隔离仓库中的完整 OID，且没有并发写入者。命令分别读取候选对象、判断祖先关系和尝试条件更新；expected-old 不匹配时应非零退出且保持 ref 不变。恢复时保留 OID 和 stderr，重新生成候选，不改写真实主线。
+
+这些命令不能验证评审编号、评论、代码所有者、检查报告者、平台权限、合并队列或审计事件。`verify-part-6-collaboration.sh` 只验证 merge/squash/rebase merge 的对象形状和 expected-old 行为；它是 Git 数据面契约测试，不是托管平台合规测试。
+
 ## 评审决定必须绑定对象和范围
 
 一条审批至少说明审批者、角色、候选 OID、目标 OID、评审范围、时间和决定。代码所有者批准某个目录，不自动代表安全、数据库或发布负责人批准其他风险。一个人可以同时拥有多个角色，但审计记录要保留是以哪个职责作出决定。
