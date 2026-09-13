@@ -268,6 +268,7 @@
 - [x] 扩写第七篇交互式 rebase 章节，增加 `rewrite_base`、`original_tip`、`current_head` 和 todo 状态对账，明确 edit/exec/skip/abort 的逐提交证据要求。
 - [x] 扩写第十篇机器身份章节，增加 `PROPOSED`、`ACTIVE`、`ROTATING`、`QUARANTINED`、`REVOKED`、`RETIRED` 生命周期状态、证据字段和撤销停止条件。
 - [x] 扩写第十篇 CI 依赖与供应链章节，增加依赖 `PROPOSED`、`LOCKED`、`RESOLVED`、`EXECUTED`、`ATTESTED`、`QUARANTINED`、`RETIRED` 生命周期状态及 pin、缓存、来源证明和事故隔离停止条件。
+- [x] 扩写第十篇凭据泄漏与历史清理章节，增加 `DETECTED`、`CREDENTIAL_CONTAINED`、`IMPACT_MAPPED`、`REFS_REWRITTEN_OR_RISK_ACCEPTED`、`COPIES_RECONCILED`、`RECONTAMINATION_MONITORED`、`CLOSED` 处置状态和跨副本停止条件。
 - [x] 扩写第十二篇审计日志与证据留存章节，增加 `PLANNED`、`COLLECTING`、`COMPLETE/PARTIAL/INCONCLUSIVE`、`FROZEN`、`EXPIRED`、`DESTROYED` 留存状态及 legal hold、manifest 和销毁证据边界。
 - [x] 扩写第十二篇仓库健康与容量维护章节，增加健康快照与维护任务的联合状态模型，明确 `WARN/FAIL/INCONCLUSIVE` 的动作边界、快照过期和维护阻断条件。
 
@@ -478,6 +479,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-interactive-rebase.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第七篇交互式 rebase todo 与逐提交状态对账扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-machine-credential-boundaries.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇机器身份生命周期状态、撤销传播和服务端证据边界扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-ci-dependency-pinning.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇 CI 依赖生命周期、pin/解析/执行/来源证明和隔离停止条件扩写通过专项实验与文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-sensitive-history-boundaries.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇凭据泄漏处置状态、全 refs 清理、旧 clone 重新污染和物理对象边界扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-audit-evidence-retention.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇审计留存状态、采集完整性、legal hold 和销毁证据扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-repository-health-capacity.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇健康快照与维护任务联合状态、容量/恢复阻断条件扩写通过专项实验与文档门禁 |
 

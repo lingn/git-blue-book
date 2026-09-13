@@ -50,6 +50,32 @@
 
 “轮换”不是只生成一个新值。完整动作包括把新值安全分发到合法消费者、验证它们工作、撤销旧值、证明旧值被拒绝，并清除不再需要的副本。高可用系统若必须分阶段切换，也要先缩小旧值权限、缩短有效期并强化监控；不能因为发布窗口不便就延迟风险控制而不记录。
 
+### 泄漏处置状态要按能力和副本分别推进
+
+一个可审计的泄漏事件至少经过以下状态：
+
+```text
+DETECTED
+  -> CREDENTIAL_CONTAINED
+  -> IMPACT_MAPPED
+  -> REFS_REWRITTEN_OR_RISK_ACCEPTED
+  -> COPIES_RECONCILED
+  -> RECONTAMINATION_MONITORED
+  -> CLOSED
+```
+
+| 状态 | 必须满足 | 不能据此宣称 |
+| --- | --- | --- |
+| `DETECTED` | 位置、可能类型、时间窗口和责任人已登记 | 凭据一定真实或已被使用 |
+| `CREDENTIAL_CONTAINED` | 旧值撤销/冻结，合法消费者切换并验证拒绝旧值 | Git 历史和外部副本已经清理 |
+| `IMPACT_MAPPED` | 签发器、ref、CI、制品、日志、LFS、clone 和备份范围已盘点 | 所有副本都能被删除 |
+| `REFS_REWRITTEN_OR_RISK_ACCEPTED` | 全部批准 refs 已更新，或 owner 记录不改写理由与风险接受 | unreachable 对象已经物理清除 |
+| `COPIES_RECONCILED` | 平台缓存、artifact、旧 clone、镜像、LFS/备份按责任人处理或明确未覆盖 | 未来不会被旧 clone 重新推回 |
+| `RECONTAMINATION_MONITORED` | 旧 first-changed OID、路径和凭据使用持续监控，回流被拒绝或告警 | 证据可以立即删除 |
+| `CLOSED` | owner、残余风险、保留期、复盘和验证记录齐全 | 网络上所有历史副本绝对消失 |
+
+任何一层出现 `inconclusive`，事件停在当前状态并保留缺口。凭据已经撤销但 refs 尚未改写，仍可进入 `CREDENTIAL_CONTAINED`；历史已经改写但旧 clone 仍能普通 push 回流，不能进入 `COPIES_RECONCILED`。不要用一次全 refs 扫描覆盖签发器撤销证据，也不要用服务端 GC 覆盖旧令牌使用窗口。
+
 ### 3. 以签发器日志界定影响
 
 从最早可能进入 commit、CI、评审或日志的时间，到撤销真正生效的时间，查询：
@@ -177,7 +203,7 @@ Commit/tag message 中的值使用 `--replace-message` 等对应能力，不能�
 3. 比较候选 tree、构建、测试、依赖、许可证和发布内容，确认只发生批准变化；
 4. 保存 old-to-new commit/ref map 和 first-changed commits 到受控事故记录；
 5. 验证改写后的签名、tag、CI cache key、submodule gitlink、发布清单与外部链接处置；
-6. 在没有旧对象/cache的环境 clone 清理结果并重新扫描。
+6. 在没有旧对象 / cache 的环境 clone 清理结果并重新扫描。
 
 每个被改写 commit 的 OID 都会变化，其后代即使 tree 内容没变，也因 parent OID 变化而重建。Commit/tag 对象签名不能继续为新对象背书；需要按新 OID 重新评审、签名或发布，旧签名保留在受限证据中。不要批量伪造原签名者的新签名。
 
