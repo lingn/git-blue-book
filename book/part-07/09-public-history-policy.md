@@ -40,6 +40,50 @@ git remote -v
 
 “分支不是 main”不能证明它私有，“还没有同事抱怨”也不能证明没有人获取。共享判断要结合服务器日志、平台事件、CI 和部署记录；本地 Git 只能提供部分线索。
 
+## 共享状态不是一个二值开关
+
+改写决策至少要把“已经确认共享”和“没有看到共享证据”分开。可以用下面的状态表示当前证据强度：
+
+| 状态 | 已确认的事实 | 默认动作 |
+| --- | --- | --- |
+| `local-only` | 只有本地工作树和本地 refs 可见，没有远端、评审或自动化记录 | 可以按个人分支流程评估，仍先保存恢复入口 |
+| `remote-published` | 对象已写入任意远端 ref，但尚未发现协作者或外部系统引用 | 按已共享处理，禁止无审批改写，先核对远端 old OID |
+| `externally-referenced` | 评审、CI、制品、部署、标签、bundle、备份或其他 clone 已保存旧 OID | 默认 revert 或追加修正，改写必须有明确事故/维护批准 |
+| `platform-unknown` | 平台事件、访问日志或审计数据不可见，无法判断是否有人获取 | 按最高风险状态处理，先补证据或冻结改写 |
+| `retired-with-retention` | 引用已删除，但仍在保留窗口、法律留存或恢复介质中 | 不把删除当作遗忘，保留旧坐标和处置记录 |
+
+状态必须绑定观察时间和证据来源。一次 `git ls-remote` 只能证明查询时服务器返回了哪些 refs，不能证明之前没有其他 clone；一次本地 `reflog` 只能说明这个 clone 观察到的移动。`platform-unknown` 不是 `local-only` 的同义词，也不是允许强推的默认值。
+
+### 改写前的决策包
+
+在执行 amend、rebase、reset 或受控强推前，创建一份不可变决策记录，至少包含：
+
+```text
+decision_id / incident_or_change_id
+repository_id / ref_scope
+old_tip / old_remote_tip / expected_remote
+new_tip_or_plan / candidate_scope
+audience_evidence: users / clones / review / CI / artifact / deploy / backup
+sharing_state / observed_at / evidence_gaps
+chosen_action: revert / append-fix / merge / rebase / force-update
+approvers / notification_targets / recovery_ref_or_bundle
+retention_until / rollback_owner / verification_plan
+```
+
+其中 `old_remote_tip` 和 `expected_remote` 不是从当前分支名推导出的说明文字，而是执行前保存的完整 OID。若决策包中有 `evidence_gaps`，动作不能因为审批人“猜测应该没人使用”就转成允许改写。改写完成后追加实际 new OID、服务端响应、协作者确认、评审/CI/制品重新绑定结果和恢复引用状态，不能覆盖原来的 old 坐标。
+
+### 例外要有期限和退出条件
+
+紧急安全处置、敏感信息清理或错误发布可能需要改写共享历史，但例外应明确资源、动作、窗口和补偿控制：
+
+- 允许改写的 ref 和完整 old OID；
+- 需要冻结的 push、CI、发布和镜像入口；
+- 旧对象和外部副本的保留、撤销或重污染处置；
+- 通知协作者和重新 clone/rebase 的责任人；
+- 验证 new OID、制品、部署和审计记录的关闭条件。
+
+窗口到期后，不能因为强推已经成功就自动认为风险关闭。仍有旧 clone、缓存制品或评审记录时，状态保持 `externally-referenced` 或 `platform-unknown`，直到证据补齐。
+
 ## 改写前后的提交图
 
 Alice 已获取 B，并从 B 创建 C。Bob 把 B 改成 B' 后强制更新远程：
