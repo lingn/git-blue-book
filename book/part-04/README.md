@@ -16,9 +16,11 @@
 4. [快进与合并提交：引用移动和新对象是两种历史结果](04-fast-forward-and-merge-commits.md)
 5. [`ort` 三方合并：策略生成候选 tree，不替团队判断业务](05-three-way-merge-and-ort.md)
 6. [复杂路径冲突：先还原每一侧做了什么，再决定最终布局](06-complex-path-conflicts.md)
+7. [解决、中止与验收：冲突消失只是结构条件](07-resolve-abort-and-verify.md)
+8. [Rerere：复用编辑结果，但每次重新验证语义](08-rerere.md)
 
-后续章节将按迁移表继续落地解决/中止/验收、rerere、标签和综合练习。未落地主题仍由旧第三篇承担，不创建只有标题的占位页。
+后续章节将按迁移表继续落地标签和综合练习。未落地主题仍由旧第三篇承担，不创建只有标题的占位页。
 
 ## 实验边界
 
-当前实验验证本地分支创建、切换拒绝、分离提交恢复、upstream 配置、linked worktree 占用、merge base、快进、非快进候选、`ort`/`ours`、`AUTO_MERGE` 和多类 index stages。它不连接真实远端，不模拟托管平台分支保护、评审、合并队列或审计，也不证明业务测试和发布条件成立。
+当前实验验证本地分支、切换保护、merge base、快进、非快进候选、`ort`/`ours`、`AUTO_MERGE`、复杂 stages、abort/quit/continue、autostash 和 rerere。它不连接真实远端，不模拟托管平台分支保护、评审、合并队列或审计，也不证明业务测试和发布条件成立。

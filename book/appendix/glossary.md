@@ -29,7 +29,9 @@
 | plumbing | 直接操作对象、引用、index 等底层结构的原语；调用者承担更多前置条件与恢复责任 | [Porcelain 与 plumbing](../part-03/06-porcelain-and-plumbing.md) |
 | `ort` | Git 新版本对单分支普通合并采用的三方合并策略，负责组合 tree 和处理 rename 等机械语义 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
 | `AUTO_MERGE` | `ort` 冲突现场记录初始自动合并工作区内容的临时 tree 引用 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
-| rerere | 记录冲突 preimage 与已解决 postimage，并在相似冲突中复用编辑结果的机制 | [复杂冲突与 rerere](../part-3/10-complex-conflicts-rerere.md) |
+| rerere | 记录冲突 preimage 与已解决 postimage，并在相似冲突中复用编辑结果的机制 | [Rerere](../part-04/08-rerere.md) |
+| merge abort | 尝试恢复普通 merge 开始前的 `HEAD`、index、工作区和状态；合并前脏状态与 autostash 会扩大恢复边界 | [解决、中止与验收](../part-04/07-resolve-abort-and-verify.md) |
+| merge quit | 移除进行中 merge 的元数据，但保留当前 index 和工作区，不等同于中止 | [解决、中止与验收](../part-04/07-resolve-abort-and-verify.md) |
 | 标签 | 给特定对象的稳定名字，通常用于发布提交 | [标签](../part-3/09-tags.md) |
 | 远程仓库 | 当前仓库通过路径或网络访问的另一个仓库 | [远程模型](../part-4/01-remote-model.md) |
 | 远程跟踪分支 | 本地记录最近一次通信时远程分支位置的引用 | [远程跟踪](../part-4/05-remote-tracking.md) |

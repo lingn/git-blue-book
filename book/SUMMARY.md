@@ -39,6 +39,8 @@
   * [快进与合并提交：引用移动和新对象是两种历史结果](part-04/04-fast-forward-and-merge-commits.md)
   * [`ort` 三方合并：策略生成候选 tree，不替团队判断业务](part-04/05-three-way-merge-and-ort.md)
   * [复杂路径冲突：先还原每一侧做了什么，再决定最终布局](part-04/06-complex-path-conflicts.md)
+  * [解决、中止与验收：冲突消失只是结构条件](part-04/07-resolve-abort-and-verify.md)
+  * [Rerere：复用编辑结果，但每次重新验证语义](part-04/08-rerere.md)
 * [旧第三篇：分支、合并与冲突迁移目录](part-3/README.md)
   * [兼容入口：提交图正文已拆入 v2 第三、四篇](part-3/01-commit-graph.md)
   * [兼容入口：分支引用正文已拆入 v2 第三、四篇](part-3/02-branch-as-reference.md)

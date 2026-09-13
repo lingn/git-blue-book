@@ -21,6 +21,7 @@
 - 本地分支创建与当前 ref 隔离、可携带/冲突 tracked 修改、未跟踪覆盖拒绝、分离提交恢复、显式 upstream 和 linked worktree 分支占用；
 - 唯一 merge base、左右独有计数、三方 tree 自动组合、普通快进、`--no-commit` 快进边界、`--no-ff` 暂停、`--ff-only` 拒绝、abort、二父顺序和 content/content stages；
 - `-X ours` 与 `-s ours` 的 tree 差异、`AUTO_MERGE` 人工编辑基线、add/add 的 stage 2/3 和 modify/delete 的 stage 1/3；
+- `--autostash` 冲突后的 abort 恢复、quit 保留 index/工作区、pre-commit 拒绝 continue、修复门禁后重试和最终二父 tree 验收；
 - 首次提交、身份作用域与条件 include、工作区/index/HEAD 状态矩阵、取消暂存恢复、差异、提交失败与空提交、`.gitignore`、`.gitattributes` 和换行属性；
 - 分支、快进、分叉合并、冲突中止与解决、标签；
 - index stage 1/2/3、`AUTO_MERGE`、rerere 复用与忘记、rename/delete 和目录重命名；

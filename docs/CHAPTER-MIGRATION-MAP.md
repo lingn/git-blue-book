@@ -221,6 +221,8 @@ book/part-13/  故障排查手册
 | `book/part-04/04-fast-forward-and-merge-commits.md` | `book/part-3/06-merge-shapes.md` | 新写并承担祖先关系分流、快进、Already up to date、`--ff-only`、`--no-ff`、`--no-commit`、二父提交、squash 边界、多父合并和恢复时点 |
 | `book/part-04/05-three-way-merge-and-ort.md` | `book/part-3/07-conflict-model.md`、`book/part-3/10-complex-conflicts-rerere.md` | 新写并承担 `ort` 三方策略、strategy/option、自动结果、冲突现场、conflict style、`AUTO_MERGE`、rename 推断和业务闭包验证；index 数据模型仍引用第三篇 |
 | `book/part-04/06-complex-path-conflicts.md` | `book/part-3/10-complex-conflicts-rerere.md` | 新写并承担 add/add、modify/delete、rename/delete、rename/rename、目录迁移、file/directory、mode/symlink、binary/LFS、submodule 和逐路径结果验收 |
+| `book/part-04/07-resolve-abort-and-verify.md` | `book/part-3/08-resolve-conflict.md` | 新写并承担冲突现场采集、逐路径 stage 0、continue/hook 重试、abort/autostash、quit 接管、完成后两父/tree/测试验收和冲突报告 |
+| `book/part-04/08-rerere.md` | `book/part-3/10-complex-conflicts-rerere.md` | 新写并承担 rerere preimage/postimage、autoupdate、status/diff/remaining/forget、多状态机复用、缓存保留/共享/安全和重新验证 |
 | `book/part-06/README.md` | 原路径 | 新写；第六篇只导航已经落盘的共享历史、评审与受保护更新正文，不预列占位章 |
 | `book/part-06/01-branch-models-and-integration.md` | `book/part-4/09-review-ready.md`、`book/part-6/05-hotfix.md` | 新写并建立分支状态与整合拓扑的权威来源；承担主干、功能、发布、维护和堆叠分支的状态、责任与恢复契约 |
 | `book/part-06/02-review-state-machine.md` | `book/part-4/09-review-ready.md`、`book/part-6/09-protected-branches.md` | 新写并建立厂商无关评审请求状态机；承担功能头、目标基线、候选、审批、检查、策略版本和条件引用更新的失效与重算 |
