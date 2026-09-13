@@ -13,9 +13,11 @@ Git 的“远程”是另一个仓库，不是当前分支自动同步的云端�
 1. [远程状态模型：服务器事实、本地缓存和工作分支不能混写](01-remote-state-model.md)
 2. [Clone 初始状态：复制哪些 Git 数据，建立哪条本地工作线](02-clone-and-initial-state.md)
 3. [Remotes 与 refspec：连接目标和引用映射是两类配置](03-remotes-and-refspecs.md)
+4. [Fetch 与 FETCH_HEAD：取得远端状态，不替本地分支做决定](04-fetch-and-fetch-head.md)
+5. [Pull 是 fetch 加本地整合：两阶段必须分开诊断](05-pull-as-composition.md)
 
-后续章节按迁移表继续落地 fetch/`FETCH_HEAD`、pull、push、拒绝/原子推送、传输认证、协商/受限克隆和综合练习。旧第四篇在目标章节完成前继续承担未迁移正文。
+后续章节按迁移表继续落地 push、拒绝/原子推送、传输认证、协商/受限克隆和综合练习。旧第四篇在目标章节完成前继续承担未迁移正文。
 
 ## 实验边界
 
-当前实验验证远程状态分层、普通/no-checkout/bare/mirror/empty clone，以及 fetch/push URL、正负 refspec、remote rename/remove。它不验证 DNS、SSH/TLS、真实令牌、SSO、平台权限、隐藏 refs、分支保护、审计、复制延迟、LFS 或 CI。
+当前实验验证远程状态分层、普通/no-checkout/bare/mirror/empty clone、remote/refspec、fetch/`FETCH_HEAD`、pull 的快进/merge/rebase。它不验证 DNS、SSH/TLS、真实令牌、SSO、平台权限、隐藏 refs、分支保护、审计、复制延迟、LFS 或 CI。

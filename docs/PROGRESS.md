@@ -4,7 +4,7 @@
 
 ## 当前里程碑
 
-阶段 0 已完成。现有基础教程和实验保持可用，v2 第二至十三篇的已建目录已经落入权威路径，其余旧目录按逐章迁移表继续收束。当前共有 182 个公开页面、47 个兼容迁移页和 68 组隔离实验；正文尚未达到出版标准。
+阶段 0 已完成。现有基础教程和实验保持可用，v2 第二至十三篇的已建目录已经落入权威路径，其余旧目录按逐章迁移表继续收束。当前共有 184 个公开页面、47 个兼容迁移页和 70 组隔离实验；正文尚未达到出版标准。
 
 ## 已完成
 
@@ -168,6 +168,8 @@
 - [x] 新增远程状态隔离实验，验证 `ls-remote`、fetch、symbolic HEAD 和各层 refs 的独立副作用，实验总数增至 66 组。
 - [x] 新增 v2 第五篇 clone 初始状态与 remotes/refspec 两章，覆盖普通/特殊 clone、URL/pushURL、正负映射、rename/remove 和恢复边界。
 - [x] 新增 clone 与 remotes/refspec 两组实验，验证五类 clone 初态、非传输本地状态、分离读写 URL、排除对象和 remote 生命周期，实验总数增至 68 组。
+- [x] 新增 v2 第五篇 fetch/`FETCH_HEAD` 与 pull 组合两章，收束 remote-tracking 更新、prune/atomic、短期 fetch 记录、快进/merge/rebase 两阶段和失败分流。
+- [x] 新增 fetch 与 pull 两组隔离实验，验证 `FETCH_HEAD` 模式、强制 tracking、失败保留旧状态、ff-only 拒绝、二父 merge 和 rebase 重建，实验总数增至 70 组。
 - [x] 将旧第四篇远程模型、clone 和 remote 配置三页迁入 v2 第五篇，更新命令地图、术语和过渡目录，旧 URL 保留兼容入口。
 
 - [x] 扩写受保护分支章节，建立平台控制面与 Git 引用更新的分层模型。
@@ -368,6 +370,7 @@
 | 2026-09-14 | Write 中文标点门禁、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 旧第三篇标签、综合练习和目录全部迁为兼容入口后整库回归，178 个公开页面、44 个兼容迁移页与 65 组隔离实验正常 |
 | 2026-09-14 | Write 中文标点门禁、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第五篇入口、远程状态模型章及实验接入后整库回归，180 个公开页面、44 个兼容迁移页与 66 组隔离实验正常 |
 | 2026-09-14 | Write 中文标点门禁、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第五篇 clone 初始状态、remotes/refspec 两章及实验接入后整库回归，182 个公开页面、44 个兼容迁移页与 68 组隔离实验正常 |
+| 2026-09-14 | Write 中文标点门禁、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第五篇 fetch/`FETCH_HEAD`、pull 组合两章及实验接入后整库回归，184 个公开页面、47 个兼容迁移页与 70 组隔离实验正常 |
 | 2026-09-14 | Write 中文标点门禁、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第五篇 clone 初始状态、remotes/refspec 两章及实验接入后整库回归，182 个公开页面、44 个兼容迁移页与 68 组隔离实验正常 |
 | 2026-09-04 | `./scripts/verify-all.sh` | 通过 | 提交改写与远端历史重写场景接入整库回归，141 个公开页面、7 个兼容迁移页与 54 组隔离实验正常 |
 | 2026-09-04 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 新增第五篇正文、索引、实验说明和验收规则通过中文标点、链接覆盖与差异空白检查 |
