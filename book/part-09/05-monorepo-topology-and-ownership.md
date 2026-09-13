@@ -66,6 +66,28 @@ directly changed components
 
 反向闭包要有终止和循环处理，组件重命名、条件依赖、平台矩阵和可选插件不能靠一条 glob 规则解决。路径过滤只适合在依赖图完整、规则经过回归、未知边采用保守策略时减少检查。否则“检查被跳过”本身就是供应链和发布风险。
 
+### 闭包结果要绑定候选并允许停在未知
+
+一次变更影响分析可以按下面的状态记录：
+
+```text
+GRAPH_SNAPSHOT
+  -> CLOSURE_COMPUTED
+  -> OWNERSHIP_RESOLVED
+  -> RELEASE_BOUND
+  -> RECOVERY_BOUND
+```
+
+| 状态 | 进入条件 | 必须保存 | 不能继续的情况 |
+| --- | --- | --- | --- |
+| `GRAPH_SNAPSHOT` | 构建图、版本、来源和候选 OID 已固定 | graph digest、candidate/tree、解析器版本 | 图来源不明或候选变化 |
+| `CLOSURE_COMPUTED` | 直接组件和反向依赖闭包计算完成，循环已标记 | changed paths、组件集合、未解析边和计算时间 | 依赖边缺失、条件依赖未知或路径解析失败 |
+| `OWNERSHIP_RESOLVED` | 每个受影响组件、共享输入和风险边界都有有效 owner | owner snapshot、角色、有效期、审批范围 | owner 缺失、过期或只命中目录未命中运行责任 |
+| `RELEASE_BOUND` | 受影响组件映射到明确 release unit、制品和兼容窗口 | release unit、候选/制品摘要、部署顺序和混合版本窗口 | 组件漏出发布单元或协议兼容性未知 |
+| `RECOVERY_BOUND` | 每个发布单元有回退/恢复责任、备份和验证入口 | rollback class、恢复点、owner、RPO/RTO 和验收命令 | 无法独立恢复、恢复来源不可信或外部依赖未登记 |
+
+闭包计算必须以候选 OID 和图摘要为输入，不接受“当前分支最新状态”作为隐式替代。图缺边时结果是 `inconclusive`，默认扩大检查集并由 owner 补图；不能因为输出集合为空就进入 `OWNERSHIP_RESOLVED`。候选、图、owner、release unit 或恢复点任一变化，都要生成新的 attempt，旧的闭包和审批记录保留为历史。
+
 ### 生成文件和配置是图中的节点
 
 生成器、schema、接口描述、版本文件、容器定义和 CI 配置经常位于独立目录，却影响很多组件。它们要进入图的输入节点，并在变更时触发所有消费者。将生成文件提交到 Git 也不能省略生成器版本和输入校验；提交的只是一个结果快照。

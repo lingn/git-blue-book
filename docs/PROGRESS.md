@@ -274,6 +274,7 @@
 - [x] 扩写第十篇秘密扫描与归档导出章节，增加 `CANDIDATE_FIXED`、`ARCHIVE_GENERATED`、`CONTENT_VALIDATED`、`MANIFEST_SEALED`、`PUBLISHED`、`REVOKED/RETIRED` 归档生命周期和重新生成失效规则。
 - [x] 扩写第十二篇审计日志与证据留存章节，增加 `PLANNED`、`COLLECTING`、`COMPLETE/PARTIAL/INCONCLUSIVE`、`FROZEN`、`EXPIRED`、`DESTROYED` 留存状态及 legal hold、manifest 和销毁证据边界。
 - [x] 扩写第十二篇仓库健康与容量维护章节，增加健康快照与维护任务的联合状态模型，明确 `WARN/FAIL/INCONCLUSIVE` 的动作边界、快照过期和维护阻断条件。
+- [x] 扩写第九篇 Monorepo 拓扑治理章节，增加 `GRAPH_SNAPSHOT`、`CLOSURE_COMPUTED`、`OWNERSHIP_RESOLVED`、`RELEASE_BOUND`、`RECOVERY_BOUND` 候选级闭包状态和图缺边/owner 缺失/发布单元不完整的停止条件。
 - [x] 扩展第八篇部署与回退实验，给 rollout 记录加入 generation 条件，验证金丝雀暂停后过期继续请求被拒绝且状态、暂停原因和记录摘要保持不变。
 - [x] 扩写第八篇数据库迁移章节，增加 `DESIGNED`、`EXPAND_APPLIED`、`BACKFILLING`、`BACKFILL_VERIFIED`、`READ_SWITCHED`、`CONTRACT_ELIGIBLE`、`CONTRACTED` 及暂停/向前修复状态，明确批次、schema、checkpoint、兼容矩阵和不可逆边界。
 - [x] 扩写第八篇事故到发布综合章节，增加各状态的进入证据、回退触发条件、attempt/blocked_reason 记录和不能提前宣称的结论，防止以局部指标关闭事故。
@@ -491,6 +492,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-secret-scanning-and-exports.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇归档候选、内容扫描、manifest sealing、发布与撤销状态扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-audit-evidence-retention.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇审计留存状态、采集完整性、legal hold 和销毁证据扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-repository-health-capacity.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇健康快照与维护任务联合状态、容量/恢复阻断条件扩写通过专项实验与文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-monorepo-topology.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第九篇 Monorepo 变更闭包、owner、release unit 和恢复责任状态扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-deploy-rollback.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第八篇部署 generation 条件更新、过期继续请求和暂停状态保留扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-database-migrations.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第八篇数据库迁移批次状态、schema/回填/切换/contract 证据与向前修复边界扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-incident-to-release.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第八篇事故到发布状态门禁、回退条件和多组件验证边界扩写通过专项实验与文档门禁 |
