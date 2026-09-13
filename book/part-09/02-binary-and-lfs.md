@@ -161,6 +161,50 @@ git status --porcelain=v1
 
 对构建真正使用的每个关键文件，还应把以下证据写入制品清单：候选 commit OID、仓库路径、pointer blob 的 Git OID、pointer 中的 payload SHA-256/size、实际水合字节的 SHA-256/size、Git/Git LFS 版本和 LFS endpoint 身份。若实际摘要或长度与 pointer 不符，立即停止构建并隔离 cache；不要重新上传当前工作区字节“修复”一个来源不明的对象。
 
+## 用四个摘要字段判断 LFS 状态
+
+同一个路径至少有四个容易被混淆的身份：
+
+| 字段 | 如何取得 | 能证明什么 | 不能证明什么 |
+| --- | --- | --- | --- |
+| `candidate_commit` | `git rev-parse <candidate>^{commit}` | 构建使用哪一个 Git 提交 | 提交中的 pointer 是否可水合 |
+| `pointer_blob` | `git rev-parse <candidate>:<path>` | 提交中保存的 pointer blob 身份 | 原始二进制内容身份 |
+| `payload_oid` 与 `size` | 解析 pointer 的 `oid sha256`、`size` | 该版本声明的 LFS 字节摘要和长度 | 当前 cache 或远端一定有对象 |
+| `hydrated_bytes` | 对工作区实际文件计算 SHA-256 和长度 | 当前工作区拿到的字节 | 这些字节来自可信 endpoint 或正确候选 |
+
+四者必须分开存储，字段名不要都叫 `file_sha`。Git 仓库切换到 SHA-256 格式时，`pointer_blob` 的算法和长度可能变化；LFS pointer 的 `oid sha256` 仍然针对原始 payload。只有把路径、候选 commit、pointer 文本、payload 摘要和获取主体放在同一条记录里，CI 才能判断一次水合是否真的对应候选。
+
+可以用下面的状态矩阵处理常见结果：
+
+| Git pointer | 本地 payload | 工作区文件 | 结论 | 下一步 |
+| --- | --- | --- | --- | --- |
+| 缺失或无法解析 | 任意 | 任意 | Git 候选输入错误 | 停止构建，核对 commit、tree 和 attributes |
+| 合法 | 不存在 | pointer 或缺失 | 远端对象尚未取得 | 在允许网络和凭据后按同一 payload OID fetch |
+| 合法 | 存在且摘要不符 | 任意 | cache 损坏或指向错误 | 隔离 cache，从可信来源重新下载，不覆盖原证据 |
+| 合法 | 摘要匹配 | 仍是 pointer | 尚未水合，或显式跳过 smudge | 执行受控 checkout，之后重新核对工作区摘要 |
+| 合法 | 摘要匹配 | 摘要不符 pointer | 本地修改、filter 配置或错误路径 | 停止提交和构建，比较 `status`、attributes 与实际字节 |
+| 合法 | 摘要匹配 | 摘要匹配 | 当前 payload 与 pointer 一致 | 仍需检查 endpoint 身份、候选绑定和构建清单 |
+
+“本地 payload 存在”只能说明 cache 中有一份相同摘要的对象。它可能来自旧仓库、另一个 endpoint、未经验证的 cache 导入或攻击者写入的目录。CI 复用 cache 时，至少把仓库/endpoint 边界、获取时间、客户端版本和验证结果写入 provenance；无法追溯来源就按缺失处理。
+
+## 把一致性检查放在构建之前
+
+一个不依赖平台 UI 的门禁可以按下面顺序组织，具体 LFS 命令以安装版本手册为准：
+
+~~~text
+1. 固定 candidate commit 和目标路径清单
+2. 从该 commit 读取 pointer blob，并解析 payload OID/size
+3. 在隔离 cache 中按 OID 取得 payload
+4. 对取得字节计算 SHA-256/size，和 pointer 比较
+5. 以同一 candidate checkout，执行受控水合
+6. 对工作区文件再次计算摘要，确认没有本地改写
+7. 把四个摘要字段、endpoint、主体、版本和时间写进构建 manifest
+~~~
+
+第 3 步的网络失败、权限拒绝、对象不存在和摘要不匹配应分别记录，不能都转成“重试”。重试必须使用同一 candidate、payload OID 和受控 endpoint；如果候选已经变化，先生成新的清单。第 6 步发现工作区修改时，不能用 `git add` 把字节重新写成一个新 pointer 来掩盖问题。
+
+备份验收也要从 pointer 清单开始，而不是只比较 Git 仓库大小。对固定 refs 枚举所有可达 pointer，统计 payload OID/size，随机抽取或按风险等级从空 cache 恢复，再验证字节摘要。备份只保存 pointer 而没有 payload，Git `fsck` 仍可能通过，但二进制恢复已经失败；这两个结果必须在报告中分开。
+
 失败要按层分流：
 
 - `git rev-parse` 失败：Git 候选未取得或事件传入错误，不是 LFS 故障；

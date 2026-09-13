@@ -182,6 +182,7 @@
 - [x] 实质扩写第六篇评审状态机，补充证据键、事件幂等/乱序、`stale` 与 `inconclusive` 分流、评论/审批/检查时间线和本地 Git 与平台控制面边界。
 - [x] 实质扩写第六篇 merge/squash/rebase merge 章节，补充 tree 相同与提交证据差异、回滚单位、bisect 粒度、最终对象签名和对象链验收顺序。
 - [x] 实质扩写第九篇性能基线，补充成对样本、冷热缓存分组、长尾统计、计时器前置条件、性能护栏和错误归因分流。
+- [x] 实质扩写第九篇二进制与 Git LFS，补充 candidate/pointer/payload/水合字节四字段一致性矩阵、CI 水合门禁、cache provenance 和备份恢复分流。
 
 - [x] 扩写受保护分支章节，建立平台控制面与 Git 引用更新的分层模型。
 - [x] 为平台事实建立版本与核对登记表。
@@ -401,6 +402,8 @@
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第六篇合并历史后果扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第九篇性能基线测量协议与错误归因扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第九篇性能基线扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第九篇二进制与 Git LFS 一致性矩阵和 CI/备份边界扩写通过文档门禁，207 个公开页面、75 个兼容迁移页 |
+| 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第九篇 LFS 正文扩写后的整库回归，207 个公开页面、75 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 
