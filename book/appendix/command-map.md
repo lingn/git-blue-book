@@ -42,8 +42,8 @@
 
 | 目标 | 命令 | 详解 |
 | --- | --- | --- |
-| 复制仓库 | `git clone` | [克隆](../part-4/02-clone.md) |
-| 管理远程地址 | `git remote` | [远程配置](../part-4/03-remote.md) |
+| 复制仓库并验收初始状态 | `git clone` | [Clone 初始状态](../part-05/02-clone-and-initial-state.md) |
+| 管理远程地址和引用映射 | `git remote`、fetch/push refspec | [Remotes 与 refspec](../part-05/03-remotes-and-refspecs.md) |
 | 只获取远程历史 | `git fetch` | [获取](../part-4/04-fetch.md) |
 | 获取并整合 | `git pull` | [拉取](../part-4/06-pull.md) |
 | 发布提交或标签 | `git push` | [推送](../part-4/07-push.md) |
