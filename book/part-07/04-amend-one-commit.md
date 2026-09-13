@@ -63,6 +63,25 @@ git status --short
 
 如果补充内容是另一个需求，不要为了“一条提交看起来整齐”而 amend。直接创建下一条提交，意图边界比提交数量更重要。
 
+### amend 的前后对账
+
+一次 amend 至少保存下面的记录：
+
+```text
+old_tip: amend 前完整 commit OID
+old_tree: amend 前 HEAD^{tree}
+old_parent: amend 前父提交 OID
+recovery_ref: 指向 old_tip 的命名引用
+index_scope: 本次允许并入的路径清单
+new_tip: amend 后完整 commit OID
+new_tree: amend 后 HEAD^{tree}
+shared_state: local-only / remote-published / externally-referenced
+```
+
+内容 amend 的验收要证明新 tree 包含预期路径，父提交仍符合最近提交的范围；说明 amend 即使 tree 不变，也要记录新 OID 和新说明。两者都要确认工作区与 index 的剩余状态，不能只用“提交成功”判断没有混入其他任务。
+
+如果 `old_tip` 已经被远端、评审、CI、制品或其他 worktree 使用，`recovery_ref` 只能保留旧坐标，不能授权覆盖共享 ref。应转到共享历史政策、显式租约或 revert 章节。
+
 ## 已经推送，又要补代码并保持一条提交
 
 这只适合明确允许改写的个人评审分支。主线、发布分支和多人共同开发分支默认追加修正或 revert。确认允许改写后，先按本章审查 index 并完成 amend，再按[显式租约](10-explicit-force-lease.md)记录服务器基线、条件更新远端。租约被拒绝时停止推送，不升级为无条件 `--force`。
