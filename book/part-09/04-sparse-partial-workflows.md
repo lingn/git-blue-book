@@ -104,6 +104,69 @@ git cat-file -e '<BLOB-OID>'
 
 发布、取证和灾备任务通常应先从完整 clone 或完整 bundle 建立基线。若必须使用 partial clone，构建清单要列出 filter、promisor identity、实际请求对象、网络状态和离线恢复路径。不得把“第一次构建没有触发缺失对象”写成完整来源证明。
 
+## 恢复顺序应从引用缺口向工作区展开
+
+受限状态出问题时，不要直接执行 `sparse-checkout disable`、`fetch --unshallow` 或重新 `add -A`。先把缺口分层，保留原副本，再在新副本中恢复：
+
+| 层 | 先确认的事实 | 恢复动作 | 恢复后必须重算 |
+| --- | --- | --- | --- |
+| 引用 | 目标 ref 是否已取得，refspec 是否排除了候选 | 修正映射或显式 fetch 同一 ref | 可见 refs、目标 OID、FETCH_HEAD |
+| 历史 | shallow boundary 是否阻断共同祖先或版本范围 | `fetch --deepen` 或 `--unshallow` | merge-base、范围、tag/签名链 |
+| 对象 | 所需 commit/tree/blob 是否由 promisor 提供 | 在线按 OID 取得，或换完整 clone | 缺失对象清单、对象摘要、输入闭包 |
+| 工作区 | sparse 规则、index 标志和实际路径是否满足构建 | 在一次性 worktree 扩大范围或关闭 sparse | candidate tree、path 清单、构建 manifest |
+
+四层的顺序有依赖关系。没有正确引用，就无法确定候选；没有足够历史，就可能算错依赖闭包；没有对象，就不能读取 tree 或文件；工作区最后才是把已经证明需要的路径展开。恢复工作区不能反过来修复 ref、历史或对象缺口。
+
+每一层都要区分 `pass`、`fail` 和 `inconclusive`：
+
+~~~text
+pass：输入、对象和规则都有证据，结果可重现
+fail：某个可定位条件不满足，按该层修复后重试
+inconclusive：查询、权限、序列或来源缺失，不能判断是否满足
+~~~
+
+例如，`git show <candidate>:path` 因 promisor 网络超时返回失败，这是对象层 `fail`；远端是否存在该对象尚未查清，属于 `inconclusive`，不能直接标记为对象损坏。sparse 规则没有包含生成器目录而构建“成功”，如果构建没有实际读取该目录，结果也不能升级为 `pass`，应按输入闭包缺证据处理。
+
+## 在新副本恢复，原副本只作证据
+
+受限 clone 的原地修改会改变 `.git/shallow`、promisor 对象、index、sparse 规则和缓存，之后很难判断问题发生前缺了什么。事故、发布和取证场景至少保留：
+
+~~~text
+restricted_original/   原始引用、边界、配置和错误
+recovery_full/         从可信 OID 恢复的完整副本
+candidate_manifest     两个副本共同的候选和路径清单
+recovery_actions       每次 fetch、checkout、规则变化和失败
+~~~
+
+在原副本中只做不改变状态的采集，例如 `rev-parse`、`for-each-ref`、`cat-file --batch-check` 和读取 sparse 配置。需要 deepen、按需取 blob 或展开工作区时，在 `recovery_full` 或一次性 worktree 执行。恢复副本得到新对象后，不要把它们混入原始性能基线或事故快照。
+
+发布任务若使用受限 clone，建议先创建完整基线，再按工作负载建立受限副本并比较：
+
+~~~bash
+git clone "<REMOTE>" full-baseline
+git clone --filter=blob:none --sparse "<REMOTE>" restricted-candidate
+git -C full-baseline rev-parse --verify '<CANDIDATE>^{commit}'
+git -C restricted-candidate rev-parse --verify '<CANDIDATE>^{commit}'
+~~~
+
+两个目录必须是新建且互不共享可变 cache 的副本，`<REMOTE>` 和 `<CANDIDATE>` 要替换为已核对值。命令只建立和比较候选入口，不证明两个副本的 refs、历史、对象或工作区已经等价。差异应写进 manifest，不能以“HEAD 相同”省略受限状态。
+
+## 输入闭包是受限构建的退出条件
+
+受限构建在开始前写出 required inputs：
+
+~~~text
+candidate_commit / target_commit
+required_refs / required_ancestors
+required_paths / generated_inputs
+required_blobs / promisor_requests
+LFS payloads / submodule gitlinks
+toolchain / dependency lock / policy version
+offline fallback / recovery source
+~~~
+
+运行中若出现未列出的对象请求、范围外路径读取、未声明的 submodule 或生成器，当前结果应标为 `inconclusive`，而不是偷偷扩大范围后继续给出绿色结论。扩大范围后要增加新的 attempt、manifest 和摘要，不能覆盖原 attempt。这样才能区分“受限输入足够”和“工具碰巧没有走到缺失路径”。
+
 ## Shallow clone 影响祖先关系，不只是少下载几次提交
 
 浅克隆的边界会影响 `merge-base`、变更范围、版本生成、签名链、`git describe`、cherry-pick 上下文和发布候选。先记录：
