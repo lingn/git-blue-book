@@ -25,6 +25,8 @@
 - 轻量/附注标签类型与 peel、分支/标签短名碰撞、显式 tag push、同名拒绝、条件恢复和远端删除边界；
 - 功能/热修复分叉、ff-only 拒绝、15/10/30 三方配置、第三种结果、二父整合、main 快进、双附注标签和已合入分支清理；
 - server ref、`ls-remote` 响应、remote-tracking ref、本地分支、upstream、`FETCH_HEAD` 与 remote symbolic `HEAD` 的独立变化；
+- 普通/no-checkout/bare/mirror/empty clone 初态，以及源 local config、hook 和未跟踪文件不随普通 clone 传输；
+- fetch URL/pushURL 分离、正负 refspec、排除分支独有对象、显式 push 目标、remote rename/remove 与服务器保留边界；
 - 首次提交、身份作用域与条件 include、工作区/index/HEAD 状态矩阵、取消暂存恢复、差异、提交失败与空提交、`.gitignore`、`.gitattributes` 和换行属性；
 - 分支、快进、分叉合并、冲突中止与解决、标签；
 - index stage 1/2/3、`AUTO_MERGE`、rerere 复用与忘记、rename/delete 和目录重命名；

@@ -45,6 +45,8 @@
   * [综合练习：功能开发期间插入主线热修复](part-04/exercise.md)
 * [第五篇（v2）：远程仓库、协议与认证](part-05/README.md)
   * [远程状态模型：服务器事实、本地缓存和工作分支不能混写](part-05/01-remote-state-model.md)
+  * [Clone 初始状态：复制哪些 Git 数据，建立哪条本地工作线](part-05/02-clone-and-initial-state.md)
+  * [Remotes 与 refspec：连接目标和引用映射是两类配置](part-05/03-remotes-and-refspecs.md)
 * [兼容入口：旧第三篇正文已迁入 v2 第三、四篇](part-3/README.md)
   * [兼容入口：提交图正文已拆入 v2 第三、四篇](part-3/01-commit-graph.md)
   * [兼容入口：分支引用正文已拆入 v2 第三、四篇](part-3/02-branch-as-reference.md)

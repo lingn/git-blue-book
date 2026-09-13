@@ -227,6 +227,8 @@ book/part-13/  故障排查手册
 | `book/part-04/exercise.md` | `book/part-3/exercise.md` | 新写并贯通功能分支、主线热修复、附注 tag、分叉、ff-only 拒绝、三方冲突、第三种结果、二父提交、main 快进和安全分支清理 |
 | `book/part-05/README.md` | `book/part-4/README.md` | 新写；建立远程数据面、协议、认证与平台控制面分层入口，只导航已落盘章节 |
 | `book/part-05/01-remote-state-model.md` | `book/part-4/01-remote-model.md`、`book/part-4/05-remote-tracking.md` | 新写并承担 server ref、查询响应、remote-tracking ref、本地分支、upstream、`FETCH_HEAD`、symbolic HEAD 与平台控制面六层模型，以及 clone/fetch/pull/push 副作用总览 |
+| `book/part-05/02-clone-and-initial-state.md` | `book/part-4/02-clone.md` | 新写并承担普通、显式 branch/single-branch、empty、no-checkout、bare、mirror、本地复制优化、非 Git 状态缺口、外部依赖、失败目录和 clone 后验收 |
+| `book/part-05/03-remotes-and-refspecs.md` | `book/part-4/03-remote.md`、`book/part-4/14-refspec-partial-clone.md` | 新写并承担 remote name、fetch URL/pushURL、正/负 fetch refspec、push refspec、rename/remove、prune、多远程、mirror 和 URL 迁移；受限 clone 留给第九章 |
 | `book/part-06/README.md` | 原路径 | 新写；第六篇只导航已经落盘的共享历史、评审与受保护更新正文，不预列占位章 |
 | `book/part-06/01-branch-models-and-integration.md` | `book/part-4/09-review-ready.md`、`book/part-6/05-hotfix.md` | 新写并建立分支状态与整合拓扑的权威来源；承担主干、功能、发布、维护和堆叠分支的状态、责任与恢复契约 |
 | `book/part-06/02-review-state-machine.md` | `book/part-4/09-review-ready.md`、`book/part-6/09-protected-branches.md` | 新写并建立厂商无关评审请求状态机；承担功能头、目标基线、候选、审批、检查、策略版本和条件引用更新的失效与重算 |
