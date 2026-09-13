@@ -21,6 +21,44 @@
 
 后面还要继续问：流水线检出的是否正是该对象，构建输入是否完整，制品摘要是否和部署记录一致。签名是证据链中的一段，不是整条链。
 
+## 验证结果还需要一个时间和策略快照
+
+签名验证不是一个脱离环境的永久布尔值。相同对象在不同时间、不同信任库和不同撤销列表下，可能得到不同的组织授权结论。密码学签名本身可以保持不变，但 key 是否过期、是否撤销、principal 是否仍属于组织，以及策略是否允许该动作，都会随时间变化。
+
+一次可复核的签名证据至少保存：
+
+~~~text
+object_kind: commit | tag
+object_oid: <完整 OID>
+tag_target_oid: <tag 才有>
+signature_format: openpgp | ssh | x509
+key_fingerprint: <稳定指纹>
+principal: <策略映射主体>
+cryptographic_result: good | bad | missing
+trust_result: trusted | unknown | revoked | expired
+action: verify | merge | release | deploy
+policy_version / policy_digest:
+key_status_source:
+verified_at / relevant_signature_time:
+verifier_identity / tool_versions:
+candidate_oid / artifact_digest:
+~~~
+
+`verified_at` 是验证器实际运行时间，`relevant_signature_time` 通常是签名或证书声明的时间；两者不能互换。保存一行“Good signature”而没有策略版本、key 状态来源和候选 OID，无法在密钥轮换或事故调查后重现当时的决定。
+
+可以把结果拆成四种，而不是只保留通过/失败：
+
+| 结果 | 含义 | 是否能进入发布门禁 |
+| --- | --- | --- |
+| `cryptographically-valid` | 签名与对象 payload 和公钥匹配 | 还需要身份、时间和动作授权 |
+| `trusted-at-time` | 在指定时间和策略版本中，key 映射到允许主体 | 可以作为该动作的一项证据 |
+| `revoked-or-expired` | key/证书在相关时间不再可用，或策略禁止继续使用 | 需要按组织规则判断历史签名，不能自动通过 |
+| `inconclusive` | 时间、撤销信息、策略或主体来源缺失 | 不得作为保护性门禁的成功结果 |
+
+撤销和过期有时间语义。某个 key 在今天被撤销，不必然说明它昨天签出的对象在组织政策下无效；反过来，签名时 key 已撤销，也不能因为现在验证器仍能读到公钥就自动接受。组织必须定义是否依赖可信时间戳、证书有效期、撤销生效时间和离职时间，并把这套规则的版本写入证据。Git `verify-commit` 或 `verify-tag` 本身不会替组织做完整的历史授权判断。
+
+签名证据还要绑定最终对象。merge、squash、rebase、tag retarget 或候选重建都会产生新的 OID；来源 commit 的有效签名不能替代最终候选或发布 tag 的验证。构建清单中的 candidate、签名记录和 artifact digest 不一致时，发布状态应为 `inconclusive` 或 `blocked`，不能按相邻字段推断“仍然是同一份代码”。
+
 ### 历史身份、传输身份和签名身份互不替代
 
 一次推送可能同时出现多种身份：
