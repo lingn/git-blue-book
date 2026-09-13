@@ -34,6 +34,49 @@
 
 普通开发者可自行处理一个尚未推送的误删分支；疑似主机入侵、平台管理员滥用或法律保全不能沿用同一权限。若采集行为会触发恶意 filter、访问生产凭据、改变远端或违反保留要求，先升级事件等级。
 
+## 采集包有三种完整性状态
+
+一组文件已经写入证据目录，不代表现场已经被完整保全。建议把采集包状态分成：
+
+| 状态 | 条件 | 可以支持的结论 | 下一步 |
+| --- | --- | --- | --- |
+| `complete-for-scope` | 声明的 Git、平台和运行输入均成功采集，命令、退出码和摘要齐全 | 可以在声明范围内重放观察 | 进入分析或从包派生恢复副本 |
+| `partial` | 某些输出缺失，但缺口明确且不影响当前问题的关键不变量 | 只能支持已采集部分的事实 | 补采缺失层，不能扩展结论范围 |
+| `inconclusive` | 时间点不一致、活跃 writer 未隔离、权限/快照失败或来源无法确认 | 不能判断现场原始状态 | 继续冻结、升级权限或重新获取一致快照 |
+
+`complete-for-scope` 不是“仓库绝对完整”。例如 Git refs 和对象已经保存，但平台评审、LFS payload 或运行主机未纳入范围，报告仍要写出这些 `not-scanned` 输入。任何一个关键层的失败都不能被空文件、命令重试或“当前状态看起来正常”覆盖。
+
+采集包的 manifest 至少记录：
+
+~~~text
+incident_id / package_id
+source_worktree / git_dir / common_dir
+filesystem_snapshot_id / snapshot_start / snapshot_end
+Git_version / collector_version / principal
+declared_scope / omitted_inputs
+command / exit_code / stdout / stderr digest
+raw_file_manifest / logical_snapshot_manifest
+platform_event_cursor / query_window / permission
+status: complete-for-scope | partial | inconclusive
+derived_copies / access_log / retention
+~~~
+
+逻辑快照中的 refs、index、reflog 和 `fsck` 输出不能替代原始 pack、index、锁文件和文件时间；文件系统快照也不能替代平台事件、LFS 或内存证据。两类证据要在 manifest 中分别列出，不能把派生的 `status` 输出当作原始现场字节。
+
+### 先做低副作用采集，再做有写入的检查
+
+采集顺序应先从版本、布局、refs、index、进行中操作和配置开始，再决定是否需要 `fsck --full`、对象复制或平台查询。每一步标出副作用：
+
+~~~text
+read-only-ish: rev-parse、for-each-ref、reflog、ls-files、配置导出
+may-write: status 刷新 index、fetch、filter/process、fsck --lost-found
+destructive/high-risk: reset、abort、gc、repack、prune、clean、force push
+~~~
+
+“只读-ish”表示相对低副作用，不是安全沙盒。`status` 仍可能刷新 index，读取 partial/LFS 对象可能联网，配置或 attributes 可能选择外部程序。若命令触发了未声明的 writer、网络请求或生成文件，暂停当前包，将状态改为 `inconclusive`，保存原始输出，再在隔离副本重试。
+
+采集器应为每个动作保留 `before` 和 `after` 的最小状态摘要。即使预期“不改变现场”，也要核对 HEAD、refs、index 摘要、工作区状态和对象统计；发现变化时不要继续把后续结果合并进原始快照。
+
 ## 四层证据必须分开
 
 ### 1. 文件系统现场
