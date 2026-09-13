@@ -2,7 +2,7 @@
 
 一次 git push 失败，可能发生在连接远端之前，也可能已经通过认证却被仓库策略拒绝。把所有错误都归结为“权限不够”，常见后果是扩大令牌权限、关闭主机校验，或者用 --force 覆盖别人已经发布的历史。
 
-本章把一次写入请求拆成可观察的层：远端 URL 与传输、服务器身份、客户端认证、仓库授权、对象/引用更新规则，以及托管平台的评审和策略控制面。排障先确定请求到达了哪一层，再选择不会扩大影响的下一步。传输和认证的完整机制见《远程 URL、传输协议与认证边界》，非快进整合见《推送为什么会被拒绝》，保护规则见《受保护分支》。
+本章把一次写入请求拆成可观察的层：远端 URL 与传输、服务器身份、客户端认证、仓库授权、对象/引用更新规则，以及托管平台的评审和策略控制面。排障先确定请求到达了哪一层，再选择不会扩大影响的下一步。传输和认证的完整机制见[传输与认证](../part-05/08-transport-and-authentication.md)，非快进、原子更新和 receive 规则见[Push 拒绝与原子更新](../part-05/07-rejection-atomic-push-and-options.md)，保护规则见[受保护引用与例外](../part-06/08-protected-refs-and-exceptions.md)。
 
 本章以 Git 2.49.0 和本地 bare 仓库实验为基线。SSH 主机密钥、HTTPS TLS、令牌、SSO、平台权限、评审检查和服务端审计必须在获批目标环境核对；本地 hook 只能证明接收端拒绝某个 ref 更新，不能冒充任何托管平台。
 
@@ -18,6 +18,36 @@
 | 平台控制面 | 评审、检查、规则、配额或策略是否允许发布 | 平台事件、规则版本、检查绑定提交、审计记录 | 本地 bare hook 的结果就是平台结果 |
 
 错误文案可能隐藏仓库存在性，或把多层失败合并成一个状态码。结论要写成“在某时间、某 endpoint、某身份上下文、某动作上观察到 X”，不要写成“用户没有权限”这种未分层归因。
+
+## 一次尝试要有 before/after 记录
+
+排障记录必须绑定同一次 push，不能把上午的本地 `HEAD`、下午的远端 OID 和另一个账号的错误拼成一条结论。最小记录如下：
+
+```text
+attempt_id / observed_at
+repository_id / remote_name / sanitized_endpoint
+client_worktree / local_branch / local_head
+source_ref / destination_ref
+server_old_oid / proposed_new_oid
+transport_and_credential_context_id
+command_shape / options_without_secrets
+client_exit_status / stderr_digest
+server_result: accepted | denied | failed | partial | unknown
+server_after_oid / request_or_audit_id
+failure_layer / confidence / evidence_gaps
+```
+
+`server_old_oid` 应来自本次操作前的服务端查询或平台事件，不是未经 fetch 的 `origin/main`；`server_after_oid` 在失败和成功后都要重新核对。客户端退出非零可能发生在服务器之前，也可能是服务端拒绝；退出为零也可能只说明某个 ref 成功，而多 ref push 的其他更新失败或发布链尚未开始。
+
+| 结果 | 证据 | 下一步 |
+| --- | --- | --- |
+| `not-reached` | DNS、连接、TLS/SSH 主机身份失败，没有服务端 request/audit 事件 | 修复 endpoint 或信任链，重试只读探针 |
+| `denied` | 服务端明确拒绝认证、授权、祖先关系或策略，目标 ref 未改变 | 按命中层修复，不扩大权限或强推 |
+| `accepted` | 服务端确认目标 ref 从 old 条件更新到 new，查询后的 OID 一致 | 继续核对评审、CI、制品和部署，不提前宣布发布完成 |
+| `partial` | 多 ref/外部动作只有部分成功 | 固定每个 ref 的实际结果，停止重放整个命令 |
+| `unknown` | 连接中断、审计缺失、查询权限不足或服务端状态不可见 | 保持写入暂停，补采服务器事实，不能按成功或拒绝处理 |
+
+若查询与 push 之间服务器又发生更新，before/after 记录应展示这个竞态。不要修改 `server_old_oid` 来迎合当前状态；创建新 attempt，并保留旧尝试为什么失效。
 
 ## 第一轮只做不会写远端的确认
 
@@ -80,7 +110,7 @@ origin/main 是上一次 fetch 保存的本地值，缺失可能代表尚未 fet
     git log --left-right --graph --oneline refs/remotes/origin/main...HEAD
     git merge-base --is-ancestor refs/remotes/origin/main HEAD
 
-这里的 fetch 是有副作用的诊断动作：它会写对象、远程跟踪 ref 和 FETCH_HEAD，所以必须保存 fetch 前快照。若 merge-base 返回 0，当前 HEAD 至少包含 fetch 后的远端 tip，可按团队规则普通推送；返回 1 表示存在分叉，不能把它解释成认证失败。
+这里的 fetch 是有副作用的诊断动作：它会写对象、远程跟踪引用和 FETCH_HEAD，所以必须保存 fetch 前快照。若 merge-base 返回 0，当前 HEAD 至少包含 fetch 后的远端 tip，可按团队规则普通推送；返回 1 表示存在分叉，不能把它解释成认证失败。
 
 ### 选择 merge、rebase 或停止
 
@@ -99,7 +129,7 @@ origin/main 是上一次 fetch 保存的本地值，缺失可能代表尚未 fet
     expected_remote='FULL-OID-SAVED-BEFORE-REWRITE'
     git push --force-with-lease=refs/heads/topic:"$expected_remote" origin HEAD:refs/heads/topic
 
-成功会更新服务器 topic，失败不会接受该 ref 更新；失败时重新获取并比较新旧 OID，不要改成无条件 --force。完整租约竞态见第五篇对应章节。
+成功会更新服务器 topic，失败不会接受该 ref 更新；失败时重新获取并比较新旧 OID，不要改成无条件 --force。完整租约竞态见[显式租约](../part-07/10-explicit-force-lease.md)。
 
 ## 保护规则/接收 hook 拒绝：请求已到达写入层
 
@@ -166,10 +196,10 @@ push 失败先问“请求到达哪一层”：连接、服务器身份、客户
 
 ## 资料
 
-- git-push
-- git-fetch
-- git-ls-remote
-- git-remote
-- git-receive-pack
-- githooks
-- gitcredentials
+- [git-push](https://git-scm.com/docs/git-push)
+- [git-fetch](https://git-scm.com/docs/git-fetch)
+- [git-ls-remote](https://git-scm.com/docs/git-ls-remote)
+- [git-remote](https://git-scm.com/docs/git-remote)
+- [git-receive-pack](https://git-scm.com/docs/git-receive-pack)
+- [githooks](https://git-scm.com/docs/githooks)
+- [gitcredentials](https://git-scm.com/docs/gitcredentials)

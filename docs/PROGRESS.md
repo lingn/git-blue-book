@@ -278,6 +278,7 @@
 - [x] 扩展第八篇部署与回退实验，给 rollout 记录加入 generation 条件，验证金丝雀暂停后过期继续请求被拒绝且状态、暂停原因和记录摘要保持不变。
 - [x] 扩写第八篇数据库迁移章节，增加 `DESIGNED`、`EXPAND_APPLIED`、`BACKFILLING`、`BACKFILL_VERIFIED`、`READ_SWITCHED`、`CONTRACT_ELIGIBLE`、`CONTRACTED` 及暂停/向前修复状态，明确批次、schema、checkpoint、兼容矩阵和不可逆边界。
 - [x] 扩写第八篇事故到发布综合章节，增加各状态的进入证据、回退触发条件、attempt/blocked_reason 记录和不能提前宣称的结论，防止以局部指标关闭事故。
+- [x] 扩写第十三篇 push/认证/权限故障章，增加单次尝试的 before/after 证据记录，区分 `not-reached`、`denied`、`accepted`、`partial`、`unknown`，并将传输、原子更新、受保护引用和显式租约链接到 v2 权威章节。
 
 ## 回归状态
 
@@ -497,6 +498,8 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-database-migrations.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第八篇数据库迁移批次状态、schema/回填/切换/contract 证据与向前修复边界扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-incident-to-release.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第八篇事故到发布状态门禁、回退条件和多组件验证边界扩写通过专项实验与文档门禁 |
 | 2026-09-14 | 第七篇重复命令/术语扫描、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 普通 rebase 移除重复显式租约流程，租约章继续作为高风险命令权威来源，事故章只保留诊断与恢复，远程跟踪引用术语已统一 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-push-auth-permission-boundaries.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十三篇 push 尝试 before/after 记录、分层结果与 v2 权威链接扩写通过专项实验和文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十三篇 push 故障章扩写后的整库回归；首轮在可重复构建无输出断言处瞬时退出，专项复验通过后全量重跑通过，末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 
