@@ -270,6 +270,7 @@
 - [x] 扩写第十篇 CI 依赖与供应链章节，增加依赖 `PROPOSED`、`LOCKED`、`RESOLVED`、`EXECUTED`、`ATTESTED`、`QUARANTINED`、`RETIRED` 生命周期状态及 pin、缓存、来源证明和事故隔离停止条件。
 - [x] 扩写第十篇凭据泄漏与历史清理章节，增加 `DETECTED`、`CREDENTIAL_CONTAINED`、`IMPACT_MAPPED`、`REFS_REWRITTEN_OR_RISK_ACCEPTED`、`COPIES_RECONCILED`、`RECONTAMINATION_MONITORED`、`CLOSED` 处置状态和跨副本停止条件。
 - [x] 扩写第十篇签名与信任策略章节，增加 `DISCOVERED`、`CRYPTO_VALIDATED`、`IDENTITY_MAPPED`、`AUTHORIZED`、`QUARANTINED`、`RETIRED` 签名生命周期状态及候选、策略、撤销和制品变化的重新评估边界。
+- [x] 扩写第十篇不受信任仓库章节，增加 `FETCHED_UNTRUSTED`、`INSPECTED`、`CHECKED_OUT_ISOLATED`、`EXECUTED_RESTRICTED`、`APPROVED_FOR_CONTEXT` 信任升级状态及候选、配置、依赖和权限变化的降级门禁。
 - [x] 扩写第十二篇审计日志与证据留存章节，增加 `PLANNED`、`COLLECTING`、`COMPLETE/PARTIAL/INCONCLUSIVE`、`FROZEN`、`EXPIRED`、`DESTROYED` 留存状态及 legal hold、manifest 和销毁证据边界。
 - [x] 扩写第十二篇仓库健康与容量维护章节，增加健康快照与维护任务的联合状态模型，明确 `WARN/FAIL/INCONCLUSIVE` 的动作边界、快照过期和维护阻断条件。
 
@@ -482,6 +483,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-ci-dependency-pinning.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇 CI 依赖生命周期、pin/解析/执行/来源证明和隔离停止条件扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-sensitive-history-boundaries.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇凭据泄漏处置状态、全 refs 清理、旧 clone 重新污染和物理对象边界扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-signatures-trust.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇签名生命周期、密码学/身份/授权分层与撤销重新评估边界扩写通过专项实验与文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-untrusted-repository.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十篇不受信任仓库逐级信任、隔离 checkout/执行和降级门禁扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-audit-evidence-retention.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇审计留存状态、采集完整性、legal hold 和销毁证据扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-repository-health-capacity.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十二篇健康快照与维护任务联合状态、容量/恢复阻断条件扩写通过专项实验与文档门禁 |
 

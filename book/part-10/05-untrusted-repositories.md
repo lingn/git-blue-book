@@ -23,6 +23,28 @@
 
 “文件带有 executable bit”也不等于 Git 会自动运行。它只保存 tree mode；真正执行仍需要 Shell、构建器、hook 路径、CI runner 或用户动作。
 
+## 信任只能逐级升级
+
+仓库从取得对象到允许高权限执行，应显式经过以下状态：
+
+```text
+FETCHED_UNTRUSTED
+  -> INSPECTED
+  -> CHECKED_OUT_ISOLATED
+  -> EXECUTED_RESTRICTED
+  -> APPROVED_FOR_CONTEXT
+```
+
+| 状态 | 允许的动作 | 必须保存 | 降级条件 |
+| --- | --- | --- | --- |
+| `FETCHED_UNTRUSTED` | 只在隔离对象库读取 refs、commit、tree、blob | 来源 URL、候选 OID、传输身份、Git/OS 版本 | 对象/来源不一致、协议或认证异常 |
+| `INSPECTED` | 审查 attributes、modules、CI、脚本、mode、symlink 和依赖 | tree 清单、配置来源、外部资源和未覆盖项 | 候选 OID、目标配置或规则变化 |
+| `CHECKED_OUT_ISOLATED` | 在无生产凭据、受限网络/文件系统写工作区 | filter/hook/template、部分失败路径和工作区摘要 | 意外程序、网络、递归或配置被触发 |
+| `EXECUTED_RESTRICTED` | 仅运行批准命令，使用只读/短期能力和隔离 cache | 命令、runner、权限、网络、输入/输出摘要 | 新依赖、脚本自修改、越权或不可复现输出 |
+| `APPROVED_FOR_CONTEXT` | 只在记录的候选、用途和环境中进入后续评审/构建 | approver、策略版本、candidate、artifact 与有效期 | 新提交、配置/依赖/权限/环境变化 |
+
+`APPROVED_FOR_CONTEXT` 不是永久信任。相同仓库的新 commit、同一 commit 在不同 system/global config 下 checkout、或同一制品在更高权限环境执行，都需要回到相应阶段重新评估。`safe.directory` 放行只影响所有权门禁，最多让 Git 读取 local config，不能把状态直接提升为 `INSPECTED` 或 `APPROVED_FOR_CONTEXT`。
+
 ## Clone 的安全起点是延迟 checkout 与递归
 
 对来源尚未建立信任的仓库，首次获取可在低权限、无生产凭据的临时环境中进行。下面只展示命令契约；`source_url` 必须由操作者从可信渠道取得并核对，不能从不受信任文本直接拼进 Shell：
