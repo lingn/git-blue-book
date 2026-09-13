@@ -66,18 +66,18 @@ book/part-13/  故障排查手册
 
 | 当前文件 | v2 目标 | 动作 |
 | --- | --- | --- |
-| `book/part-2/README.md` | `book/part-02/README.md` | 保留重写 |
-| `book/part-2/01-install.md` | `book/part-02/01-install-version-help.md` | 保留重写，增加平台与版本边界 |
-| `book/part-2/02-identity.md` | `book/part-02/02-identity-and-config.md` | 保留重写，增加配置作用域与条件包含 |
-| `book/part-2/03-init.md` | `book/part-02/03-repository-discovery-and-init.md` | 保留重写 |
-| `book/part-2/04-status.md` | `book/part-02/04-observe-status.md` | 保留重写 |
-| `book/part-2/05-three-areas.md` | `book/part-02/05-worktree-index-commit.md`、`book/part-03/05-index-internals.md` | 拆分；第二篇讲操作模型，第三篇讲数据结构 |
-| `book/part-2/06-add.md` | `book/part-02/06-stage-a-change.md` | 保留重写 |
-| `book/part-2/07-commit.md` | `book/part-02/07-atomic-commit-and-hooks.md` | 合并扩写 |
-| `book/part-2/08-diff.md` | `book/part-02/08-read-diffs.md` | 保留重写 |
-| `book/part-2/09-history.md` | `book/part-02/09-read-history.md` | 保留重写，取证高级用法转第十一篇 |
-| `book/part-2/10-ignore.md` | `book/part-02/10-ignore-attributes-and-eol.md` | 扩写 `.gitattributes`、换行符与过滤器边界 |
-| `book/part-2/exercise.md` | `book/part-02/exercise.md` | 保留重写 |
+| `book/part-2/README.md` | `book/part-02/README.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-2/01-install.md` | `book/part-02/01-install-version-help.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-2/02-identity.md` | `book/part-02/02-identity-and-config.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-2/03-init.md` | `book/part-02/03-repository-discovery-and-init.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-2/04-status.md` | `book/part-02/04-observe-status.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-2/05-three-areas.md` | `book/part-02/05-worktree-index-commit.md`、`book/part-03/05-index-internals.md` | 已于 2026-09-14 拆分迁移；第二篇承担操作模型，第三篇承担数据结构；旧页保留兼容入口 |
+| `book/part-2/06-add.md` | `book/part-02/06-stage-a-change.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-2/07-commit.md` | `book/part-02/07-atomic-commit-and-hooks.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-2/08-diff.md` | `book/part-02/08-read-diffs.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-2/09-history.md` | `book/part-02/09-read-history.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-2/10-ignore.md` | `book/part-02/10-ignore-attributes-and-eol.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
+| `book/part-2/exercise.md` | `book/part-02/exercise.md` | 已于 2026-09-14 迁移；旧页保留 `legacy-redirect` 兼容入口 |
 
 ## 第三篇现有页面
 

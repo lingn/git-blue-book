@@ -51,7 +51,7 @@ git ls-files --others --exclude-standard
 
 常见的合理顺序是先加入兼容接口或 schema，再切换调用方，最后删除旧路径。纯格式化、大规模重命名和生成物刷新容易淹没行为变化，通常应单独提交，并固定工具版本和输入。
 
-提交原子性、说明、trailers、hook 与签名由[第二篇的提交章节](../part-2/07-commit.md)承担。本章只增加共享评审边界：一旦评审、CI 或子分支绑定某个提交序列，reword、squash、fixup 和 reorder 都会生成新 OID，需要使旧证据过期。
+提交原子性、说明、trailers、hook 与签名由[第二篇的提交章节](../part-02/07-atomic-commit-and-hooks.md)承担。本章只增加共享评审边界：一旦评审、CI 或子分支绑定某个提交序列，reword、squash、fixup 和 reorder 都会生成新 OID，需要使旧证据过期。
 
 ## 什么时候应拆分评审
 

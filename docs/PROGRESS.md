@@ -4,7 +4,7 @@
 
 ## 当前里程碑
 
-阶段 0 已完成。现有基础教程和实验保持可用，v2 第一至十三篇的已建目录已经落入权威路径，其余旧目录按逐章迁移表继续收束。当前共有 196 个公开页面、62 个兼容迁移页和 71 组隔离实验；正文尚未达到出版标准。
+阶段 0 已完成。现有基础教程和实验保持可用，v2 第一至十三篇的已建目录已经落入权威路径，其余旧目录按逐章迁移表继续收束。当前共有 207 个公开页面、74 个兼容迁移页和 71 组隔离实验；正文尚未达到出版标准。
 
 ## 已完成
 
@@ -177,6 +177,7 @@
 - [x] 新写 v2 第五篇传输与认证、协商与受限克隆两章及远程同步综合练习，区分 endpoint、服务器身份、客户端认证、授权、对象协商、shallow、partial、sparse 和评审候选边界。
 - [x] 将旧第四篇 push、push 拒绝、传输认证、受限克隆和远程练习迁为 `legacy-redirect` 兼容入口，更新 SUMMARY、命令地图、场景索引、术语表和迁移映射。
 - [x] 将第一篇七个页面迁入 `book/part-01/` v2 权威路径，按快照直觉、对象模型和第三篇底层事实拆分职责；旧 `book/part-1/` 页面改为 `legacy-redirect`，同步 SUMMARY、阅读路线、术语表和迁移映射。
+- [x] 将第二篇核心十二页迁入 `book/part-02/` v2 权威路径，合并 stash/worktree 补充入口；第二篇承担本地操作模型，第三篇承担 index 数据结构，旧 `book/part-2/` 页面改为 `legacy-redirect`。
 
 - [x] 扩写受保护分支章节，建立平台控制面与 Git 引用更新的分层模型。
 - [x] 为平台事实建立版本与核对登记表。
@@ -387,6 +388,8 @@
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第五篇传输认证、受限克隆和远程同步正文接入后的整库回归，189 个公开页面、55 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 | 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | v2 第一篇七页正文、旧第一篇兼容入口、导航、术语表和迁移映射通过标点、链接、SUMMARY 覆盖与差异空白检查，196 个公开页面、62 个兼容迁移页 |
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第一篇迁移和旧 URL 兼容入口接入后的整库回归，196 个公开页面、62 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | v2 第二篇核心十二页、stash/worktree 合并入口、旧第二篇兼容页、导航和迁移映射通过标点、链接、SUMMARY 覆盖与差异空白检查，207 个公开页面、74 个兼容迁移页 |
+| 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | v2 第二篇主线迁移和旧 URL 兼容入口接入后的整库回归，207 个公开页面、74 个兼容迁移页与 71 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 

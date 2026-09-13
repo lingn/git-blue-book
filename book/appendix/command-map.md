@@ -6,16 +6,16 @@
 
 | 目标 | 命令 | 详解 |
 | --- | --- | --- |
-| 确认版本 | `git --version` | [安装与版本](../part-2/01-install.md) |
-| 配置身份 | `git config` | [身份配置](../part-2/02-identity.md) |
-| 查看配置来源和最终身份 | `git config --show-origin --show-scope`、`git var` | [身份配置](../part-2/02-identity.md) |
-| 初始化仓库 | `git init` | [创建仓库](../part-2/03-init.md) |
-| 查看状态 | `git status` | [状态](../part-2/04-status.md) |
-| 准备内容 | `git add` | [暂存](../part-2/06-add.md) |
-| 创建提交 | `git commit` | [提交](../part-2/07-commit.md) |
-| 检查暂存差异或创建受控空提交 | `git diff --staged --check`、`git commit --allow-empty` | [提交](../part-2/07-commit.md) |
-| 比较内容 | `git diff` | [差异](../part-2/08-diff.md) |
-| 查看历史 | `git log`、`git show` | [历史](../part-2/09-history.md) |
+| 确认版本 | `git --version` | [安装与版本](../part-02/01-install-version-help.md) |
+| 配置身份 | `git config` | [身份配置](../part-02/02-identity-and-config.md) |
+| 查看配置来源和最终身份 | `git config --show-origin --show-scope`、`git var` | [身份配置](../part-02/02-identity-and-config.md) |
+| 初始化仓库 | `git init` | [创建仓库](../part-02/03-repository-discovery-and-init.md) |
+| 查看状态 | `git status` | [状态](../part-02/04-observe-status.md) |
+| 准备内容 | `git add` | [暂存](../part-02/06-stage-a-change.md) |
+| 创建提交 | `git commit` | [提交](../part-02/07-atomic-commit-and-hooks.md) |
+| 检查暂存差异或创建受控空提交 | `git diff --staged --check`、`git commit --allow-empty` | [提交](../part-02/07-atomic-commit-and-hooks.md) |
+| 比较内容 | `git diff` | [差异](../part-02/08-read-diffs.md) |
+| 查看历史 | `git log`、`git show` | [历史](../part-02/09-read-history.md) |
 
 ## 内部模型与工具接口
 

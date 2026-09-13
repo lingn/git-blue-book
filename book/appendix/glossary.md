@@ -12,9 +12,9 @@
 | tree | 把路径名和模式关联到 blob 或子 tree 的对象 | [对象数据库](../part-01/05-first-repository-map.md) |
 | 提交 | 指向快照并包含身份、说明和父关系的不可变记录 | [对象与仓库](../part-01/05-first-repository-map.md) |
 | 对象 ID | 由对象类型、长度和内容计算、用于寻址对象的标识 | [对象身份与格式](../part-03/01-object-identity-and-formats.md) |
-| 工作区 | 当前可直接查看和编辑的项目文件 | [三个区域](../part-2/05-three-areas.md) |
-| 暂存区 | 为下一次提交准备快照内容的区域，也叫 index | [三个区域](../part-2/05-three-areas.md) |
-| 未跟踪文件 | 工作区中存在但尚未纳入 Git 记录集合的文件 | [查看状态](../part-2/04-status.md) |
+| 工作区 | 当前可直接查看和编辑的项目文件 | [工作区、暂存区与提交](../part-02/05-worktree-index-commit.md) |
+| 暂存区 | 为下一次提交准备快照内容的区域，也叫 index | [工作区、暂存区与提交](../part-02/05-worktree-index-commit.md) |
+| 未跟踪文件 | 工作区中存在但尚未纳入 Git 记录集合的文件 | [查看状态](../part-02/04-observe-status.md) |
 | 提交图 | 以提交为节点、父提交关系为连线的有向图 | [提交图与可达性](../part-03/04-commit-graph-and-reachability.md) |
 | 引用 | 指向 Git 对象的名字 | [引用、HEAD 与 reflog](../part-03/03-refs-head-and-reflog.md) |
 | 分支 | 指向提交并随当前工作线新提交向前移动的引用 | [分支与分离 HEAD](../part-04/01-branches-and-detached-head.md) |
