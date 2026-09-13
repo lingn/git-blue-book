@@ -115,6 +115,30 @@ ORIG_HEAD  -> C
 
 这张表只描述提交形式。每种模式都会改变引用可达关系；即使文件仍在工作区，原提交也可能从普通 `git log` 中消失。
 
+## 一次 reset 要有前后快照
+
+不要把 reset 写成只有一条命令的动作卡。执行前至少保存以下字段：
+
+```text
+before_ref: 当前分支或分离 HEAD 的完整 OID
+before_index: git write-tree 的 OID
+before_worktree: status、普通 diff 和 staged diff
+target: 已核对的目标 commit/tree
+mode: soft / mixed / hard / path form
+recovery_ref: 指向 before_ref 的命名引用
+```
+
+执行后按模式验证对应不变量：
+
+| 形式 | 必须确认 | 不应假设 |
+| --- | --- | --- |
+| 提交形式 `--soft` | HEAD/分支到 target，index tree 保持执行前值 | 工作区一定干净 |
+| 提交形式 `--mixed` | HEAD/分支到 target，index 等于 target tree | 原暂存选择仍保留 |
+| 提交形式 `--hard` | HEAD、index、工作区匹配 target，阻挡路径的未跟踪文件按实验结果核对 | 未跟踪内容全部安全 |
+| 路径形式 | HEAD、分支和其他 index 路径不变，指定路径 index 等于来源 tree | 工作区文件被同步 |
+
+如果 `git write-tree` 因未合并 index 失败，先处理当前状态机，不能把失败解释成 index 已经与目标一致。`status` 为空也不能证明未跟踪文件、子模块和 LFS payload 与目标相同。恢复引用必须在验证后保留，直到确认没有需要从 `before_ref` 重新取出的提交或文件。
+
 ## 路径形式不移动 HEAD
 
 指定路径时，reset 从给定 tree 复制这些路径到 index：
