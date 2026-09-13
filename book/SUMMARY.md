@@ -84,7 +84,7 @@
   * [reflog 与 recovery ref：保存引用移动的本地证据](part-07/12-reflog-and-recovery-refs.md)
   * [本地与远程恢复：先保留候选，再验证共享状态](part-07/13-local-and-remote-recovery.md)
   * [远端历史被重写后为什么同时 ahead 和 behind](part-07/14-remote-history-rewrite.md)
-  * [综合场景：四类事故的恢复决策](part-07/exercise.md)
+  * [综合场景：从工作区误操作到远端恢复](part-07/exercise.md)
 * [兼容目录：旧第六篇工程场景](part-6/README.md)
   * [兼容入口：stash 正文已迁入 v2 第二篇补充](part-6/01-stash.md)
   * [兼容入口：worktree 正文已迁入 v2 第二篇补充](part-6/02-worktree.md)

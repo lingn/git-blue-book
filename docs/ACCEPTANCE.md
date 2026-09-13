@@ -56,7 +56,7 @@
 ./scripts/verify-all.sh
 ```
 
-总验证至少包括 Git 行为实验、Shell 语法、本地链接、GitBook 页面覆盖和 `git diff --check`。新增实验要进入总验证。中文新增或大改文档还要运行仓库采用的标点门禁。
+总验证至少包括 Git 行为实验、Shell 语法、本地链接、Markdown 围栏配对、GitBook 页面覆盖和 `git diff --check`。新增实验要进入总验证。中文新增或大改文档还要运行仓库采用的标点门禁。
 
 ## 出版候选门槛
 

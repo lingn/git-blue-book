@@ -1,8 +1,19 @@
-# 综合场景：四类事故的恢复决策
+# 综合场景：从工作区误操作到远端恢复
 
 本练习是 v2 第七篇的综合验收。它把状态矩阵、工作区恢复、取消暂存、amend、revert、recovery ref、显式租约和进行中操作串成一条判断链。涉及发布制品、数据库、消息和生产指标时，只记录需要的外部证据，不把本地 Git 实验当成运行平台证明。
 
 以下现场都可能被口头称为“回滚”，但它们处于不同层：工作区、index、私有提交、共享引用或远程并发。每个场景先保存证据，再执行最小动作，并在动作后验证不变量。
+
+| 场景 | 对应权威章节 |
+| --- | --- |
+| 丢弃尚未暂存的修改 | [restore 的来源与覆盖边界](02-restore-worktree.md) |
+| 取消暂存并保留文件 | [把选择退回工作区](03-unstage.md) |
+| 补充最近一条私有提交 | [amend 一条提交](04-amend-one-commit.md) |
+| 撤销共享错误提交 | [revert 共享历史](08-revert-shared-history.md) |
+| 恢复误删分支 | [reflog 与 recovery ref](12-reflog-and-recovery-refs.md) |
+| 改写个人远程分支 | [显式租约](10-explicit-force-lease.md) |
+| 处理进行中的 merge/rebase/cherry-pick | [rebase 状态机](06-rebase-model-and-workflow.md)与[本地/远程恢复](13-local-and-remote-recovery.md) |
+| 分层验收恢复结果 | [本地与远程恢复](13-local-and-remote-recovery.md) |
 
 ## 练习边界
 
@@ -103,7 +114,7 @@ git show --stat --format=fuller HEAD
 printf 'stable behavior\n' > app.txt
 git add -- app.txt
 git commit -m "feat: add stable behavior"
-~~
+~~~
 
 ~~~bash
 git clone --bare . ../recovery-server.git

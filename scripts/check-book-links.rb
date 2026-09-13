@@ -14,8 +14,18 @@ markdown_files = [repo.join("README.md"), *book.glob("**/*.md")]
 markdown_files.each do |file|
   content = file.read
   local_link_count = 0
+  open_fence = nil
 
   content.each_line.with_index(1) do |line, line_number|
+    stripped = line.lstrip
+    if open_fence
+      closing = /\A#{Regexp.escape(open_fence[:char])}{#{open_fence[:length]},}[ \t]*(?:\r?\n)?\z/
+      open_fence = nil if stripped.match?(closing)
+    elsif (match = stripped.match(/\A([`~])\1{2,}/))
+      marker = match[0]
+      open_fence = { char: marker[0], length: marker.length, line: line_number }
+    end
+
     line.scan(/\]\(([^)]+)\)/).flatten.each do |raw_target|
       target = raw_target.strip
       next if target.empty?
@@ -32,6 +42,10 @@ markdown_files.each do |file|
         summary_targets << resolved
       end
     end
+  end
+
+  if open_fence
+    errors << "#{file.relative_path_from(repo)}:#{open_fence[:line]}: unclosed Markdown fence"
   end
 
   if content.include?("<!-- legacy-redirect -->")
