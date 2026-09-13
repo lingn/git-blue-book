@@ -223,6 +223,8 @@ book/part-13/  故障排查手册
 | `book/part-04/06-complex-path-conflicts.md` | `book/part-3/10-complex-conflicts-rerere.md` | 新写并承担 add/add、modify/delete、rename/delete、rename/rename、目录迁移、file/directory、mode/symlink、binary/LFS、submodule 和逐路径结果验收 |
 | `book/part-04/07-resolve-abort-and-verify.md` | `book/part-3/08-resolve-conflict.md` | 新写并承担冲突现场采集、逐路径 stage 0、continue/hook 重试、abort/autostash、quit 接管、完成后两父/tree/测试验收和冲突报告 |
 | `book/part-04/08-rerere.md` | `book/part-3/10-complex-conflicts-rerere.md` | 新写并承担 rerere preimage/postimage、autoupdate、status/diff/remaining/forget、多状态机复用、缓存保留/共享/安全和重新验证 |
+| `book/part-04/09-tags-and-release-refs.md` | `book/part-3/09-tags.md`、`book/part-10/04-signatures.md`、`book/part-08/05-release-refs-and-artifact-promotion.md` | 新写并承担轻量/附注/签名 tag、peel、ref/object 名、版本语义、显式 push、同名竞态、删除、受限 clone 和发布证据边界；密码学与制品提升仍引用第十、八篇 |
+| `book/part-04/exercise.md` | `book/part-3/exercise.md` | 新写并贯通功能分支、主线热修复、附注 tag、分叉、ff-only 拒绝、三方冲突、第三种结果、二父提交、main 快进和安全分支清理 |
 | `book/part-06/README.md` | 原路径 | 新写；第六篇只导航已经落盘的共享历史、评审与受保护更新正文，不预列占位章 |
 | `book/part-06/01-branch-models-and-integration.md` | `book/part-4/09-review-ready.md`、`book/part-6/05-hotfix.md` | 新写并建立分支状态与整合拓扑的权威来源；承担主干、功能、发布、维护和堆叠分支的状态、责任与恢复契约 |
 | `book/part-06/02-review-state-machine.md` | `book/part-4/09-review-ready.md`、`book/part-6/09-protected-branches.md` | 新写并建立厂商无关评审请求状态机；承担功能头、目标基线、候选、审批、检查、策略版本和条件引用更新的失效与重算 |

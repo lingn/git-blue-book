@@ -34,7 +34,7 @@
 | 切换分支 | `git switch` | [创建和切换分支](../part-04/02-create-and-switch-branches.md) |
 | 合并历史 | `git merge` | [快进与合并提交](../part-04/04-fast-forward-and-merge-commits.md) |
 | 计算共同祖先并判断快进条件 | `git merge-base`、`git merge-base --is-ancestor` | [Merge base 与三方合并](../part-04/03-merge-base.md) |
-| 标记版本 | `git tag` | [标签](../part-3/09-tags.md) |
+| 标记版本并核对 tag object/target | `git tag`、`git rev-parse '<tag>^{}'` | [标签与发布引用](../part-04/09-tags-and-release-refs.md) |
 | 重建功能提交 | `git rebase` | [rebase 模型与安全工作流](../part-07/06-rebase-model-and-workflow.md) |
 | 迁移独立提交 | `git cherry-pick` | [挑选提交](../part-07/07-cherry-pick.md) |
 

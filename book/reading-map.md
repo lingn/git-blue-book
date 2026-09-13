@@ -20,7 +20,7 @@
 
 ## 第四篇（v2）：分支、合并与冲突
 
-从本地分支、远程跟踪引用和 upstream 的区别开始，处理附着、分离、unborn `HEAD` 以及 linked worktree 的分支占用。合并章节固定 receiver/incoming/base 三方输入，区分快进与二父提交；冲突章节再拆开 `ort`、复杂路径、abort/quit/continue、autostash 和 rerere。每次结果都要回到最终 tree、测试和候选证据。
+从本地分支、远程跟踪引用和 upstream 的区别开始，处理附着、分离、unborn `HEAD` 以及 linked worktree 的分支占用。合并与冲突章节覆盖 `ort`、复杂路径、abort/quit/continue、autostash 和 rerere；标签章再区分 ref、tag object、签名和发布证据。综合练习把主线热修复与功能整合串成一条可执行路径。
 
 ## 第三篇：用分支组织并行工作
 

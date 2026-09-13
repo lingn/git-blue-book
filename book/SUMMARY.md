@@ -41,6 +41,8 @@
   * [复杂路径冲突：先还原每一侧做了什么，再决定最终布局](part-04/06-complex-path-conflicts.md)
   * [解决、中止与验收：冲突消失只是结构条件](part-04/07-resolve-abort-and-verify.md)
   * [Rerere：复用编辑结果，但每次重新验证语义](part-04/08-rerere.md)
+  * [标签与发布引用：稳定名字仍需目标、签名和远端证据](part-04/09-tags-and-release-refs.md)
+  * [综合练习：功能开发期间插入主线热修复](part-04/exercise.md)
 * [旧第三篇：分支、合并与冲突迁移目录](part-3/README.md)
   * [兼容入口：提交图正文已拆入 v2 第三、四篇](part-3/01-commit-graph.md)
   * [兼容入口：分支引用正文已拆入 v2 第三、四篇](part-3/02-branch-as-reference.md)
