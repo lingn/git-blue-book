@@ -178,6 +178,28 @@ revert 成功只说明源码分支新增了一条反向提交。完整事故流�
 
 远端分支普通 push 成功，也不能替代这些运行证据。发布章节会把提交、制品、部署和实例串成一条可审计链。
 
+可以把一次共享撤销记录为以下状态，而不是把 `git revert` 的退出码当作事故关闭信号：
+
+```text
+REQUESTED
+  -> REVERT_COMMIT_CREATED
+  -> REVIEWED_AND_BUILT
+  -> DEPLOYED_OR_MITIGATED
+  -> DATA_AND_SIDE_EFFECTS_CHECKED
+  -> CLOSED
+```
+
+| 状态 | 必须存在的证据 | 不能据此宣称 |
+| --- | --- | --- |
+| `REQUESTED` | bad OID、影响范围、共享状态和回滚责任人 | 反向补丁一定适用 |
+| `REVERT_COMMIT_CREATED` | revert OID、父 OID、tree、冲突解决记录 | 线上已经停止错误行为 |
+| `REVIEWED_AND_BUILT` | 评审、检查、制品摘要和候选绑定 | 制品已经运行 |
+| `DEPLOYED_OR_MITIGATED` | 实际实例 digest、流量/特性开关和完成时间 | 数据和外部副作用已撤销 |
+| `DATA_AND_SIDE_EFFECTS_CHECKED` | schema、消息、补偿任务、外部 API 和业务指标核对 | 证据可以立即删除 |
+| `CLOSED` | 责任人确认、残留风险、保留期和复盘行动项 | 无需保留原 bad OID 或 revert OID |
+
+冲突、制品失败、部署失败或数据证据缺失时，状态停留在当前阶段并记录阻塞原因。`REVERT_COMMIT_CREATED` 可以与线上缓解并行，但不能跳过评审和运行验收。
+
 ## 隔离实验覆盖普通、冲突和 merge revert
 
 **前置条件**：Git 2.28 或更高版本、Bash、`mktemp` 和本书工作区。在仓库根目录执行：
@@ -195,3 +217,5 @@ Single-commit revert, conflict abort, and merge mainline revert passed.
 ```
 
 实验只验证本地 Git 历史与 tree，不连接远程，不模拟 CI、数据库或部署回退。对象 ID 和临时路径每次不同，断言失败时返回非零状态并清理实验目录。
+
+实验的三条路径分别证明：普通提交被反向提交后原 bad OID 仍可达；冲突中的 `REVERT_HEAD` 和 `--abort` 能恢复操作前的 HEAD/tree；merge commit 缺少 mainline 会拒绝，选择正确父提交后只撤销合入侧变化。它们不证明 `REQUESTED` 之后的评审、制品、部署、数据补偿或运行指标状态已经前进。
