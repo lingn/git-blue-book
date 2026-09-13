@@ -13,6 +13,7 @@ verification_scripts=(
   scripts/verify-index-internals.sh
   scripts/verify-porcelain-plumbing.sh
   scripts/verify-branch-switching.sh
+  scripts/verify-merge-shapes.sh
   scripts/verify-part-2.sh
   scripts/verify-part-3-basics.sh
   scripts/verify-part-3-conflicts.sh

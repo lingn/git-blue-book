@@ -35,6 +35,8 @@
 * [第四篇（v2）：分支、合并与冲突](part-04/README.md)
   * [分支与分离 HEAD：工作线是可移动入口，不是提交容器](part-04/01-branches-and-detached-head.md)
   * [创建和切换分支：先证明本地内容不会被覆盖](part-04/02-create-and-switch-branches.md)
+  * [Merge base 与三方合并：先固定共同历史，再计算两侧变化](part-04/03-merge-base.md)
+  * [快进与合并提交：引用移动和新对象是两种历史结果](part-04/04-fast-forward-and-merge-commits.md)
 * [第三篇：用分支组织并行工作](part-3/README.md)
   * [提交如何组成历史：从父提交读懂提交图](part-3/01-commit-graph.md)
   * [分支是引用：给提交位置一个可移动的名字](part-3/02-branch-as-reference.md)

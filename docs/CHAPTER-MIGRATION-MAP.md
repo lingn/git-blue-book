@@ -217,6 +217,8 @@ book/part-13/  故障排查手册
 | `book/part-04/README.md` | `book/part-3/README.md` | 新写；建立分支、合并、冲突与标签的 v2 操作层入口，只导航已落盘章节，旧第三篇在全部目标章迁移前继续承担兼容教学 |
 | `book/part-04/01-branches-and-detached-head.md` | `book/part-3/02-branch-as-reference.md`、`book/part-3/03-head.md` | 新写并承担分支工作线、附着/分离/unborn `HEAD`、可达关系、本地/远程跟踪/upstream、命名、worktree 占用和删除恢复；底层 ref/reflog 格式仍引用第三篇 |
 | `book/part-04/02-create-and-switch-branches.md` | `book/part-3/04-switch-branch.md` | 新写并承担 branch/switch、明确起点、tracked/staged/未跟踪覆盖保护、可携带修改、upstream、分离候选、worktree 和 checkout 迁移边界 |
+| `book/part-04/03-merge-base.md` | `book/part-3/01-commit-graph.md`、`book/part-3/05-first-merge.md` | 新写并承担 receiver/incoming 方向、最佳共同祖先、多个/缺失 base、三棵 tree、自动合并候选、冲突输入、shallow/replace 边界和证据清单；提交图定义仍引用第三篇 |
+| `book/part-04/04-fast-forward-and-merge-commits.md` | `book/part-3/06-merge-shapes.md` | 新写并承担祖先关系分流、快进、Already up to date、`--ff-only`、`--no-ff`、`--no-commit`、二父提交、squash 边界、多父合并和恢复时点 |
 | `book/part-06/README.md` | 原路径 | 新写；第六篇只导航已经落盘的共享历史、评审与受保护更新正文，不预列占位章 |
 | `book/part-06/01-branch-models-and-integration.md` | `book/part-4/09-review-ready.md`、`book/part-6/05-hotfix.md` | 新写并建立分支状态与整合拓扑的权威来源；承担主干、功能、发布、维护和堆叠分支的状态、责任与恢复契约 |
 | `book/part-06/02-review-state-machine.md` | `book/part-4/09-review-ready.md`、`book/part-6/09-protected-branches.md` | 新写并建立厂商无关评审请求状态机；承担功能头、目标基线、候选、审批、检查、策略版本和条件引用更新的失效与重算 |

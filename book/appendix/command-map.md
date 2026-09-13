@@ -32,7 +32,8 @@
 | --- | --- | --- |
 | 查看或创建分支 | `git branch` | [分支模型](../part-3/02-branch-as-reference.md) |
 | 切换分支 | `git switch` | [切换分支](../part-3/04-switch-branch.md) |
-| 合并历史 | `git merge` | [合并](../part-3/05-first-merge.md) |
+| 合并历史 | `git merge` | [快进与合并提交](../part-04/04-fast-forward-and-merge-commits.md) |
+| 计算共同祖先并判断快进条件 | `git merge-base`、`git merge-base --is-ancestor` | [Merge base 与三方合并](../part-04/03-merge-base.md) |
 | 标记版本 | `git tag` | [标签](../part-3/09-tags.md) |
 | 重建功能提交 | `git rebase` | [rebase 模型与安全工作流](../part-07/06-rebase-model-and-workflow.md) |
 | 迁移独立提交 | `git cherry-pick` | [挑选提交](../part-07/07-cherry-pick.md) |

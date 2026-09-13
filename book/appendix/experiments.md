@@ -19,6 +19,7 @@
 - index stage 0 的 mode/OID/path、格式转换、暂存/工作区分离、替代 index、content/content 与 add/add stages，以及 sparse-directory 展开前后的 tree 不变量；
 - `hash-object`、`mktree`、`commit-tree`、`update-ref` 的分层副作用，不可达 commit、工作区/index 未同步、批量对象读取、缺失对象和过期 expected-old 拒绝；
 - 本地分支创建与当前 ref 隔离、可携带/冲突 tracked 修改、未跟踪覆盖拒绝、分离提交恢复、显式 upstream 和 linked worktree 分支占用；
+- 唯一 merge base、左右独有计数、三方 tree 自动组合、普通快进、`--no-commit` 快进边界、`--no-ff` 暂停、`--ff-only` 拒绝、abort、二父顺序和 content/content stages；
 - 首次提交、身份作用域与条件 include、工作区/index/HEAD 状态矩阵、取消暂存恢复、差异、提交失败与空提交、`.gitignore`、`.gitattributes` 和换行属性；
 - 分支、快进、分叉合并、冲突中止与解决、标签；
 - index stage 1/2/3、`AUTO_MERGE`、rerere 复用与忘记、rename/delete 和目录重命名；

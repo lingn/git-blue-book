@@ -20,8 +20,9 @@
 | 分支 | 指向提交并随当前工作线新提交向前移动的引用 | [分支与分离 HEAD](../part-04/01-branches-and-detached-head.md) |
 | upstream | 本地分支关联的默认远端与合并引用配置，用于比较、pull/push 默认值等上下文 | [创建和切换分支](../part-04/02-create-and-switch-branches.md) |
 | `HEAD` | 表示当前工作位置的特殊引用，通常指向当前分支 | [引用、HEAD 与 reflog](../part-03/03-refs-head-and-reflog.md) |
-| 合并 | 把另一条历史中当前分支尚未包含的变化整合进来 | [第一次合并](../part-3/05-first-merge.md) |
-| 快进 | 当前提交是目标提交祖先，只需向前移动分支 | [第一次合并](../part-3/05-first-merge.md) |
+| merge base | 两个或多个提交的最佳共同祖先，三方合并据此计算各侧变化 | [Merge base 与三方合并](../part-04/03-merge-base.md) |
+| 合并 | 把另一条历史中当前分支尚未包含的变化整合进来 | [Merge base 与三方合并](../part-04/03-merge-base.md) |
+| 快进 | 当前提交是目标提交祖先，只需向前移动分支 | [快进与合并提交](../part-04/04-fast-forward-and-merge-commits.md) |
 | 冲突 | Git 无法替人决定最终内容时留下的未完成整合状态 | [冲突模型](../part-3/07-conflict-model.md) |
 | index stage | 冲突期间 index 保存的共同祖先、当前侧和合入侧条目；普通 merge 中分别是 stage 1、2、3 | [Index 内部结构](../part-03/05-index-internals.md) |
 | porcelain | 按用户意图编排一个或多个 Git 数据层的高层接口；分类本身不代表无副作用 | [Porcelain 与 plumbing](../part-03/06-porcelain-and-plumbing.md) |
