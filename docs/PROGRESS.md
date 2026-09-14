@@ -280,6 +280,7 @@
 - [x] 扩写第八篇事故到发布综合章节，增加各状态的进入证据、回退触发条件、attempt/blocked_reason 记录和不能提前宣称的结论，防止以局部指标关闭事故。
 - [x] 扩写第十三篇 push/认证/权限故障章，增加单次尝试的 before/after 证据记录，区分 `not-reached`、`denied`、`accepted`、`partial`、`unknown`，并将传输、原子更新、受保护引用和显式租约链接到 v2 权威章节。
 - [x] 扩写第十三篇远程引用漂移章，增加 endpoint/主体/查询模式/响应摘要与 fetch 前后本地引用的 observation 记录，区分 `visible`、`absent`、`inconclusive`，防止把空列表或 prune 结果误写成服务端删除事实。
+- [x] 扩写第十三篇仓库损坏/锁并发章，增加单锁处置记录、`active-writer`/`stale-unconfirmed`/`stale-confirmed` 分流和重现停止条件；修正专项实验硬编码 `/tmp`，使其遵守 `TMPDIR`。
 
 ## 回归状态
 
@@ -503,6 +504,8 @@
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十三篇 push 故障章扩写后的整库回归；首轮在可重复构建无输出断言处瞬时退出，专项复验通过后全量重跑通过，末尾输出 `All Git blue book checks passed.` |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-remote-ref-drift-failures.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十三篇远程引用 observation、空响应证据状态和 fetch/prune 本地副作用边界扩写通过专项实验与文档门禁 |
 | 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十三篇远程引用漂移 observation 契约扩写后的整库回归，207 个公开页面、75 个兼容入口与 73 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-repository-corruption-locks-concurrency.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check` | 通过 | 第十三篇单锁处置记录、writer 可见性、精确重试和专项实验临时目录边界扩写通过专项实验与文档门禁 |
+| 2026-09-14 | `TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十三篇仓库损坏、锁残留与并发处置契约扩写后的整库回归，207 个公开页面、75 个兼容入口与 73 组隔离实验正常；末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 

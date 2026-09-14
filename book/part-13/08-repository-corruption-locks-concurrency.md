@@ -91,6 +91,26 @@ lsof "$git_dir/index.lock" 2>/dev/null || true
 
 移动锁文件本身也是现场变更。若这是取证事件，先复制并摘要，再在恢复副本处理；原现场保留原路径和保管链。删除锁不会恢复丢失的 index 内容，也不会解决对象损坏或错误的 expected old。
 
+### 每个锁只对应一份处置记录
+
+确认残留锁之前，至少保存：
+
+```text
+lock_case_id / observed_at
+repository_id / host_or_namespace / worktree
+git_dir / common_dir / exact_lock_path
+owner / mode / size / mtime / content_digest
+writer_visibility_scope / process_or_task_evidence
+head_oid / refs_digest / index_digest / worktree_status_digest
+classification: active-writer | stale-unconfirmed | stale-confirmed
+approved_action / approver / quarantined_copy
+retry_command / retry_exit / refs_or_index_after
+```
+
+`stale-unconfirmed` 表示当前主体没有看到 writer，但进程命名空间、调度器或存储租约仍不完整，此时不能删除。只有 writer 范围可见、任务已终止、文件系统健康且前置快照完整时，才进入 `stale-confirmed`。处置后只重试原失败命令；如果同一路径再次出现锁，记录新的观察并停止，不能沿用旧批准继续删除。
+
+对 index lock，前后要比较 index 摘要和工作区状态；对 ref lock，比较 old/new OID 和 reflog；对 packed refs 或 shallow lock，还要核对对应文件与并发 fetch/维护任务。一个锁的批准不能扩展成“删除仓库内全部 `.lock`”。
+
 ### `GIT_OPTIONAL_LOCKS=0` 的边界
 
 ```bash
@@ -174,7 +194,7 @@ git status --porcelain=v2 --untracked-files=all
 bash scripts/verify-repository-corruption-locks-concurrency.sh
 ```
 
-实验前置条件是 Git 2.49.0 或兼容版本、Bash、可创建临时目录的本地文件系统；不需要网络或真实凭据。脚本在 `mktemp` 目录中创建虚构身份的临时仓库，并在可销毁副本操作损坏文件。
+实验前置条件是 Git 2.49.0 或兼容版本、Bash、可创建临时目录的本地文件系统；不需要网络或真实凭据。脚本使用 `${TMPDIR:-/tmp}` 下的 `mktemp` 目录创建虚构身份的临时仓库，并在可销毁副本操作损坏文件。需要避开系统默认临时卷时，可以显式执行 `TMPDIR=/private/tmp bash scripts/verify-repository-corruption-locks-concurrency.sh`。
 
 实验验证：
 
