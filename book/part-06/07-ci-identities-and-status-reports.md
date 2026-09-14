@@ -52,11 +52,31 @@ evidence: <日志、测试清单、制品或来源证明>
 
 提交 author、committer 和签名不能替代报告者主体。平台应用名称也可能被重装或迁移，长期审计需要保存安装、工作区、环境和委托身份。
 
+## 原始事件、规范化状态和门禁决定分开保存
+
+状态 API 返回的事件是来源证据，不能直接等同于“允许合并”。同一平台可能有多种状态接口，不同产品对 `neutral`、`skipped`、重跑和取消的定义也不完全相同。接收端应保留原始事件，再生成规范化状态，最后由当前策略作出门禁决定。
+
+| 记录 | 至少保存 | 不能被它替代的证据 |
+| --- | --- | --- |
+| 原始事件 | provider event ID、接收时间、原始主体、原始候选、payload 摘要和未改写载荷 | 当前策略是否接受该结果 |
+| 规范化状态 | repository、candidate、check、reporter、pipeline、run、attempt、conclusion 和 evidence | 最终引用是否更新 |
+| 门禁决定 | policy version、报告者登记版本、选中的 attempt、求值时间、结果和原因 | 原始平台事件及其时间顺序 |
+
+规范化不能丢掉未知值。平台返回了本地模型没有的结论时，应保存原值并输出 `inconclusive`，不能为了兼容 schema 把它归到 `success`。重复的稳定事件 ID 可以幂等忽略；相同状态键对应多个内容不同的事件时，先按证据冲突停止求值。
+
+状态的有效性会随外部事实变化。报告者登记撤销、策略升级、候选前进或事件缺口出现后，保留原始事件和当时的门禁决定，并追加 `stale`、`revoked` 或 `inconclusive` 原因。覆盖旧记录会让调查者误以为旧结果从未存在，也无法判断当时为何允许合并。
+
 ## 短期凭据缩小泄漏窗口
 
 CI 应优先使用绑定仓库、候选、环境和短有效期的工作负载凭据。长期个人令牌会把员工生命周期、个人权限和自动化运行耦合在一起，离职或权限调整后也难以证明所有副本已撤销。
 
 短期不等于安全。凭据声明的 audience、subject、仓库、ref、事件类型和环境仍要由接收端验证；日志、缓存、制品和子进程也可能泄漏凭据。安全模型和轮换流程见[凭据泄漏章节](../part-10/01-credential-leak-history-cleanup.md)。
+
+## 重跑形成 attempt 链，旧成功不能覆盖新失败
+
+重跑要保留原 run 与 attempt 关系。门禁选择某个 attempt 时，应证明它属于当前候选、可信报告者和当前流水线版本，并且没有更新的 attempt 取代它。同一 run 的 attempt 2 已经失败或取消时，attempt 1 的成功仍是历史事实，但不再是当前放行证据。
+
+平台若为每次重跑分配全新 run ID，规范化层还要保存 `supersedes_run_id` 或等价关系。无法建立顺序时，结论是 `inconclusive`，不能按“任意一次成功即可”求值。重复投递若具有相同稳定事件 ID，可按幂等事件处理；缺少稳定 ID 且同一状态键出现两份记录时，需要先确认是重复传输、覆盖更新还是两个真实报告。
 
 ## Fork 和外部贡献要按不受信任事件处理
 
@@ -84,7 +104,7 @@ TMPDIR=/private/tmp bash scripts/verify-ci-identity-status-boundaries.sh
 成功输出为：
 
 ```text
-Candidate binding, reporter identity, pipeline version, stale status, and revocation boundaries passed.
+Candidate binding, reporter identity, pipeline version, attempt ordering, duplicate status, and revocation boundaries passed.
 ```
 
 实验先在 `T0` 上建立外部 trusted reporter 登记，再创建候选 `F1`。`F1` 同时修改业务文件和仓库内的 CI 元数据，但求值器仍使用临时目录中的报告者登记。不同输入得到的状态如下：
@@ -95,9 +115,11 @@ Candidate binding, reporter identity, pipeline version, stale status, and revoca
 | 只有 `T0` 的成功状态，当前候选是 `F1` | `deny/stale-status` | 状态没有绑定当前候选 |
 | 当前候选、可信主体、可信流水线和 `success` 全部匹配 | `allow` | 最小证据键完整 |
 | 状态声明的流水线版本不是登记版本 | `deny/pipeline-mismatch` | 不能把旧模板的成功迁移给新策略 |
+| attempt 1 成功，但同一 run 的 attempt 2 已失败 | `deny/superseded-attempt` | 旧成功不能覆盖更新尝试 |
+| 同一状态键出现两份不同证据 | `inconclusive/duplicate-status-event` | 先确定事件顺序和幂等关系 |
 | 报告者登记被撤销 | `inconclusive` | 身份信任根缺失，不能按绿色结果放行 |
 
-实验输出只是本地状态求值器的结果，不是托管平台状态 API 的真实响应。它证明候选和报告者的绑定规则可重放，并证明候选内的 CI 文件没有直接改写外部信任根；真实平台仍需验证应用安装、OIDC 声明、token audience、状态 API 权限、fork secrets 和审计事件，并记录产品版本、权限、套餐和核对日期。
+实验输出只是本地状态求值器的结果，不是托管平台状态 API 的真实响应。它证明候选、报告者和 attempt 的绑定规则可重放，并证明候选内的 CI 文件没有直接改写外部信任根；真实平台仍需验证应用安装、OIDC 声明、token audience、状态 API 权限、重跑事件顺序、fork secrets 和审计事件，并记录产品版本、权限、套餐和核对日期。
 
 ## 失败方式和恢复
 
@@ -107,6 +129,8 @@ Candidate binding, reporter identity, pipeline version, stale status, and revoca
 | 候选流水线获得生产 secret | 事件类型、候选 OID、secret 发放和日志 | 撤销轮换、冻结制品与发布，调查泄漏范围 |
 | 个人离职后 CI 中断 | token owner、工作流、仓库和环境 | 切换工作负载身份，复查个人令牌产生的历史结果 |
 | 重装应用后旧状态仍被接受 | 旧新安装主体、check ID 和规则缓存 | 使旧绑定失效，按新主体重新报告 |
+| 重跑失败却沿用第一次成功 | run/attempt 链、事件 ID、接收时间和门禁选择 | 使旧 attempt 过期，按最新完整 attempt 重新求值 |
+| 同一状态键出现冲突事件 | 原始 payload、事件 ID、投递顺序和摘要 | 停止合并，先确认幂等、覆盖或重复报告语义 |
 | Runner 被攻陷 | 候选、镜像、缓存、凭据、日志和制品 | 围栏 runner 与输出，使用可信环境重建和复验 |
 | 合并服务能自行报告检查 | 权限清单和审计委托链 | 分离报告与更新权限，复查相关合并决定 |
 
