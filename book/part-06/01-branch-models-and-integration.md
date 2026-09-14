@@ -60,6 +60,22 @@ git for-each-ref --format='%(refname) %(objectname)' refs/heads refs/remotes/ori
 
 维护分支代表仍受支持的旧版本，通常只接受安全修复和高优先级缺陷。它需要明确支持截止时间、允许的变化类型、测试环境和发布权限。旧分支缺少当前 CI、依赖服务或构建工具时，不能因为 cherry-pick 成功就判定修复可发布。
 
+## 分支状态转换需要退出证据
+
+分支是否存在只是 Git 引用事实，不能代替支持状态。团队可以采用下面的通用状态，也可以换成自己的名称：
+
+| 状态 | 进入证据 | 允许的更新 | 退出证据 |
+| --- | --- | --- | --- |
+| `proposed` | 创建目的、来源 OID、owner 和预期寿命 | 建立候选，不承载正式发布 | 首个候选进入评审，或提议取消 |
+| `active` | 保护、检查、更新者和整合路径已生效 | 按分支契约持续接收变化 | 候选冻结、工作完成或计划终止 |
+| `frozen` | 候选 OID、冻结时间、例外和发布目标已固定 | 只接受登记的阻断修复 | 发布完成、冻结取消或候选废弃 |
+| `maintenance` | 已发布基线、支持范围、截止时间和构建环境可用 | 只接受支持政策允许的修复 | 支持期结束且未决修复、消费者和恢复责任已处理 |
+| `retired` | 最后版本、制品/依赖归档、只读策略和 owner 已确认 | 默认不再接受普通更新 | 仅按重新启用流程回到维护状态 |
+
+不是每条分支都要经过所有状态。短功能分支可以从 `active` 直接结束，主线通常长期保持 `active`，发布分支才可能进入 `frozen` 和 `maintenance`。状态变化要追加记录，不能通过重命名分支或覆盖一行登记伪造过去的支持范围。
+
+删除 ref 是 Git 数据面动作，退役是治理决定。维护线退役后可以保留只读 ref 供构建和调查；功能分支合并后也可以删除，但要先保存最终候选、整合方式、未合入变化和恢复入口。两件事的顺序由恢复与合规要求决定，不能把“平台自动删分支”当成退役证据。
+
 ## 用提交图核对声明
 
 假设团队声明 `release/2.x` 从已发布标签 `v2.4.0` 维护，当前主线是 `origin/main`。在开发者 clone 中执行：
@@ -79,6 +95,24 @@ git log --left-right --cherry-pick --oneline \
 这里的输出字段都是本地 fetch 后的观察值。`--left-right` 用 `<` 和 `>` 标出只从一侧可达的提交，`--cherry-pick` 会省略能识别为补丁等价的成对提交。它有助于找线索，不证明两个分支的运行行为相同，也不能替代发布和数据库证据。
 
 命令失败时先按错误分流：引用不存在，检查远端是否发布了该分支以及 fetch refspec 是否包含它；对象缺失，检查浅克隆或部分克隆边界；工作区不是问题，因为这些命令不切换分支。不要为了让命令成功而直接创建同名本地分支，这会把“服务器没有观察到该 ref”和“本地自己造了一个名字”混在一起。
+
+## 一次修复在每条维护线分别结案
+
+同一缺陷进入主线和多个维护分支时，每个目标都会产生自己的提交图、冲突、检查和发布结果。来源提交不能充当所有目标的完成证明。一份最小传播记录应包含：
+
+```text
+change_id / source_ref / source_oid / source_patch_id
+target_ref / target_old_oid / target_policy_version
+method: cherry-pick | equivalent | reimplemented | rejected
+result_oid / result_patch_id / conflict_resolution
+checks / artifact_digest / release_id
+status: pending | applied | equivalent | reimplemented | rejected
+reason / owner / observed_at
+```
+
+`git patch-id --stable` 和 `git cherry` 可以辅助识别补丁等价。Patch ID 来自 diff，不包含提交父关系、身份、说明和签名，也不能证明构建、数据库和运行行为等价。目标分支上下文改变后，相同补丁还可能得到不同结果，因此记录仍要保存目标 tree、冲突解决和独立测试。
+
+某条维护线已经包含等价修复时，状态可以是 `equivalent`，并附上目标提交和判断依据；无法适配时标记 `rejected`，记录支持决定和替代措施。不能为了让表格全部变绿，重复 cherry-pick 或把未验证的手工实现写成已应用。
 
 ## 分支策略的决策矩阵
 
@@ -110,6 +144,27 @@ printf 'candidate=%s\n' "$tip"
 前两条命令只列出本地哪些可见引用包含该 OID，第三条用 `=`、`<` 和 `>` 辅助识别补丁等价和两侧独有提交。它们都不是通用的“是否已合并”判定，输出还受 fetch 时点和可见 refs 影响。可靠做法是先保存完整 OID，再按团队采用的 merge、squash 或 rebase merge 方式验证最终结果。Merge 可以检查祖先关系；squash 和 rebase merge 还要结合评审记录、补丁映射和最终 tree。
 
 误删分支时不要立即运行清理。先用保存的 OID、reflog、评审平台和同事 clone 建立 `refs/recovery/*`，再恢复工作分支。恢复步骤见[reflog](../part-07/12-reflog-and-recovery-refs.md)和[综合恢复案例](../part-07/13-local-and-remote-recovery.md)。
+
+## 隔离实验：维护线传播与误删恢复
+
+本章的实验要求 Git 2.49.0 或兼容版本、Bash、`mktemp`、`awk` 和常用 POSIX 工具。在本书仓库根目录执行，不需要网络、平台账号或真实凭据：
+
+```bash
+git --version
+TMPDIR=/private/tmp bash scripts/verify-branch-model-backports.sh
+```
+
+脚本在 `${TMPDIR:-/tmp}` 下创建临时仓库，从附注发布标签的 peeled commit 建立 `release/1.x`，把主线修复 cherry-pick 到维护线，并验证来源提交和目标提交 OID 不同、Patch ID 相同。实验还断言维护线没有带入主线独有功能，随后删除一条未合入功能分支，再从保存的完整 OID 建立 `refs/recovery/*` 和恢复分支。
+
+成功输出为：
+
+```text
+Branch creation points, backport patch equivalence, maintenance isolation, deletion, and recovery refs passed.
+```
+
+任一对象、父关系、Patch ID、tree 路径或引用断言不满足时，脚本以非零状态退出。默认退出时删除临时目录；需要检查现场时，使用 `KEEP_BRANCH_MODEL_LAB=1` 重跑并记录脚本打印的绝对路径，检查完成后只清理该路径。
+
+实验只证明本地 Git 的创建点、提交图、补丁等价线索、tree 隔离和 recovery ref 行为。它不证明平台保护、审批、CI、制品、支持政策或发布已完成，也不能把合成维护线当成真实客户版本的验证结果。
 
 ## 失败方式和恢复边界
 

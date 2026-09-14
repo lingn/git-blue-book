@@ -39,6 +39,7 @@ verification_scripts=(
   scripts/verify-revert.sh
   scripts/verify-remote-history-rewrite.sh
   scripts/verify-part-6-collaboration.sh
+  scripts/verify-branch-model-backports.sh
   scripts/verify-part-6-engineering.sh
   scripts/verify-ownership-approval-boundaries.sh
   scripts/verify-ci-identity-status-boundaries.sh

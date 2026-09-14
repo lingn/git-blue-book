@@ -44,6 +44,7 @@
 - 远端在六条新基线后重建三条旧变化时精确出现 `ahead 3, behind 9`，以及 forced-update、补丁等价、rebase abort 和恢复分支同步；
 - stash、worktree、bisect 和热修复迁移。
 - merge、squash 与 rebase merge 的父关系、祖先关系、最终 tree 和 OID 差异，以及带 expected-old 的引用并发更新。
+- 发布标签创建点、主线修复向维护线 backport 后的 Patch ID 等价、主线独有路径隔离、功能分支删除和 recovery ref 恢复。
 - 分离 HEAD 的 CI 候选、合并提交父节点、可重复源码归档、证据清单和部署副本摘要恢复。
 - CI 的 NUL 路径清单、路径选择、过期候选、队列顺序和带期望旧值的条件引用更新。
 - 候选 commit/tree 的构造上下文、目标与功能差异、候选过期和合并队列的 expected-old 条件更新（复用上述两组 CI 实验）。
