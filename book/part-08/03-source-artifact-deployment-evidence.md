@@ -192,7 +192,7 @@ printf 'tag_object=%s\ntag_target=%s\n' "$tag_object" "$tag_target"
 本章复用 `scripts/verify-ci-evidence-chain.sh`，在仓库根目录执行：
 
 ```bash
-bash scripts/verify-ci-evidence-chain.sh
+TMPDIR=/private/tmp bash scripts/verify-ci-evidence-chain.sh
 ```
 
 前置条件是 Bash、Git 2.28 或更高版本、`awk`，以及 `sha256sum` 或 `shasum`。脚本使用 `mktemp` 临时目录、虚构身份和本地 `file://` 裸仓库，不读取用户级 Git 配置、不连接网络，也不修改蓝皮书仓库。
@@ -208,7 +208,7 @@ bash scripts/verify-ci-evidence-chain.sh
 成功输出为：
 
 ```text
-Detached CI checkout, reproducible archive, manifest, and deployment verification passed.
+Detached CI checkout, reproducible archive, manifest, per-environment promotion, and deployment verification passed.
 ```
 
 `git archive` 的可重复性只证明当前隔离环境中的源码归档字节一致，不代表任意语言编译、容器镜像、外部依赖或跨平台构建已经可重复。模拟 staging 和 production 是普通目录，不能证明真实制品权限、签名、审计、滚动发布或运行实例状态；这些证据必须在专用测试环境采集。实验中的逐环境 TSV 只演示 attempt 与摘要对账，不能代替制品库或部署控制面的原子性保证。
