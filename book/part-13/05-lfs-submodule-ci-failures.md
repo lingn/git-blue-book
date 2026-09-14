@@ -192,10 +192,10 @@ CI 输入清单建议使用以下字段：
 本书提供 scripts/verify-external-dependency-ci-failures.sh。在仓库根目录执行：
 
 ~~~bash
-bash scripts/verify-external-dependency-ci-failures.sh
+TMPDIR=/private/tmp bash scripts/verify-external-dependency-ci-failures.sh
 ~~~
 
-脚本在 mktemp 中使用虚构身份和本地 file 传输，依次验证：
+脚本在 `${TMPDIR:-/tmp}` 下的 `mktemp` 目录中使用虚构身份和本地 file 传输，依次验证：
 
 1. LFS-like pointer 的 Git blob 与外部 payload 分离；移走 payload 后，required smudge 失败而 Git fsck 仍通过，恢复相同 OID 后才能水合；
 2. superproject 的 tree 保存固定 gitlink；父仓库可以先被推送，但依赖 commit 尚未发布时，递归更新失败，依赖 commit 发布后同一 gitlink 才能成功检出；

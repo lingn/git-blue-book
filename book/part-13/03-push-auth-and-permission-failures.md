@@ -6,6 +6,14 @@
 
 本章以 Git 2.49.0 和本地 bare 仓库实验为基线。SSH 主机密钥、HTTPS TLS、令牌、SSO、平台权限、评审检查和服务端审计必须在获批目标环境核对；本地 hook 只能证明接收端拒绝某个 ref 更新，不能冒充任何托管平台。
 
+## 进入条件与完成标准
+
+本章处理已经发生或准备复现的一次 push。进入排障前，应有原始命令形状、客户端退出码和 stderr，知道命令在哪个 worktree 执行、使用哪个 remote、请求更新哪些完整 refs。只有截图或转述时，先把结论标为 `unknown`，不要直接重试写入来补证据。
+
+网络探测、凭据检查和平台查询还需要对应授权。排障包必须区分受限原件与可分享的脱敏副本，不能把 token、完整内部 URL、Authorization header 或私钥材料写进正文模板和公共工单。
+
+读完本章后，应能判断请求是否到达服务端，把服务端结果分成拒绝、接受、部分成功或未知；能区分认证、仓库授权、非快进和平台规则；能说明 fetch、URL 修改、merge/rebase 与再次 push 各自改变什么；也能在多 ref 结果不一致时停止整批重放并保留可恢复的本地候选。
+
 ## 先把“写入失败”分成六层
 
 | 层 | 要回答的问题 | 典型证据 | 不应据此推出 |
@@ -32,12 +40,16 @@ server_old_oid / proposed_new_oid
 transport_and_credential_context_id
 command_shape / options_without_secrets
 client_exit_status / stderr_digest
-server_result: accepted | denied | failed | partial | unknown
-server_after_oid / request_or_audit_id
+request_reach: not-reached | reached | unknown
+server_result: not-observed | denied | accepted | partial | unknown
+per_ref_outcomes: target_ref / expected_old / proposed_new / result / actual_after
+request_or_audit_id
 failure_layer / confidence / evidence_gaps
 ```
 
-`server_old_oid` 应来自本次操作前的服务端查询或平台事件，不是未经 fetch 的 `origin/main`；`server_after_oid` 在失败和成功后都要重新核对。客户端退出非零可能发生在服务器之前，也可能是服务端拒绝；退出为零也可能只说明某个 ref 成功，而多 ref push 的其他更新失败或发布链尚未开始。
+`server_old_oid` 应来自本次操作前的服务端查询或平台事件，不是未经 fetch 的 `origin/main`；每个 `actual_after` 在失败和成功后都要重新核对。客户端退出非零可能发生在服务器之前，也可能是服务端拒绝；退出为零也只说明 Git 报告的请求成功，发布链是否开始要另外核对。
+
+`not-reached` 对应 `server_result=not-observed`，表示没有证据证明请求进入服务端。连接中断且缺少 request/audit 事件时，`request_reach` 和结果都可能是 `unknown`。不能把无法观察写成服务端拒绝，也不能用本地 stderr 推断服务器最终 OID。
 
 | 结果 | 证据 | 下一步 |
 | --- | --- | --- |
@@ -48,6 +60,19 @@ failure_layer / confidence / evidence_gaps
 | `unknown` | 连接中断、审计缺失、查询权限不足或服务端状态不可见 | 保持写入暂停，补采服务器事实，不能按成功或拒绝处理 |
 
 若查询与 push 之间服务器又发生更新，before/after 记录应展示这个竞态。不要修改 `server_old_oid` 来迎合当前状态；创建新 attempt，并保留旧尝试为什么失效。
+
+## 多 ref push 不能用一个退出码结案
+
+一次 push 可以请求更新多个分支、标签或其他 refs。没有原子保证时，服务端可能接受其中一部分并拒绝其余部分，客户端整体仍以非零退出。此时 `server_result=partial` 必须能展开成逐 ref 记录：
+
+| target ref | expected old | proposed new | 服务端结果 | 查询后的实际值 |
+| --- | --- | --- | --- | --- |
+| `refs/heads/topic-a` | `<OID-A0>` | `<OID-A1>` | accepted | `<OID-A1>` |
+| `refs/heads/topic-b` | `<OID-B0>` | `<OID-B1>` | denied | `<OID-B0>` |
+
+表中的 OID 是字段格式，不是可照抄的输出。每个值都要来自同一次 attempt 的发送记录和随后查询。重新执行原命令可能再次触发 hooks、审计或其他服务端动作，也可能让已经成功的 ref 遇到新的 expected-old。先固定全部实际值，再为仍需处理的 ref 创建新 attempt。
+
+使用 `git push --atomic` 时，客户端要求同一服务端的目标 refs 全部更新或全部不更新；服务端不支持该能力时，命令应失败。这个保证只覆盖该 push 的 ref 更新，不回滚外部 CI、通知、审计、配额或 hook 已产生的其他影响。原子 push 的本地数据面实验和失败边界见[Push 拒绝与原子更新](../part-05/07-rejection-atomic-push-and-options.md)。
 
 ## 第一轮只做不会写远端的确认
 
@@ -172,11 +197,13 @@ remote set-url 只写本地 .git/config，不移动对象、refs、index 或工�
 
 ## 隔离实验：把 ref 拒绝和 endpoint 失败分开
 
-本书提供 scripts/verify-push-auth-permission-boundaries.sh。在仓库根目录执行：
+本书提供 `scripts/verify-push-auth-permission-boundaries.sh`。在仓库根目录执行：
 
-    bash scripts/verify-push-auth-permission-boundaries.sh
+```bash
+TMPDIR=/private/tmp bash scripts/verify-push-auth-permission-boundaries.sh
+```
 
-脚本在 mktemp 中使用虚构身份和本地 bare 仓库，验证：
+脚本在 `${TMPDIR:-/tmp}` 下的 `mktemp` 目录中使用虚构身份和本地 bare 仓库，验证：
 
 1. 客户端可通过 file:// 只读探测目标 ref，endpoint 错误时命令失败且远端 refs 不变；
 2. 两个客户端从同一 OID 分叉，陈旧客户端普通 push 被非快进拒绝，远端 ref 保持不变；
@@ -185,6 +212,14 @@ remote set-url 只写本地 .git/config，不移动对象、refs、index 或工�
 5. hook 拒绝时客户端保留本地 commit，修复为 review ref 后能安全发布；
 6. push 成功后以 ls-remote 核对 new OID，并明确平台评审/CI 不在本地实验范围；
 7. remote URL set-url 只改变本地配置，恢复旧 URL 后对象、refs、index 和工作区摘要不变。
+
+成功输出为：
+
+```text
+Push boundary endpoint, non-fast-forward, fetch side effect, protected ref, and URL rollback checks passed.
+```
+
+任一 endpoint、OID、父关系、远程跟踪引用、`FETCH_HEAD`、hook 或 URL 回滚断言失败时，脚本以非零状态退出。默认清理临时目录；需要保留失败现场时，使用 `KEEP_PUSH_BOUNDARY_LAB=1` 重跑并记录脚本打印的绝对路径，检查完成后只删除该路径。
 
 实验不会模拟 SSH 主机校验、HTTPS TLS、真实凭据、SSO、平台规则集、评审、CI、配额或审计；本地 hook 不是 GitHub/GitLab 行为。认证/授权能力必须在专用测试组织按产品版本、权限、套餐和核对日期验证。
 

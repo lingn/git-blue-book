@@ -209,10 +209,10 @@ default_oid="$(git ls-remote origin HEAD | awk '{print $1}')"
 本书提供 `scripts/verify-remote-ref-drift-failures.sh`。在仓库根目录执行：
 
 ```bash
-bash scripts/verify-remote-ref-drift-failures.sh
+TMPDIR=/private/tmp bash scripts/verify-remote-ref-drift-failures.sh
 ```
 
-实验前置条件是 Git 2.49.0 或兼容版本、可创建临时目录的本地 shell；不需要网络、真实凭据或托管平台权限。脚本在 `mktemp` 目录中创建 seed 仓库、bare 远端和客户端 clone，并配置虚构身份。
+实验前置条件是 Git 2.49.0 或兼容版本、可创建临时目录的本地 shell；不需要网络、真实凭据或托管平台权限。脚本在 `${TMPDIR:-/tmp}` 下的 `mktemp` 目录中创建 seed 仓库、bare 远端和客户端 clone，并配置虚构身份。
 
 实验依次验证：
 

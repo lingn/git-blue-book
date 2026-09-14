@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-lab_root="$(mktemp -d /tmp/git-blue-book-remote-ref-drift.XXXXXX)"
+lab_root="$(mktemp -d "${TMPDIR:-/tmp}/git-blue-book-remote-ref-drift.XXXXXX")"
 trap 'rm -rf -- "$lab_root"' EXIT
 
 export GIT_CONFIG_NOSYSTEM=1

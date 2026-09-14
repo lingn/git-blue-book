@@ -207,10 +207,10 @@ refs、HEAD、tree、可达提交集合和工作区必须满足预先声明的�
 本书提供 scripts/verify-performance-troubleshooting.sh。在仓库根目录执行：
 
 ~~~bash
-bash scripts/verify-performance-troubleshooting.sh
+TMPDIR=/private/tmp bash scripts/verify-performance-troubleshooting.sh
 ~~~
 
-实验会在 mktemp 中创建虚构身份的本地仓库，生成多批提交和多个 pack/ref，采集对象、refs、tracked paths、index 和一次 Trace2 status 事件；随后写入并验证 commit-graph、MIDX bitmap，运行受控 maintenance task，最后核对 refs、HEAD、tree、可达提交和工作区不变。脚本还用明确标注的容量 fixture 检验 pass、warn、fail、inconclusive 的分流，避免把来源不可用当成零。
+实验会在 `${TMPDIR:-/tmp}` 下的 `mktemp` 目录中创建虚构身份的本地仓库，生成多批提交和多个 pack/ref，采集对象、refs、tracked paths、index 和一次 Trace2 status 事件；随后写入并验证 commit-graph、MIDX bitmap，运行受控 maintenance task，最后核对 refs、HEAD、tree、可达提交和工作区不变。脚本还用明确标注的容量 fixture 检验 pass、warn、fail、inconclusive 的分流，避免把来源不可用当成零。
 
 实验能够证明：这些 Git 命令在当前版本的输入/输出边界、辅助索引可被验证、维护不会改变 fixture 的逻辑历史，以及容量分类器按硬限制和证据缺口停止。实验不能证明：冷/热缓存差异、真实 p95/p99、网络或服务端性能、LFS/制品/备份容量、inode/磁盘故障、后台 scheduler、平台套餐/计费或真实维护收益。任何生产优化都必须在代表性副本和目标环境重新测量。
 

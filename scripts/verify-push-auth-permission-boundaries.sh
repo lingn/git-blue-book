@@ -2,8 +2,15 @@
 
 set -euo pipefail
 
-lab_root="$(mktemp -d "/tmp/git-blue-book-push-boundaries.XXXXXX")"
-trap 'rm -rf -- "$lab_root"' EXIT
+lab_root="$(mktemp -d "${TMPDIR:-/tmp}/git-blue-book-push-boundaries.XXXXXX")"
+cleanup() {
+  if test "${KEEP_PUSH_BOUNDARY_LAB:-0}" = 1; then
+    printf 'Preserved push boundary lab: %s\n' "$lab_root"
+  else
+    rm -rf -- "$lab_root"
+  fi
+}
+trap cleanup EXIT
 
 export GIT_CONFIG_NOSYSTEM=1
 export GIT_CONFIG_GLOBAL="$lab_root/gitconfig"

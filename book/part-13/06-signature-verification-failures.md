@@ -12,7 +12,7 @@
 
 | 状态 | 首要证据 | 可以得出的结论 | 不能得出的结论 |
 | --- | --- | --- | --- |
-| 无签名 | commit 原始 header、format %G?、verify-commit 退出码 | 对象没有当前格式的签名 | 作者字段可信、提交一定恶意 |
+| 无签名 | commit 原始 header、format `%G?`、verify-commit 退出码 | 对象没有当前格式的签名 | 作者字段可信、提交一定恶意 |
 | 签名不匹配/损坏 | verify-commit 输出、候选完整 OID、对象原始字节 | 当前签名不能证明这个对象 | 私钥一定泄漏，可能是对象被改写或工具故障 |
 | key 未知 | fingerprint、验证器 keyring/allowed signers、工具版本 | 当前环境没有该公钥或信任记录 | key 一定不属于该主体 |
 | principal/key 未授权 | 策略版本、fingerprint 到主体的登记、仓库/动作范围 | 密码学成立但当前策略不允许 | 代码内容一定错误 |
@@ -182,10 +182,10 @@ candidate：完整 commit/tag OID
 本书提供 scripts/verify-signature-troubleshooting.sh。在仓库根目录执行：
 
 ~~~bash
-bash scripts/verify-signature-troubleshooting.sh
+TMPDIR=/private/tmp bash scripts/verify-signature-troubleshooting.sh
 ~~~
 
-实验在 mktemp 中生成两对一次性 SSH key 和外部 allowed signers 文件，验证：
+实验在 `${TMPDIR:-/tmp}` 下的 `mktemp` 目录中生成两对一次性 SSH key 和外部 allowed signers 文件，验证：
 
 1. 签名 commit 和附注 tag 在正确策略下通过，tag 对象和剥离目标保持一致；
 2. 无签名 commit 的 %G? 与严格 verify-commit 失败，验证前后 HEAD、refs、index 和工作区不变；
