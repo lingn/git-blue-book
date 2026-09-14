@@ -6,6 +6,12 @@
 
 本章以 Git 2.49.0、SSH 对象签名和隔离的 allowed signers 文件为基线，核对日期为 2026-08-22。OpenPGP、X.509、硬件密钥、托管平台徽章、时间戳服务和企业撤销系统必须在目标环境按产品版本、权限和组织策略核对；本地实验不冒充这些服务。
 
+## 进入条件和退出能力
+
+进入签名排障时，先固定待验证的 commit 或 tag OID、Git 与签名工具版本、验证策略来源、策略摘要和验证时刻。验证对象应来自已经冻结的候选或发布记录；如果 tag ref、候选分支或策略文件在采集期间可能移动，先把它们复制到受控证据目录，再开始求值。
+
+读完本章后，应能区分签名存在性、密码学结果、key/principal 映射、撤销与有效期、tag 目标和当前动作授权；能说明哪些证据只支持“这个 key 签过这个对象”，哪些证据还不足以支持合并或发布；能在策略或引用发生竞态时停止，并从原始 OID、策略快照和恢复入口重新核对。
+
 ## 先区分六类失败
 
 在签名验证现场，先固定候选 commit 或 tag 的完整 OID、Git 版本、签名格式、验证策略来源和原始 stderr。不要先改全局配置、删除 tag、重写历史或把仓库里的策略文件复制进验证环境。
@@ -51,6 +57,21 @@ printf 'candidate=%s\nexit=%s\n' "$candidate" "$verify_status"
 
 退出 0 只表示当前验证器接受该 commit 的签名判断。非零要结合 stdout/stderr 和格式状态分流，不能把任意非零都当作“没有签名”。保存 Git 版本、外部签名工具版本、fingerprint、principal、信任策略摘要、撤销文件摘要和验证时间。
 
+一次验证至少要有一份不可覆盖的 observation：
+
+```text
+observation_id / observed_at / verification_time
+candidate_oid / tag_ref / tag_object_oid / peeled_target_oid
+git_version / signer_format / verifier_version
+policy_source / policy_digest / revocation_source / revocation_digest
+fingerprint / principal / action
+crypto_result / identity_result / authorization_result
+ref_before / ref_after / artifact_digest / runtime_digest
+failure_or_stop_reason / evidence_gaps
+```
+
+`verification_time` 是验证器采用撤销和有效期规则的时间，`observed_at` 是采集记录写入的时间，两者不能互换。commit 的 author、committer 或 tagger 时间由对象创建者提供，不能单独充当可信签名时钟。策略摘要变化后，即使候选 OID 不变，也要创建新的 observation，不能覆盖旧结论。
+
 若验证的是发布 tag，先固定 tag object 和剥离目标：
 
 ~~~bash
@@ -63,6 +84,8 @@ printf 'tag=%s\ntarget=%s\n' "$tag_object" "$tag_target"
 ~~~
 
 ^{tag} 会拒绝轻量 tag，避免把“没有 tag 对象”误当作签名失败。verify-tag 只验证 tag payload，不验证 tag ref 没有被强制移动，也不验证制品和部署。远端 ref 必须另用受控只读查询和审计记录核对。
+
+签名验证和 tag 引用核对也要分开。一个 tag object 可以在密码学上持续有效，但 `refs/tags/<name>` 已经被移动到另一个同样有效的 tag object。验证前后至少保存 tag ref 的 OID、tag object 的 OID 和剥离后的 target OID；三者任何一项变化都要让发布判断重新开始。恢复时使用执行前保存的 expected-old 条件恢复原 ref，不要用当前名称直接覆盖。
 
 ## 按四层证据处理失败
 
@@ -121,6 +144,12 @@ git show --no-patch --format='%GF%n%GS' "$candidate"
 6. 保留旧策略和验证结果，说明历史签名按哪个时间规则解释。
 
 修改 allowed signers 文件改变未来验证判断，不等于清理 Git 历史；远端 refs、镜像和下游 clone 仍需独立处置。
+
+### 时间判断要写出采用哪一套钟
+
+同一份签名材料可能同时有对象时间、签名后端时间、服务端接收时间和验证器本地时间。处置记录要明确策略使用哪一个时间，其他时间作为辅助证据保留。若撤销服务不可用、时钟偏差超出允许窗口，或只能从对象中的可伪造时间推断“撤销前”，状态应为 `inconclusive`，不能把验证器当前返回的 `good` 直接升级为允许发布。
+
+密钥轮换也要拆成两个动作：停止新签名和继续验证历史对象。旧公钥从策略中移除后，历史签名可能无法重放验证；旧公钥继续作为历史验证材料保留时，又不能继续授予新发布权限。两类用途要在策略中分别登记，并记录生效时间和撤销来源。
 
 ## 历史改写后签名为什么消失
 
@@ -190,14 +219,16 @@ TMPDIR=/private/tmp bash scripts/verify-signature-troubleshooting.sh
 1. 签名 commit 和附注 tag 在正确策略下通过，tag 对象和剥离目标保持一致；
 2. 无签名 commit 的 %G? 与严格 verify-commit 失败，验证前后 HEAD、refs、index 和工作区不变；
 3. 候选提交修改仓库内 allowed signers 后，在候选自带策略下看似通过，但切回候选之外的外部策略后被拒绝；
-4. 验证策略切换、失败采集和 tag/commit 查询不会移动 refs 或改变工作区，实验保留 fingerprint、OID 和策略摘要；
-5. 本地实验只验证 SSH 对象签名和外部信任文件，不模拟 OpenPGP/X.509、硬件密钥、托管平台、撤销服务或组织授权。
+4. 签名 tag 的 ref 被移动到另一个有效 tag object 时，验证仍能读到签名，但剥离目标变化会阻止沿用原发布结论；恢复时按 expected-old 把原 ref 放回；
+5. 验证策略切换、失败采集和 tag/commit 查询不会移动 refs 或改变工作区，实验保留 fingerprint、OID、策略摘要和验证时刻；
+6. 外部策略摘要在验证前后保持一致，防止验证过程中静默替换信任根；
+7. 本地实验只验证 SSH 对象签名和外部信任文件，不模拟 OpenPGP/X.509、硬件密钥、托管平台、撤销服务或组织授权。
 
 实验不把 key 生成、allowed signers 或 verify-commit 输出当作生产身份；真实密钥、撤销、时间戳、平台审批和发布证据必须在专用环境验证。
 
 ## 小结
 
-签名排障先分层：对象有没有签名，签名是否匹配，key 映射到谁，当前动作是否授权。密钥过期或撤销还要结合策略的时间语义；历史改写后新 commit 必须重新签名；tag 签名有效也要独立核对 tag ref、目标 OID、制品和部署。
+签名排障先分层：对象有没有签名，签名是否匹配，key 映射到谁，当前动作是否授权。密钥过期或撤销还要结合策略的时间语义；历史改写后新 commit 必须重新签名；tag 签名有效也要独立核对 tag ref、目标 OID、制品和部署。验证记录还要保留策略摘要和验证时刻，避免用后来改变的信任根解释旧结果。
 
 诊断动作应保持只读和可回放，信任根必须来自候选之外。任何需要关闭验证、替换对象、使用候选自带策略或静默移动共享 tag 的“修复”都应停止并升级。
 

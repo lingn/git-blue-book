@@ -76,7 +76,7 @@
 - Push/认证/权限边界实验覆盖错误 endpoint、file 传输只读探测、非快进拒绝、fetch 对远程跟踪 ref/FETCH_HEAD 的副作用、受保护 ref 的本地 hook、review ref 替代路径和 remote URL 回滚。
 - 性能/容量排障实验覆盖对象、refs、tracked paths、index 和 Trace2 采集，commit-graph/MIDX bitmap 验证，受控 maintenance 前后的逻辑不变量，以及明确标注的 pass/warn/fail/inconclusive 容量 fixture；不声称冷/热缓存、p95、网络、服务端、LFS、制品、备份或真实磁盘收益。
 - LFS/子模块/CI 外部依赖实验覆盖 pointer 与 payload 分离、required smudge 缺失和恢复、主仓库 fsck 仍通过、未发布 gitlink 导致递归检出失败、依赖发布后按同一 OID 恢复，以及 detached candidate 和输入清单核对。
-- 签名排障实验覆盖签名 commit/tag、无签名拒绝、tag 目标核对、候选自带 allowed signers 的自授权风险、候选之外策略拒绝、历史改写后新对象无签名，以及验证前后引用/工作区不变。
+- 签名排障实验覆盖签名 commit/tag、无签名拒绝、tag 目标核对与引用竞态、候选自带 allowed signers 的自授权风险、候选之外策略拒绝、策略摘要/验证时刻和历史改写后新对象无签名，以及验证前后引用/工作区不变。
 - 远程引用漂移实验覆盖分支重命名、旧 remote-tracking ref 的 prune 与 recovery ref、默认分支 `origin/HEAD` 刷新、标签改指向前后的 OID 保护，以及跨查询竞态。
 - 仓库损坏/锁并发实验覆盖活跃 writer 持有 `index.lock`、第二 writer 拒绝、精确 stale index/ref lock、expected-old 更新、截断 pack 的 fsck 失败和 pristine donor 恢复。
 

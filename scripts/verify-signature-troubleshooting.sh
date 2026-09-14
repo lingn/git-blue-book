@@ -9,6 +9,15 @@ export GIT_CONFIG_NOSYSTEM=1
 export GIT_CONFIG_GLOBAL="$lab_root/gitconfig"
 unset GIT_CONFIG_COUNT
 
+sha256_file() {
+  local file_path="$1"
+  if command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 "$file_path" | awk '{print $1}'
+  else
+    sha256sum "$file_path" | awk '{print $1}'
+  fi
+}
+
 repo="$lab_root/repository"
 release_key="$lab_root/release-signing"
 attacker_key="$lab_root/untrusted-signing"
@@ -19,6 +28,8 @@ ssh-keygen -q -t ed25519 -N '' -C 'untrusted troubleshooting lab' -f "$attacker_
 release_public="$(awk '{print $1 " " $2}' "$release_key.pub")"
 attacker_public="$(awk '{print $1 " " $2}' "$attacker_key.pub")"
 printf 'release@example.invalid %s\n' "$release_public" > "$external_policy"
+policy_digest_before="$(sha256_file "$external_policy")"
+verification_time='2026-09-14T04:00:00Z'
 
 git init --quiet --initial-branch=main "$repo"
 git -C "$repo" config user.name 'Release Maintainer'
@@ -67,6 +78,16 @@ git -C "$repo" verify-tag "$wrong_target_tag" >/dev/null 2>&1
 test "$(git -C "$repo" rev-parse 'v1.0.0-test^{}')" = "$unsigned_commit"
 test "$unsigned_commit" != "$signed_commit"
 
+original_tag_ref="$(git -C "$repo" rev-parse refs/tags/v1.0.0)"
+git -C "$repo" update-ref refs/tags/v1.0.0 "$wrong_target_tag" "$original_tag_ref"
+test "$(git -C "$repo" rev-parse refs/tags/v1.0.0)" = "$wrong_target_tag"
+git -C "$repo" verify-tag "$wrong_target_tag" >/dev/null 2>&1
+test "$(git -C "$repo" rev-parse 'refs/tags/v1.0.0^{}')" = "$unsigned_commit"
+git -C "$repo" update-ref refs/tags/v1.0.0 "$original_tag_ref" "$wrong_target_tag"
+test "$(git -C "$repo" rev-parse refs/tags/v1.0.0)" = "$original_tag_ref"
+test "$(git -C "$repo" rev-parse 'refs/tags/v1.0.0^{}')" = "$signed_commit"
+test "$(sha256_file "$external_policy")" = "$policy_digest_before"
+
 git -C "$repo" switch --quiet main
 git -C "$repo" config user.name 'Untrusted Contributor'
 git -C "$repo" config user.email 'attacker@example.invalid'
@@ -89,6 +110,7 @@ if git -C "$repo" verify-commit "$self_authorized_commit" >/dev/null 2>&1; then
 fi
 git -C "$repo" verify-commit "$signed_commit" >/dev/null 2>&1
 git -C "$repo" verify-tag "$tag_object" >/dev/null 2>&1
+test "$(sha256_file "$external_policy")" = "$policy_digest_before"
 
 git -C "$repo" switch --quiet --create rewritten "$signed_commit"
 git -C "$repo" config user.name 'Release Maintainer'
@@ -109,4 +131,4 @@ git -C "$repo" verify-commit "$signed_commit" >/dev/null 2>&1
 git -C "$repo" cat-file -e "$signed_commit^{commit}"
 test "$(git -C "$repo" rev-parse 'v1.0.0^{}')" = "$signed_commit"
 
-printf 'Signature failure classification, external trust policy, tag target, and rewrite boundaries passed.\n'
+printf 'Signature failure classification, external trust policy, tag target race, policy snapshot, and rewrite boundaries passed at %s.\n' "$verification_time"
