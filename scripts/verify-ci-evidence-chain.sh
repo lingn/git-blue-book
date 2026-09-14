@@ -89,7 +89,7 @@ candidate_tree="$(git -C "$lab_dir/runner" rev-parse HEAD^{tree})"
 pipeline_blob="$(git -C "$lab_dir/runner" rev-parse HEAD:.ci/pipeline.sh)"
 (cd "$lab_dir/runner" && ./.ci/pipeline.sh)
 
-mkdir "$lab_dir/build" "$lab_dir/staging"
+mkdir "$lab_dir/build" "$lab_dir/staging" "$lab_dir/production"
 git -C "$lab_dir/runner" archive --format=tar \
   --output="$lab_dir/build/candidate-one.tar" HEAD
 git -C "$lab_dir/runner" archive --format=tar \
@@ -122,10 +122,37 @@ cp "$lab_dir/build/candidate-one.tar" "$lab_dir/staging/application.tar"
 cp "$lab_dir/build/evidence.env" "$lab_dir/staging/deployment.env"
 test "$(sha256_file "$lab_dir/staging/application.tar")" = "$artifact_digest"
 
+printf 'environment\tattempt\texpected_digest\tactual_digest\tresult\n' \
+  > "$lab_dir/build/promotion-attempts.tsv"
+printf 'staging\t1\t%s\t%s\taccepted\n' \
+  "$artifact_digest" "$artifact_digest" \
+  >> "$lab_dir/build/promotion-attempts.tsv"
+cp "$lab_dir/build/candidate-one.tar" "$lab_dir/production/application.tar"
+printf 'production\t1\t%s\t%s\taccepted\n' \
+  "$artifact_digest" "$(sha256_file "$lab_dir/production/application.tar")" \
+  >> "$lab_dir/build/promotion-attempts.tsv"
+awk -F '\t' 'NR > 1 && ($3 != $4 || $5 != "accepted") { exit 1 }' \
+  "$lab_dir/build/promotion-attempts.tsv"
+
 printf 'tampered after deployment\n' >> "$lab_dir/staging/application.tar"
 test "$(sha256_file "$lab_dir/staging/application.tar")" != "$artifact_digest"
 cp "$lab_dir/build/candidate-one.tar" "$lab_dir/staging/application.tar"
 test "$(sha256_file "$lab_dir/staging/application.tar")" = "$artifact_digest"
+
+printf 'tampered production copy\n' >> "$lab_dir/production/application.tar"
+production_actual_digest="$(sha256_file "$lab_dir/production/application.tar")"
+test "$production_actual_digest" != "$artifact_digest"
+printf 'production\t2\t%s\t%s\tdenied\n' \
+  "$artifact_digest" "$production_actual_digest" \
+  >> "$lab_dir/build/promotion-attempts.tsv"
+test "$(awk -F '\t' 'NR > 1 && $5 == "denied" { count++ } END { print count + 0 }' "$lab_dir/build/promotion-attempts.tsv")" = 1
+cp "$lab_dir/build/candidate-one.tar" "$lab_dir/production/application.tar"
+production_recovered_digest="$(sha256_file "$lab_dir/production/application.tar")"
+test "$production_recovered_digest" = "$artifact_digest"
+printf 'production\t3\t%s\t%s\taccepted\n' \
+  "$artifact_digest" "$production_recovered_digest" \
+  >> "$lab_dir/build/promotion-attempts.tsv"
+test "$(awk -F '\t' 'NR > 1 && $5 == "accepted" { accepted++ } END { print accepted + 0 }' "$lab_dir/build/promotion-attempts.tsv")" = 3
 
 git -C "$lab_dir/seed" switch --quiet main
 printf 'post-build main change\n' > "$lab_dir/seed/CHANGELOG.md"
@@ -140,5 +167,7 @@ git -C "$lab_dir/runner" fetch --quiet origin
 test "$(git -C "$lab_dir/runner" rev-parse origin/main)" = "$new_main"
 test "$(git -C "$lab_dir/runner" rev-parse HEAD)" = "$candidate_commit"
 grep -Fqx "source_commit=$candidate_commit" "$lab_dir/staging/deployment.env"
+test "$(awk -F '\t' 'NR > 1 && $5 == "denied" { denied++ } END { print denied + 0 }' "$lab_dir/build/promotion-attempts.tsv")" = 1
+test "$(awk -F '\t' 'NR > 1 && $1 == "production" && $5 == "accepted" { latest = $2 } END { print latest }' "$lab_dir/build/promotion-attempts.tsv")" = 3
 
-printf 'Detached CI checkout, reproducible archive, manifest, and deployment verification passed.\n'
+printf 'Detached CI checkout, reproducible archive, manifest, per-environment promotion, and deployment verification passed.\n'

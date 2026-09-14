@@ -285,6 +285,7 @@
 - [x] 扩写第六篇分支模型章，增加 `proposed`、`active`、`frozen`、`maintenance`、`retired` 状态迁移和逐目标修复传播记录；新增维护线 backport、Patch ID 等价、tree 隔离、分支删除与 recovery ref 恢复实验。
 - [x] 扩写第十三篇 push 故障章，补齐进入/退出能力，拆分 request reach 与 server result，增加多 ref 逐项结果和 atomic 外部副作用边界；修正 push、性能、外部依赖、签名和远程引用五个专项实验硬编码 `/tmp` 的问题。
 - [x] 扩写第十三篇签名故障章，增加 observation 字段、策略摘要与验证时刻、tag ref 移动竞态和 expected-old 恢复边界；专项实验验证有效签名 tag 目标漂移后不能沿用发布结论。
+- [x] 扩写第八篇制品与部署证据链，增加逐环境 promotion attempt、部分提升结果和失败记录保留；专项实验验证 production 摘要失配时单次提升被拒绝，恢复后以新 attempt 接受同一制品。
 
 ## 回归状态
 
@@ -514,6 +515,7 @@
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-branch-model-backports.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check`、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第六篇分支状态迁移与逐目标修复传播扩写通过专项和整书回归；发布点、backport 补丁等价、维护线 tree 隔离、误删与 recovery ref 恢复均通过，207 个公开页面、75 个兼容入口与 74 组隔离实验正常 |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-push-auth-permission-boundaries.sh`、五个排障专项实验、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check`、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十三篇 push 故障章的 request reach/server result、多 ref 对账和 atomic 外部副作用边界扩写完成；push、性能、外部依赖、签名与远程引用实验统一遵守 `TMPDIR`，整书回归末尾输出 `All Git blue book checks passed.` |
 | 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-signature-troubleshooting.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check`、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第十三篇签名故障 observation、策略摘要/验证时刻和 tag 目标竞态扩写通过专项与整书回归；有效签名 tag 的 ref 漂移、expected-old 恢复和候选外信任根边界均有断言，整书回归末尾输出 `All Git blue book checks passed.` |
+| 2026-09-14 | `TMPDIR=/private/tmp bash scripts/verify-ci-evidence-chain.sh`、Write 中文标点门禁、`ruby scripts/check-book-links.rb`、`git diff --check`、`TMPDIR=/private/tmp ./scripts/verify-all.sh` | 通过 | 第八篇逐环境 promotion attempt、部分提升拒绝和失败记录保留扩写通过专项与整书回归；staging/production 摘要对账、production 恢复 attempt 和候选 OID 锁定均通过，整书回归末尾输出 `All Git blue book checks passed.` |
 
 ## 已知风险
 

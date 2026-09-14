@@ -104,6 +104,22 @@ printf 'artifact_sha256=%s\n' "$artifact_sha256"
 
 测试、预发布和生产通常应提升同一个不可变 digest，只改变经过审计的环境配置。若每个环境重新构建，即使源码 commit 相同，也会产生新的制品和来源记录，不能继续使用原构建的发布结论。
 
+## 每个环境都有自己的 promotion attempt
+
+一次发布可能先后经过测试、预发布和生产，也可能同时向多个集群提升。全局发布状态不能覆盖每个环境的实际结果。至少为每个目标保存：
+
+```text
+promotion_id / deployment_id / environment / region_or_cluster
+attempt / expected_artifact_digest / actual_artifact_digest
+source_commit / configuration_version / actor / started_at / finished_at
+result: accepted | denied | partial | unknown
+failure_reason / runtime_observation_id / recovery_attempt
+```
+
+某个环境摘要失配时，发布结果应能展开为逐环境状态。例如 staging 已接受、production 在第二次尝试发现字节变化，此时整体是 `partial` 或 `blocked`，不能把 staging 的成功复制给 production，也不应重放所有环境。修复后只为 production 建立新的 attempt，引用原始 deployment 和失配证据。每次 attempt 都要保留 expected/actual 摘要，不能覆盖失败记录。
+
+同一个 digest 在不同环境出现不代表实例已经切换。提升记录回答“哪个目标接受了哪些字节”，运行观测回答“哪些实例实际加载了这些字节”。若观测只覆盖一部分实例，结果只能是部分或未知；不能用控制面一个绿色状态推导整组实例和流量都完成。
+
 ## 发布引用只命名源码，不包含制品
 
 附注 tag 可以为候选或正式发布提交提供稳定名称，并保存说明和可选签名。验证时同时读取 tag 对象和剥离后的目标：
@@ -186,7 +202,8 @@ bash scripts/verify-ci-evidence-chain.sh
 1. 生成带两个父提交的合并候选，runner 在分离 HEAD 上精确检出候选并核对 commit、tree、流水线 blob 和附注 tag；
 2. 对同一候选生成两份源码归档并核对摘要，对功能分支头生成另一份归档，证明“同一候选”是制品输入的一部分；
 3. 把摘要清单和制品复制到模拟 staging 目录，故意篡改副本后检测失配，再从已知构建制品恢复；
-4. 让服务器 `main` 前进，验证 runner 的 `origin/main` 可以变化，而分离 `HEAD` 和部署记录仍锁定原候选。
+4. 在模拟 staging 和 production 目录中分别记录 promotion attempt，故意让 production 的第二次尝试摘要失配，确认结果按逐环境记录为 denied，恢复相同制品后才接受新的 attempt；
+5. 让服务器 `main` 前进，验证 runner 的 `origin/main` 可以变化，而分离 `HEAD` 和部署记录仍锁定原候选。
 
 成功输出为：
 
@@ -194,7 +211,7 @@ bash scripts/verify-ci-evidence-chain.sh
 Detached CI checkout, reproducible archive, manifest, and deployment verification passed.
 ```
 
-`git archive` 的可重复性只证明当前隔离环境中的源码归档字节一致，不代表任意语言编译、容器镜像、外部依赖或跨平台构建已经可重复。模拟 staging 是普通目录，不能证明真实制品权限、签名、审计、滚动发布或运行实例状态；这些证据必须在专用测试环境采集。
+`git archive` 的可重复性只证明当前隔离环境中的源码归档字节一致，不代表任意语言编译、容器镜像、外部依赖或跨平台构建已经可重复。模拟 staging 和 production 是普通目录，不能证明真实制品权限、签名、审计、滚动发布或运行实例状态；这些证据必须在专用测试环境采集。实验中的逐环境 TSV 只演示 attempt 与摘要对账，不能代替制品库或部署控制面的原子性保证。
 
 ## 小结
 
