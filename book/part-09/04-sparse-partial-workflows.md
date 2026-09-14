@@ -222,7 +222,7 @@ offline_behavior / fallback_to_full_clone
 在仓库根目录运行：
 
 ```bash
-bash scripts/verify-refspec-partial-clone.sh
+TMPDIR=/private/tmp bash scripts/verify-refspec-partial-clone.sh
 ```
 
 前置条件是 Bash、Git 2.49 或兼容实现、`awk`、`grep`、`sed`、`mktemp` 和可写临时目录。实验使用本地 bare 远端和虚构身份，创建负 refspec、浅克隆、部分克隆和 sparse-checkout，退出时清理临时目录，不连接网络，也不修改本书仓库。
@@ -230,9 +230,9 @@ bash scripts/verify-refspec-partial-clone.sh
 实验验证：
 
 1. 负 refspec 不创建被排除的远程跟踪 ref，也不取得其分支尖端；
-2. shallow clone 的边界和 deepen/unshallow 会改变本地历史可见性；
+2. shallow clone 的边界和 deepen/unshallow 会改变本地历史可见性，恢复后主线 OID 与完整副本一致；
 3. `blob:none` 部分克隆在读取指定对象时按需取得 blob；
-4. sparse-checkout 只改变工作区展开范围，关闭后候选文件仍可恢复；
+4. sparse-checkout 只改变工作区展开范围，范围外路径仍存在于候选 tree，关闭后文件可以恢复；
 5. 受限机制恢复后，引用、对象和路径结果可以重新核对。
 
 实验不验证真实服务端 filter、SSH/TLS、凭据、平台隐藏 refs、冷/热缓存、费用、LFS、子模块、CI runner 或生产构建完整性。它也不提供性能收益结论，目标环境必须按[性能基线](01-measure-before-optimizing.md)重新测量。

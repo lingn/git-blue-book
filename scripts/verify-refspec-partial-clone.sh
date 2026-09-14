@@ -98,6 +98,7 @@ test "$(git -C "$lab_dir/shallow" rev-list --count main)" = "4"
 git -C "$lab_dir/shallow" fetch --quiet --unshallow origin
 test "$(git -C "$lab_dir/shallow" rev-parse --is-shallow-repository)" = "false"
 test "$(git -C "$lab_dir/shallow" rev-list --count main)" = "$main_count"
+test "$(git -C "$lab_dir/shallow" rev-parse main)" = "$main_tip"
 
 git clone --quiet --filter=blob:none \
   "$server_url" "$lab_dir/partial"
@@ -114,11 +115,20 @@ git -C "$lab_dir/partial" show main~3:app/service.txt \
 test "$(sed -n '1p' "$lab_dir/hydrated-service.txt")" = "service version 3"
 git -C "$lab_dir/partial" cat-file -e "$target_blob"
 
+partial_candidate_tree="$(git -C "$lab_dir/partial" rev-parse main^{tree})"
+git -C "$lab_dir/partial" cat-file -e 'main:docs/guide.md'
+git -C "$lab_dir/partial" ls-tree -r --full-tree main -- docs/guide.md \
+  > "$lab_dir/partial-tree-path.out"
+test -s "$lab_dir/partial-tree-path.out"
+
 git -C "$lab_dir/partial" sparse-checkout set app
 test -f "$lab_dir/partial/app/service.txt"
 test ! -e "$lab_dir/partial/docs/guide.md"
+test "$(git -C "$lab_dir/partial" rev-parse main^{tree})" = "$partial_candidate_tree"
+git -C "$lab_dir/partial" cat-file -e 'main:docs/guide.md'
 git -C "$lab_dir/partial" sparse-checkout disable
 test -f "$lab_dir/partial/docs/guide.md"
 test "$(sed -n '1p' "$lab_dir/partial/docs/guide.md")" = "guide version 1"
+test "$(git -C "$lab_dir/partial" rev-parse main^{tree})" = "$partial_candidate_tree"
 
 printf 'Refspec, shallow-clone, partial-clone, and sparse-checkout experiments passed.\n'

@@ -107,7 +107,7 @@ CI 依赖实验只解析本地 Git 对象和 refs，不执行 fixture 中的脚�
 
 事故到发布实验只验证临时 Git 仓库、`bisect` 候选、来源/目标修复提交、附注 tag、制品摘要、双组件部署清单和关闭状态。它覆盖证据冻结、缓解、旧实例围栏、主线继续前进和关闭条件；不模拟真实日志、CI、制品库、数据库、队列、流量、业务指标、权限或组织审批。
 
-稀疏与部分工作流实验复用 `scripts/verify-refspec-partial-clone.sh`，验证负 refspec、shallow deepen/unshallow、partial clone 按需取得 blob 和 sparse-checkout 展开/关闭。它不模拟真实服务端 filter、权限、费用、LFS、子模块、CI runner 或生产构建完整性。
+稀疏与部分工作流实验复用 `scripts/verify-refspec-partial-clone.sh`，验证负 refspec、shallow deepen/unshallow 后主线 OID 恢复、partial clone 按需取得 blob、sparse-checkout 范围外 tree 路径和展开/关闭后的 tree 不变。它不模拟真实服务端 filter、权限、费用、LFS、子模块、CI runner 或生产构建完整性。
 
 Monorepo 拓扑实验只验证临时 Git 仓库、文本构建图、所有权快照、变更闭包和候选制品摘要。它覆盖共享库反向依赖、图缺边的 `inconclusive`、原子候选、审批缺失和主线前进边界；不执行真实构建、评审平台、身份目录、缓存、制品库或迁移切换。
 
